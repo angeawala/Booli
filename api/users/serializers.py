@@ -2,22 +2,10 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import CustomUser, ActivationToken, PasswordResetToken, TwoFAToken
-
-# ======= CustomTokenObtainPairSerializer : Tokens pour login =======
-class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
-    """Personnalise les tokens JWT pour la connexion (auth/login)."""
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        refresh = self.get_token(self.user)
-        data['refresh'] = str(refresh)
-        data['access'] = str(refresh.access_token)
-        return data
-# ======= Fin CustomTokenObtainPairSerializer =======
+from .models import CustomUser, ActivationToken, PasswordResetToken
 
 # ======= CustomUserCreateSerializer : Inscription =======
 class CustomUserCreateSerializer(serializers.ModelSerializer):
-    """Serializer pour créer un utilisateur (auth/register) avec email d’activation."""
     class Meta:
         model = CustomUser
         fields = (
@@ -37,7 +25,6 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        """Crée un utilisateur inactif et envoie un lien d’activation."""
         password = validated_data.pop('password')
         user = CustomUser(**validated_data)
         user.set_password(password)
@@ -47,11 +34,7 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
         token = ActivationToken(user=user)
         token.save()
 
-        activation_url = (
-            f"{settings.FRONTEND_URL}/auth/activate?token={token.token}"
-            if not settings.DEVELOPPEMENT
-            else f"http://127.0.0.1:3000/auth/activate?token={token.token}"
-        )
+        activation_url = f"{settings.FRONTEND_URL}/auth/activate?token={token.token}"
         subject = 'Activation de compte - BOOLi-STORE'
         message = (
             f"Bonjour,\n\nCliquez sur ce lien pour activer votre compte : {activation_url}\n\n"
@@ -60,7 +43,50 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
 
         return user
+
 # ======= Fin CustomUserCreateSerializer =======
+class ResendActivationSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate(self, attrs):
+        email = attrs.get('email')
+        try:
+            user = CustomUser.objects.get(email=email)
+            if user.is_active:
+                raise serializers.ValidationError("Ce compte est déjà activé.")
+        except CustomUser.DoesNotExist:
+            raise serializers.ValidationError("Aucun utilisateur avec cet email.")
+        attrs['user'] = user
+        return attrs
+
+    def save(self):
+        user = self.validated_data['user']
+        ActivationToken.objects.filter(user=user).delete()
+        token = ActivationToken(user=user)
+        token.save()
+
+        activation_url = f"{settings.FRONTEND_URL}/auth/activate?token={token.token}"
+        subject = 'Nouvelle demande d’activation - BOOLi-STORE'
+        message = (
+            f"Bonjour,\n\nVoici un nouveau lien pour activer votre compte : {activation_url}\n\n"
+            f"Le lien expire dans 24 heures.\n\nCordialement,\nL’équipe BOOLi-STORE"
+        )
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
+
+# ======= CustomTokenObtainPairSerializer : Tokens pour login =======
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Personnalise les tokens JWT pour la connexion (auth/login)."""
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data['refresh'] = str(refresh)
+        data['access'] = str(refresh.access_token)
+        return data
+
+# ======= Fin CustomTokenObtainPairSerializer =======
+
+
+
 
 # ======= CustomUserSerializer : Affichage des données utilisateur =======
 class CustomUserSerializer(serializers.ModelSerializer):

@@ -23,16 +23,22 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         serializer.is_valid(raise_exception=True)
         access_token = serializer.validated_data['access']
         refresh_token = serializer.validated_data['refresh']
-        response = Response({'access': access_token, 'refresh': refresh_token})
-        response.set_cookie(
-            key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
-            value=refresh_token,
-            httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],
-            max_age=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH_MAX_AGE'],
-            path='/',
-        )
+        
+        # En développement local, renvoyer refresh dans JSON
+        if settings.DEVELOPPEMENT:
+            response = Response({'access': access_token, 'refresh': refresh_token})
+        else:
+            # En production, utiliser le cookie
+            response = Response({'access': access_token, 'refresh': refresh_token})
+            response.set_cookie(
+                key=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'],
+                value=refresh_token,
+                httponly=settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+                secure=settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+                samesite=settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],
+                max_age=settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH_MAX_AGE'],
+                path='/',
+            )
         return response
 # ======= Fin CustomTokenObtainPairView =======
 
@@ -81,7 +87,6 @@ def logout_view(request):
     serializer = LogoutSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     response = Response({'message': 'Déconnexion réussie'}, status=status.HTTP_200_OK)
-    response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'], path='/')
     response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'], path='/')
     return response
 
@@ -106,25 +111,29 @@ register_user.get_serializer_class = get_serializer_class
 # ======= Fin register_user =======
 
 # ======= activate_user : Activation du compte =======
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([permissions.AllowAny])
-def activate_user(request, token):
-    serializer = ActivationTokenSerializer(data={'token': token})
+def activate_account(request):
+    serializer = ActivationTokenSerializer(data=request.data)
     if serializer.is_valid():
-        activation_token = ActivationToken.objects.get(token=token)
-        user = activation_token.user
-        user.is_active = True
-        user.save()
-        activation_token.delete()
-        return Response({'message': 'Compte activé avec succès'}, status=status.HTTP_200_OK)
+        token = serializer.validated_data['token']
+        try:
+            activation_token = ActivationToken.objects.get(token=token)
+            if activation_token.is_expired():
+                return Response({'error': 'Token expiré'}, status=status.HTTP_400_BAD_REQUEST)
+            user = activation_token.user
+            user.is_active = True
+            user.save()
+            activation_token.delete()
+            return Response({'message': 'Compte activé avec succès'}, status=status.HTTP_200_OK)
+        except ActivationToken.DoesNotExist:
+            return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def get_serializer_class():
     return ActivationTokenSerializer
-activate_user.get_serializer_class = get_serializer_class
-# ======= Fin activate_user =======
+activate_account.get_serializer_class = get_serializer_class
 
-# ======= resend_activation : Renvoi d’activation =======
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def resend_activation(request):

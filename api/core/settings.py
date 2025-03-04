@@ -27,8 +27,9 @@ if DEVELOPPEMENT:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-    CORS_ALLOW_ALL_ORIGINS = True
-    BACKEND_URL = 'http://127.0.0.1:8000'
+    FRONTEND_URL = "http://localhost:3000"  # URL frontend local
+    BACKEND_URL = "http://localhost:8000"
+    CORS_ALLOW_ALL_ORIGINS = True 
 else:
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY')
@@ -39,12 +40,12 @@ else:
     ]
     FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://booli-store.onrender.com')
     BACKEND_URL = os.getenv('BACKEND_URL', 'https://booli-api.onrender.com')
+    CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
+    CORS_ALLOW_ALL_ORIGINS = False
     DATABASES = {
         'default': dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600)
     }
-    CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
 
- 
 # ======= Fin Dev/Prod =======
 
 # ======= Configuration SMTP =======
@@ -52,9 +53,9 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.mailersend.net")
 EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "MS_tCAwUZ@trial-3zxk54v908qgjy6v.mlsender.net")  #  username Mailersend
-EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "mssp.z9lmJhT.jy7zpl93dn0l5vx6.rv4hDGX")  # Remplace par ton mot de passe
-DEFAULT_FROM_EMAIL = "Booli-store <noreply@booli-store.com>"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "MS_tCAwUZ@trial-3zxk54v908qgjy6v.mlsender.net")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "mssp.z9lmJhT.jy7zpl93dn0l5vx6.rv4hDGX")
+DEFAULT_FROM_EMAIL = "noreply@trial-3zxk54v908qgjy6v.mlsender.net"
 # ======= Fin Configuration SMTP =======
 
 # ======= Apps : Les modules de puissance =======
@@ -85,7 +86,28 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # ======= Fin Middleware =======
-
+# =======Configuration CORS ====
+CORS_ALLOW_CREDENTIALS = True  # Permet les cookies avec les requêtes
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+]
+#========FIN CORS CONFIGURATION=================
 # ======= DRF Spectacular : Doc API auto =======
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -110,16 +132,29 @@ SPECTACULAR_SETTINGS = {
 # ======= Fin DRF Spectacular =======
 
 # ======= Simple JWT : Tokens niveau hacker =======
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=3),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_COOKIE': 'access_token',
-    'AUTH_COOKIE_SECURE': not DEVELOPPEMENT,
-    'AUTH_COOKIE_HTTP_ONLY': True,
-    'AUTH_COOKIE_SAMESITE': 'Lax',
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
+    # Configuration des cookies
+    'AUTH_COOKIE': 'access_token',         # Nom du cookie pour l’access token (optionnel)
+    'AUTH_COOKIE_REFRESH': 'refresh_token', # Nom du cookie pour le refresh token
+    'AUTH_COOKIE_SECURE': not DEVELOPPEMENT, # True en prod pour HTTPS
+    'AUTH_COOKIE_HTTP_ONLY': True,          # Protège contre XSS
+    'AUTH_COOKIE_SAMESITE': 'Lax',          # Protège contre CSRF
+    'AUTH_COOKIE_REFRESH_MAX_AGE': 3 * 24 * 60 * 60, # 3 jours en secondes
 }
 # ======= Fin Simple JWT =======
 
@@ -169,7 +204,7 @@ USE_TZ = True
 # ======= Fichiers Statiques =======
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Où collectstatic mettra les fichiers
-STATICFILES_DIRS = [BASE_DIR / 'static']  # Si tu as des fichiers statiques personnalisés (optionnel)
+STATICFILES_DIRS = []  # fichiers statiques personnalisés (optionnel)
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  # Par défaut
 # ======= Fin Fichiers Statiques =======
 
