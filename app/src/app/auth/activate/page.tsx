@@ -1,13 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { activateAccount } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 
-export default function ActivatePage() {
+interface ErrorResponse {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+}
+
+function ActivateContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [status, setStatus] = useState<"success" | "error" | null>(null);
   const router = useRouter();
@@ -29,9 +37,10 @@ export default function ActivatePage() {
         toast.success("Compte activé avec succès ! Vous pouvez maintenant vous connecter.");
         setStatus("success");
         setTimeout(() => router.push("/auth/login"), 2000);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Erreur lors de l’activation:", error);
-        const errorMsg = error.response?.data?.error || "Erreur lors de l’activation";
+        const typedError = error as ErrorResponse;
+        const errorMsg = typedError.response?.data?.error || "Erreur lors de l’activation";
         toast.error(errorMsg);
         setStatus("error");
       } finally {
@@ -79,5 +88,23 @@ export default function ActivatePage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ActivatePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="img-inscription">
+          <div className="loading-container" id="loading">
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </div>
+        </div>
+      }
+    >
+      <ActivateContent />
+    </Suspense>
   );
 }

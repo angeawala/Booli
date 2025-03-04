@@ -6,6 +6,15 @@ import { resendActivation } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+// Crée un type pour l'erreur, ici un type générique avec une structure possible
+interface ErrorResponse {
+  response?: {
+    data?: {
+      error?: string;
+    };
+  };
+}
+
 export default function ResendActivationPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -25,9 +34,12 @@ export default function ResendActivationPage() {
       const msg = response.message || "Un nouvel email d’activation a été envoyé !";
       toast.success(msg);
       router.push("/auth/login");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erreur lors du renvoi:", error);
-      const errorMsg = error.response?.data?.error || "Erreur lors de l’envoi de l’email.";
+
+      // Vérifie si l'erreur a la structure attendue
+      const typedError = error as ErrorResponse;
+      const errorMsg = typedError.response?.data?.error || "Erreur lors de l’envoi de l’email.";
       toast.error(errorMsg);
     } finally {
       setIsLoading(false);

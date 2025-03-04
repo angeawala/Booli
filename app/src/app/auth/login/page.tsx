@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import SuccessModal from "@/components/modals/SuccessModal";
 import ErrorModal from "@/components/modals/ErrorModal";
 import TwoFAModal from "@/components/modals/TwoFAModal";
+import { AxiosError } from "axios";
 
-export default function LoginPage() {
+function LoginContent() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -79,9 +80,14 @@ export default function LoginPage() {
         const next = validateRedirect(searchParams.get("next")) || "/";
         router.push(next);
       }
-    } catch (error: any) {
-      console.error("Erreur lors de la connexion:", error);
-      toast.error("Échec de la connexion. Vérifiez vos identifiants ou essayez à nouveau.");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("Erreur lors de la connexion:", error);
+        toast.error("Échec de la connexion. Vérifiez vos identifiants ou essayez à nouveau.");
+      } else {
+        console.error("Erreur inconnue:", error);
+        toast.error("Une erreur inconnue est survenue.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -97,9 +103,14 @@ export default function LoginPage() {
       setShow2FAModal(false);
       const next = validateRedirect(searchParams.get("next")) || "/";
       router.push(next);
-    } catch (error: any) {
-      console.error("Erreur lors de la vérification 2FA:", error);
-      toast.error("Code invalide ou expiré.");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("Erreur lors de la vérification 2FA:", error);
+        toast.error("Code invalide ou expiré.");
+      } else {
+        console.error("Erreur inconnue lors de la vérification 2FA:", error);
+        toast.error("Une erreur inconnue est survenue.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -112,9 +123,14 @@ export default function LoginPage() {
       console.log("2FA resend response:", response);
       setTwoFAExpiresAt(response.expires_at);
       toast.success("Nouveau code envoyé !");
-    } catch (error: any) {
-      console.error("Erreur lors du renvoi 2FA:", error);
-      toast.error("Une erreur s’est produite. Réessayez plus tard.");
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        console.error("Erreur lors du renvoi 2FA:", error);
+        toast.error("Une erreur s’est produite. Réessayez plus tard.");
+      } else {
+        console.error("Erreur inconnue lors du renvoi 2FA:", error);
+        toast.error("Une erreur inconnue est survenue.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -226,5 +242,23 @@ export default function LoginPage() {
         </>
       )}
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="img-connexion">
+          <div className="loading-container" id="loading">
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </div>
+        </div>
+      }
+    >
+      <LoginContent />
+    </Suspense>
   );
 }

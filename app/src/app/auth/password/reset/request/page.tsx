@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { passwordResetRequest } from "@/api/authApi"; // À ajouter
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image"; // Ajouter cet import pour l'utilisation de <Image />
+import { AxiosError } from "axios"; // Assurez-vous d'importer AxiosError pour la gestion des erreurs
 
 export default function PasswordResetRequestPage() {
   const [email, setEmail] = useState("");
@@ -21,10 +23,16 @@ export default function PasswordResetRequestPage() {
       console.log("Password reset request response:", response);
       toast.success("Un email de réinitialisation a été envoyé !");
       router.push("/auth/login");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erreur lors de la demande:", error);
-      const errorMsg = error.response?.data?.error || "Erreur lors de l’envoi de l’email.";
-      toast.error(errorMsg);
+
+      // Type guard pour vérifier si l'erreur est une AxiosError
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.error || "Erreur lors de l’envoi de l’email.";
+        toast.error(errorMsg);
+      } else {
+        toast.error("Une erreur inconnue est survenue.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -69,11 +77,13 @@ export default function PasswordResetRequestPage() {
                   </button>
                 </div>
                 <div className="more-info">
-                  <img
-                    src="/media/icone.png"
+                  <Image
+                    src="/image/icone.png"
                     className="toggle-icon"
                     alt="Help icon"
                     onClick={toggleInfo}
+                    width={32}   // Ajoutez la largeur de l'image
+                    height={32}  // Ajoutez la hauteur de l'image
                   />
                   {showInfo && (
                     <p className="toggle-text text-center">

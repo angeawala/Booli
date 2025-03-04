@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { resetPasswordConfirm } from "@/api/authApi"; // À ajouter
+import { resetPasswordConfirm } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AxiosError } from "axios";
 
-export default function ResetPasswordPage() {
+function ResetPasswordContent() {
   const [formData, setFormData] = useState({
     newPassword: "",
     confirmPassword: "",
@@ -43,10 +44,14 @@ export default function ResetPasswordPage() {
       console.log("Reset password response:", response);
       toast.success("Mot de passe réinitialisé avec succès ! Vous pouvez maintenant vous connecter.");
       router.push("/auth/login");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erreur lors de la réinitialisation:", error);
-      const errorMsg = error.response?.data?.error || "Erreur lors de la réinitialisation";
-      toast.error(errorMsg);
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.error || "Erreur lors de la réinitialisation";
+        toast.error(errorMsg);
+      } else {
+        toast.error("Une erreur inconnue est survenue.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -116,5 +121,23 @@ export default function ResetPasswordPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="img-inscription">
+          <div className="loading-container" id="loading">
+            <div className="bar"></div>
+            <div className="bar"></div>
+            <div className="bar"></div>
+          </div>
+        </div>
+      }
+    >
+      <ResetPasswordContent />
+    </Suspense>
   );
 }

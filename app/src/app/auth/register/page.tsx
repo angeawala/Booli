@@ -5,8 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerUser } from "@/api/authApi"; // À ajouter
-import SuccessModal from "@/components/modals/SuccessModal"; // Corrigé pour la nouvelle structure
+import { registerUser } from "@/api/authApi";
+import SuccessModal from "@/components/modals/SuccessModal";
+import { AxiosError } from "axios";
+
+interface Country {
+  name: string;
+  code: string;
+  phoneCode: string;
+}
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -26,7 +33,7 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [passwordVisible1, setPasswordVisible1] = useState(false);
   const [passwordVisible2, setPasswordVisible2] = useState(false);
-  const [countries, setCountries] = useState<{ name: string; code: string; phoneCode: string }[]>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
   const [passwordRules, setPasswordRules] = useState({
     length: false,
     uppercase: false,
@@ -42,15 +49,15 @@ export default function RegisterPage() {
       try {
         const response = await fetch("https://restcountries.com/v3.1/all");
         const data = await response.json();
-        const countryList = data
-          .map((country: any) => ({
+        const countryList: Country[] = data
+          .map((country: { name: { common: string }; cca2: string; idd: { root: string; suffixes?: string[] } }) => ({
             name: country.name.common,
             code: country.cca2,
             phoneCode: country.idd.root + (country.idd.suffixes?.[0] || ""),
           }))
-          .sort((a: any, b: any) => a.name.localeCompare(b.name));
+          .sort((a: Country, b: Country) => a.name.localeCompare(b.name));
         setCountries(countryList);
-      } catch (error) {
+      } catch (error: unknown) {
         console.error("Erreur lors du chargement des pays:", error);
         toast.error("Impossible de charger les pays.");
       } finally {
@@ -187,9 +194,10 @@ export default function RegisterPage() {
       setSuccessMessage(
         "Inscription réussie ! Un email d’activation a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception (ou vos spams) pour activer votre compte."
       );
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Erreur lors de l’inscription:", error);
-      const errorMsg = error.response?.data?.detail || error.response?.data?.email?.[0] || "Erreur lors de l’inscription.";
+      const axiosError = error as AxiosError<{ detail?: string; email?: string[] }>;
+      const errorMsg = axiosError.response?.data?.detail || axiosError.response?.data?.email?.[0] || "Erreur lors de l’inscription.";
       toast.error(errorMsg);
       setIsLoading(false);
     }
