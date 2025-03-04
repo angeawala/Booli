@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ======= Fin BASE_DIR =======
 
 # ======= Dev vs Prod : Mode geek activé =======
-DEVELOPPEMENT = True  # True = lab local, False = Render live
+DEVELOPPEMENT = os.getenv('DEVELOPPEMENT', 'True') == 'True'  # True = lab local, False = Render live
 
 if DEVELOPPEMENT:
     DEBUG = True
