@@ -12,20 +12,28 @@ export const checkAuth = async (): Promise<boolean> => {
   }
 
   try {
-    const verifyResponse = await verifyToken(accessToken);
+    const verifyResponse = (await verifyToken(accessToken)) as { valid: boolean };
     if (verifyResponse.valid) {
       return true;
     }
-  } catch (error) {
-    // Token invalide ou expiré, tenter refresh
+  } catch (error: unknown) {
+    // Vérifier si c'est une erreur et afficher un message
+    if (error instanceof Error) {
+      console.error("Erreur de vérification du token :", error.message);
+    }
+
+    // Token invalide ou expiré, tenter un refresh
     if (!isRefreshing) {
       isRefreshing = true;
       try {
-        const refreshResponse = await refreshToken();
+        const refreshResponse = (await refreshToken()) as { access: string };
         store.dispatch(setTokens({ access: refreshResponse.access }));
         isRefreshing = false;
         return true;
-      } catch (refreshError) {
+      } catch (refreshError: unknown) {
+        if (refreshError instanceof Error) {
+          console.error("Erreur de rafraîchissement du token :", refreshError.message);
+        }
         store.dispatch(logout());
         isRefreshing = false;
         return false;

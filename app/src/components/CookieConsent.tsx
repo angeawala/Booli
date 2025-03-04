@@ -58,11 +58,12 @@ const CookieConsent = () => {
         <div className={styles.popup} id="popup-annonce">
           <div className={styles.popupContent}>
             <h2><strong>LES COOKIES CHEZ E-BOOLi</strong></h2>
-            <p>
-              Notre plateforme utilise des cookies et d'autres technologies de suivi pour améliorer votre expérience de navigation.
-              En cliquant sur "Accepter", vous consentez à l'utilisation de cookies. Vous devez avoir plus de <strong>16 ans</strong> pour accepter.
-            </p>
-            <label>
+              <p>
+                Notre plateforme utilise des cookies et d&apos;autres technologies de suivi pour améliorer votre
+                expérience de navigation. En cliquant sur <strong>« Accepter »</strong>, vous consentez à
+                l&apos;utilisation de cookies. Vous devez avoir plus de <strong>16 ans</strong> pour accepter.
+              </p>
+           <label>
               <input className={styles.radioInput} type="radio" id="ageCheck" /> Je certifie avoir plus de 16 ans.
             </label>
             <p>

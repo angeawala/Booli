@@ -1,8 +1,6 @@
 // src/components/ErrorModal.tsx
 'use client';
 
-import { useState } from 'react';
-
 interface ErrorModalProps {
   message: string | null;
   onClose: () => void;
