@@ -32,13 +32,19 @@ if DEVELOPPEMENT:
 else:
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY')
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'booli-api.onrender.com').split(',')
+    ALLOWED_HOSTS = [
+        'booli-api.onrender.com',  # Domaine public
+        '.onrender.com',           # Wildcard pour les sous-domaines Render
+        '*',                       # Accepte tout (temporaire pour tester)
+    ]
     FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://booli-store.onrender.com')
     BACKEND_URL = os.getenv('BACKEND_URL', 'https://booli-api.onrender.com')
     DATABASES = {
         'default': dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600)
     }
     CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
+
+ 
 # ======= Fin Dev/Prod =======
 
 # ======= Apps : Les modules de puissance =======
