@@ -79,7 +79,7 @@ class CustomTokenVerifyView(TokenVerifyView):
 @permission_classes([permissions.AllowAny])
 def logout_view(request):
     serializer = LogoutSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)  # Valide (pas de données attendues)
+    serializer.is_valid(raise_exception=True)
     response = Response({'message': 'Déconnexion réussie'}, status=status.HTTP_200_OK)
     response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'], path='/')
     response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'], path='/')
