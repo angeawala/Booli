@@ -2,7 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import CustomUser, ActivationToken, PasswordResetToken
+from .models import CustomUser, ActivationToken, PasswordResetToken, TwoFAToken
 
 # ======= CustomTokenObtainPairSerializer : Tokens pour login =======
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -37,18 +37,16 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        """Crée un utilisateur inactif et envoie un email d’activation."""
+        """Crée un utilisateur inactif et envoie un lien d’activation."""
         password = validated_data.pop('password')
         user = CustomUser(**validated_data)
         user.set_password(password)
-        user.is_active = False  # Nécessite activation
+        user.is_active = False
         user.save()
 
-        # Token d’activation
         token = ActivationToken(user=user)
         token.save()
 
-        # Email d’activation
         activation_url = (
             f"{settings.FRONTEND_URL}/auth/activate?token={token.token}"
             if not settings.DEVELOPPEMENT
@@ -66,7 +64,7 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
 
 # ======= CustomUserSerializer : Affichage des données utilisateur =======
 class CustomUserSerializer(serializers.ModelSerializer):
-    """Serializer pour exposer les infos utilisateur."""
+    """Serializer pour exposer les informations de l’utilisateur."""
     class Meta:
         model = CustomUser
         fields = (
@@ -76,13 +74,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
 # ======= Fin CustomUserSerializer =======
 
 # ======= ActivationTokenSerializer : Validation d’activation =======
-class ActivationTokenSerializer(serializers.ModelSerializer):
+class ActivationTokenSerializer(serializers.Serializer):
     """Serializer pour valider un token d’activation (auth/activate)."""
     token = serializers.UUIDField()
-
-    class Meta:
-        model = ActivationToken
-        fields = ('token',)
 
     def validate(self, attrs):
         token = attrs.get('token')
@@ -113,13 +107,10 @@ class ResendActivationSerializer(serializers.Serializer):
 
     def save(self):
         user = self.validated_data['user']
-        # Supprime les anciens tokens
         ActivationToken.objects.filter(user=user).delete()
-        # Crée un nouveau token
         token = ActivationToken(user=user)
         token.save()
 
-        # Envoi de l’email
         activation_url = (
             f"{settings.FRONTEND_URL}/auth/activate?token={token.token}"
             if not settings.DEVELOPPEMENT
@@ -149,13 +140,10 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 
     def save(self):
         user = self.validated_data['user']
-        # Supprime les anciens tokens
         PasswordResetToken.objects.filter(user=user).delete()
-        # Crée un nouveau token
         token = PasswordResetToken(user=user)
         token.save()
 
-        # Envoi de l’email
         reset_url = (
             f"{settings.FRONTEND_URL}/auth/password/reset?token={token.token}"
             if not settings.DEVELOPPEMENT
@@ -169,28 +157,44 @@ class PasswordResetRequestSerializer(serializers.Serializer):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
 # ======= Fin PasswordResetRequestSerializer =======
 
-# ======= PasswordResetSerializer : Réinitialisation du mot de passe =======
-class PasswordResetSerializer(serializers.Serializer):
+# ======= PasswordResetConfirmSerializer : Confirmation de réinitialisation =======
+class PasswordResetConfirmSerializer(serializers.Serializer):
     """Serializer pour réinitialiser le mot de passe (auth/password/reset)."""
-    token = serializers.UUIDField()
-    password = serializers.CharField(write_only=True, min_length=8)
+    token = serializers.UUIDField(verbose_name="Jeton")
+    new_password = serializers.CharField(write_only=True, min_length=8, verbose_name="Nouveau mot de passe")
+    confirm_password = serializers.CharField(write_only=True, verbose_name="Confirmation du mot de passe")
 
     def validate(self, attrs):
-        token = attrs.get('token')
-        try:
-            reset_token = PasswordResetToken.objects.get(token=token)
-            if reset_token.is_expired():
-                raise serializers.ValidationError("Ce token de réinitialisation a expiré.")
-        except PasswordResetToken.DoesNotExist:
-            raise serializers.ValidationError("Token invalide.")
-        attrs['user'] = reset_token.user
+        new_password = attrs.get('new_password')
+        confirm_password = attrs.get('confirm_password')
+        if new_password != confirm_password:
+            raise serializers.ValidationError("Les mots de passe ne correspondent pas.")
         return attrs
+# ======= Fin PasswordResetConfirmSerializer =======
 
-    def save(self):
-        user = self.validated_data['user']
-        password = self.validated_data['password']
-        user.set_password(password)
-        user.save()
-        # Supprime le token utilisé
-        PasswordResetToken.objects.filter(user=user).delete()
-# ======= Fin PasswordResetSerializer =======
+# ======= CheckUserSerializer : Vérification d’utilisateur =======
+class CheckUserSerializer(serializers.Serializer):
+    """Serializer pour vérifier l’existence d’un utilisateur (auth/check-user)."""
+    email = serializers.EmailField(verbose_name="Adresse email")
+    password = serializers.CharField(write_only=True, verbose_name="Mot de passe")
+# ======= Fin CheckUserSerializer =======
+
+# ======= Generate2FASerializer : Génération de token 2FA =======
+class Generate2FASerializer(serializers.Serializer):
+    """Serializer pour générer un code 2FA (auth/generate-2fa-token)."""
+    email = serializers.EmailField(verbose_name="Adresse email")
+# ======= Fin Generate2FASerializer =======
+
+# ======= Verify2FASerializer : Vérification de 2FA =======
+class Verify2FASerializer(serializers.Serializer):
+    """Serializer pour vérifier un code 2FA (auth/verify-2fa)."""
+    email = serializers.EmailField(verbose_name="Adresse email")
+    code = serializers.CharField(max_length=6, verbose_name="Code 2FA")
+    password = serializers.CharField(write_only=True, verbose_name="Mot de passe")
+# ======= Fin Verify2FASerializer =======
+
+# ======= LogoutSerializer : Déconnexion =======
+class LogoutSerializer(serializers.Serializer):
+    """Serializer vide pour la déconnexion (auth/logout)."""
+    pass
+# ======= Fin LogoutSerializer =======
