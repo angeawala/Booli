@@ -78,12 +78,16 @@ class CustomTokenVerifyView(TokenVerifyView):
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def logout_view(request):
-    serializer_class = LogoutSerializer
+    serializer = LogoutSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)  # Valide (pas de données attendues)
     response = Response({'message': 'Déconnexion réussie'}, status=status.HTTP_200_OK)
     response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE'], path='/')
     response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'], path='/')
     return response
-logout_view.serializer_class = LogoutSerializer
+
+def get_serializer_class():
+    return LogoutSerializer
+logout_view.get_serializer_class = get_serializer_class
 # ======= Fin logout_view =======
 
 # ======= register_user : Inscription =======
@@ -95,7 +99,10 @@ def register_user(request):
         user = serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-register_user.serializer_class = CustomUserCreateSerializer
+
+def get_serializer_class():
+    return CustomUserCreateSerializer
+register_user.get_serializer_class = get_serializer_class
 # ======= Fin register_user =======
 
 # ======= activate_user : Activation du compte =======
@@ -111,7 +118,10 @@ def activate_user(request, token):
         activation_token.delete()
         return Response({'message': 'Compte activé avec succès'}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-activate_user.serializer_class = ActivationTokenSerializer
+
+def get_serializer_class():
+    return ActivationTokenSerializer
+activate_user.get_serializer_class = get_serializer_class
 # ======= Fin activate_user =======
 
 # ======= resend_activation : Renvoi d’activation =======
@@ -123,7 +133,10 @@ def resend_activation(request):
         serializer.save()
         return Response({'message': 'Email d’activation renvoyé'}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-resend_activation.serializer_class = ResendActivationSerializer
+
+def get_serializer_class():
+    return ResendActivationSerializer
+resend_activation.get_serializer_class = get_serializer_class
 # ======= Fin resend_activation =======
 
 # ======= password_reset_request : Demande de réinitialisation =======
@@ -135,7 +148,10 @@ def password_reset_request(request):
         serializer.save()
         return Response({'message': 'Email de réinitialisation envoyé'}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-password_reset_request.serializer_class = PasswordResetRequestSerializer
+
+def get_serializer_class():
+    return PasswordResetRequestSerializer
+password_reset_request.get_serializer_class = get_serializer_class
 # ======= Fin password_reset_request =======
 
 # ======= password_reset_confirm : Confirmation de réinitialisation =======
@@ -159,7 +175,10 @@ def password_reset_confirm(request):
         except PasswordResetToken.DoesNotExist:
             return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-password_reset_confirm.serializer_class = PasswordResetConfirmSerializer
+
+def get_serializer_class():
+    return PasswordResetConfirmSerializer
+password_reset_confirm.get_serializer_class = get_serializer_class
 # ======= Fin password_reset_confirm =======
 
 # ======= check_user : Vérification d’existence utilisateur =======
@@ -183,7 +202,10 @@ def check_user(request):
         except CustomUser.DoesNotExist:
             return Response({'exists': False}, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-check_user.serializer_class = CheckUserSerializer
+
+def get_serializer_class():
+    return CheckUserSerializer
+check_user.get_serializer_class = get_serializer_class
 # ======= Fin check_user =======
 
 # ======= generate_2fa_token : Génération 2FA =======
@@ -210,7 +232,10 @@ def generate_2fa_token(request):
         except CustomUser.DoesNotExist:
             return Response({'error': 'Utilisateur non trouvé'}, status=status.HTTP_404_NOT_FOUND)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-generate_2fa_token.serializer_class = Generate2FASerializer
+
+def get_serializer_class():
+    return Generate2FASerializer
+generate_2fa_token.get_serializer_class = get_serializer_class
 # ======= Fin generate_2fa_token =======
 
 # ======= verify_2fa : Vérification 2FA =======
@@ -237,5 +262,8 @@ def verify_2fa(request):
         except CustomUser.DoesNotExist:
             return Response({'error': 'Utilisateur non trouvé'}, status=status.HTTP_404_NOT_FOUND)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-verify_2fa.serializer_class = Verify2FASerializer
+
+def get_serializer_class():
+    return Verify2FASerializer
+verify_2fa.get_serializer_class = get_serializer_class
 # ======= Fin verify_2fa =======
