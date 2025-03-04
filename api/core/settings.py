@@ -35,7 +35,7 @@ else:
     ALLOWED_HOSTS = [
         'booli-api.onrender.com',  # Domaine public
         '.onrender.com',           # Wildcard pour les sous-domaines Render
-        '*',                       # Accepte tout (temporaire pour tester)
+        #'*',                       # Accepte tout (temporaire pour tester)
     ]
     FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://booli-store.onrender.com')
     BACKEND_URL = os.getenv('BACKEND_URL', 'https://booli-api.onrender.com')
