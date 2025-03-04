@@ -1,0 +1,152 @@
+.chat1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('../Photo/chat1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+
+.chat1::before{
+    content: '';
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #2a1b2b9c;
+    position: absolute;
+}
+.robot {
+    font-size: 80px;
+    color: #ffa600;
+    position: relative;
+}
+.search-container {
+    position: relative;
+    margin-top: 20px;
+}
+.search-bar {
+    width: 35em;
+    padding: 1.2em;
+    padding-right: 40px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #333333fa;
+}
+.search-btn {
+    position: absolute;
+    right: 10px;
+    top: 1.9em;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff9100;
+    pointer-events: none;
+    z-index: 2;
+}
+.suggestions, .response {
+    margin-top: 1px;
+    width: 35em;
+    background: #ffffffde;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.39);
+    padding: 10px;
+    display: none;
+    position: absolute;
+}
+.suggestions {
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 3;
+}
+.suggestions div, .response p {
+    padding: 5px;
+    cursor: pointer;
+}
+.suggestions div:hover {
+    background: #ffd900;
+    color: #fff;
+}
+.response p {
+    animation: typing 1s steps(40, end);
+}
+@keyframes typing {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.chattitre{
+    color: #fff;
+    font: 1000;
+    position: relative;
+}
+.faq-section {
+    position: absolute;
+    top: 0;
+    width: 40em;
+    background: #00313d;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.faq-phrase {
+    display: none;
+    animation: fadeInOut 5s ease-in-out infinite;
+}
+
+.faq-phrase h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: #ffffff;
+    font-size: 800;
+}
+
+.faq-phrase p {
+    margin: 5px 0 0;
+    font-size: 1em;
+    color: #cac7c7;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 1; }
+    20% { opacity: 1; }
+    80% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+/*====result page ====*/
+.result-container {
+    background: rgba(2, 2, 2, 0.664);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 60%;
+    max-width: 600px;
+    color: #fff;
+    position: relative;
+    box-shadow: 5px 3px 5px 3px #00000057;
+}
+.result-container h2 {
+    margin-bottom: 10px;
+}
+.result-container p {
+    font-size: 18px;
+}
+.back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff6600;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+}

@@ -1,0 +1,78 @@
+/* cookie-consent.module.css */
+/* Remplacer le sélecteur global par une classe spécifique */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: #000;
+}
+
+.popupContent {
+  background-color: #fff;
+  padding: 30px;
+  width: 600px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 1s ease-in-out;
+  font-size: 0.9em;
+}
+
+.popupContent h2 {
+  font-size: 1.8em;
+  color: #00254d;
+}
+
+.popupContent label {
+  color: #FF5733;
+  font-size: 1.1em;
+}
+
+.popupCloseBtn {
+  padding: 10px 15px;
+  background-color: #dda900;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 800;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popupAcceptBtn {
+  padding: 8px 18px;
+  border: 2px solid #ff9100;
+  color: #333;
+  font-size: 1em;
+  font-weight: 800;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popupCloseBtn:hover, .popupAcceptBtn:hover {
+  background-color: #0297bd;
+  color: #fff;
+}
+
+/* Utiliser une classe locale pour l'input radio */
+.radioInput {
+  margin: 3px 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
