@@ -47,6 +47,16 @@ else:
  
 # ======= Fin Dev/Prod =======
 
+# ======= Configuration SMTP =======
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST", "smtp.mailersend.net")
+EMAIL_PORT = int(os.getenv("EMAIL_PORT", 587))
+EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", "True") == "True"
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", "MS_tCAwUZ@trial-3zxk54v908qgjy6v.mlsender.net")  #  username Mailersend
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "mssp.z9lmJhT.jy7zpl93dn0l5vx6.rv4hDGX")  # Remplace par ton mot de passe
+DEFAULT_FROM_EMAIL = "Booli-store <noreply@booli-store.com>"
+# ======= Fin Configuration SMTP =======
+
 # ======= Apps : Les modules de puissance =======
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -156,12 +166,12 @@ USE_I18N = True
 USE_TZ = True
 # ======= Fin I18N =======
 
-# ======= Static & Media : Les fichiers du futur =======
+# ======= Fichiers Statiques =======
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-# ======= Fin Static & Media =======
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Où collectstatic mettra les fichiers
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Si tu as des fichiers statiques personnalisés (optionnel)
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  # Par défaut
+# ======= Fin Fichiers Statiques =======
 
 # ======= Auto Field : Les ID automatiques =======
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
