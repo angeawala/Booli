@@ -25,15 +25,15 @@ class CustomUserCreateSerializer(serializers.ModelSerializer):
             'country', 'city', 'birth_date', 'profession', 'gender'
         )
         extra_kwargs = {
-            'password': {'write_only': True, 'verbose_name': 'Mot de passe'},
-            'contact': {'required': False, 'verbose_name': 'Contact'},
-            'first_name': {'required': False, 'verbose_name': 'Prénom'},
-            'last_name': {'required': False, 'verbose_name': 'Nom'},
-            'country': {'required': False, 'verbose_name': 'Pays'},
-            'city': {'required': False, 'verbose_name': 'Ville'},
-            'birth_date': {'required': False, 'verbose_name': 'Date de naissance'},
-            'profession': {'required': False, 'verbose_name': 'Profession'},
-            'gender': {'required': False, 'verbose_name': 'Genre'},
+            'password': {'write_only': True},
+            'contact': {'required': False},
+            'first_name': {'required': False},
+            'last_name': {'required': False},
+            'country': {'required': False},
+            'city': {'required': False},
+            'birth_date': {'required': False},
+            'profession': {'required': False},
+            'gender': {'required': False},
         }
 
     def create(self, validated_data):
@@ -160,9 +160,9 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 # ======= PasswordResetConfirmSerializer : Confirmation de réinitialisation =======
 class PasswordResetConfirmSerializer(serializers.Serializer):
     """Serializer pour réinitialiser le mot de passe (auth/password/reset)."""
-    token = serializers.UUIDField(verbose_name="Jeton")
-    new_password = serializers.CharField(write_only=True, min_length=8, verbose_name="Nouveau mot de passe")
-    confirm_password = serializers.CharField(write_only=True, verbose_name="Confirmation du mot de passe")
+    token = serializers.UUIDField()
+    new_password = serializers.CharField(write_only=True, min_length=8)
+    confirm_password = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
         new_password = attrs.get('new_password')
@@ -175,22 +175,22 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
 # ======= CheckUserSerializer : Vérification d’utilisateur =======
 class CheckUserSerializer(serializers.Serializer):
     """Serializer pour vérifier l’existence d’un utilisateur (auth/check-user)."""
-    email = serializers.EmailField(verbose_name="Adresse email")
-    password = serializers.CharField(write_only=True, verbose_name="Mot de passe")
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
 # ======= Fin CheckUserSerializer =======
 
 # ======= Generate2FASerializer : Génération de token 2FA =======
 class Generate2FASerializer(serializers.Serializer):
     """Serializer pour générer un code 2FA (auth/generate-2fa-token)."""
-    email = serializers.EmailField(verbose_name="Adresse email")
+    email = serializers.EmailField()
 # ======= Fin Generate2FASerializer =======
 
 # ======= Verify2FASerializer : Vérification de 2FA =======
 class Verify2FASerializer(serializers.Serializer):
     """Serializer pour vérifier un code 2FA (auth/verify-2fa)."""
-    email = serializers.EmailField(verbose_name="Adresse email")
-    code = serializers.CharField(max_length=6, verbose_name="Code 2FA")
-    password = serializers.CharField(write_only=True, verbose_name="Mot de passe")
+    email = serializers.EmailField()
+    code = serializers.CharField(max_length=6)
+    password = serializers.CharField(write_only=True)
 # ======= Fin Verify2FASerializer =======
 
 # ======= LogoutSerializer : Déconnexion =======
