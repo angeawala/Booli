@@ -55,6 +55,8 @@ body{
     margin: 0;
     overflow-x: hidden;
 }
+
+
 .img-connexion{
     background-image: url('/image/house.jpg');
     background-size: cover;
@@ -62,6 +64,7 @@ body{
     background-attachment: fixed;
     height: 100vh;
 }
+
 .img-connexion::before{
     content: '';
     top: 0;
@@ -69,8 +72,7 @@ body{
     left: 0;
     right: 0;
     background-color: #00000077;
-    position: fixed;
-    z-index: -1;
+    position: absolute;
 }
 
 .img-inscription{
@@ -220,6 +222,10 @@ input[type="date"], .select{
 input[type="checkbox"]:checked{
     color: red;
     background-color: lime;
+}
+
+.container{
+    position: relative;
 }
 
 .haveaccount{
