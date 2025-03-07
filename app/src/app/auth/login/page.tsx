@@ -125,7 +125,7 @@ function LoginContent() {
   };
 
   return (
-    <div className="img-connexion min-vh-100 d-flex flex-column align-items-center justify-content-center">
+    <div className="img-connexion ">
       {isLoading && (
         <div className="loading-container" id="loading">
           <div className="bar"></div>
