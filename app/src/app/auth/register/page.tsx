@@ -94,79 +94,35 @@ export default function RegisterPage() {
       };
       setPasswordRules(rules);
       setPasswordMatch(value === formData.rePassword);
-
-      const activeElement = document.activeElement as HTMLInputElement;
-      if (activeElement && activeElement.id === "password1") {
-        if (!rules.length) toast.error("Le mot de passe doit contenir au moins 8 caractères.");
-        else if (!rules.uppercase) toast.error("Le mot de passe doit contenir une majuscule.");
-        else if (!rules.number) toast.error("Le mot de passe doit contenir un chiffre.");
-        else if (!rules.special) toast.error("Le mot de passe doit contenir un caractère spécial.");
-      }
     }
     if (name === "rePassword") {
       setPasswordMatch(value === formData.password);
-      const activeElement = document.activeElement as HTMLInputElement;
-      if (activeElement && activeElement.id === "password2" && value !== formData.password) {
-        toast.error("Les mots de passe ne correspondent pas.");
-      }
     }
   };
 
   const validateForm = () => {
-    const activeElement = document.activeElement as HTMLInputElement;
-
     if (!formData.email.includes("@") || !formData.email.includes(".")) {
-      if (activeElement && activeElement.name === "email") {
-        toast.error("Email invalide.");
-      }
+      toast.error("Email invalide.");
       return false;
     }
     if (!formData.contact.match(/^\+\d{1,3}\d{6,}$/)) {
-      if (activeElement && activeElement.name === "contact") {
-        toast.error("Numéro de contact invalide (ex. +33123456789).");
-      }
+      toast.error("Numéro de contact invalide (ex. +33123456789).");
       return false;
     }
     if (!passwordRules.length || !passwordRules.uppercase || !passwordRules.number || !passwordRules.special) {
+      toast.error("Le mot de passe ne respecte pas les critères.");
       return false;
     }
-    if (formData.password !== formData.rePassword) {
+    if (!passwordMatch) {
+      toast.error("Les mots de passe ne correspondent pas.");
       return false;
     }
-    if (!formData.firstName || !formData.lastName) {
-      if (activeElement && (activeElement.name === "firstName" || activeElement.name === "lastName")) {
-        toast.error("Le prénom et le nom sont requis.");
-      }
-      return false;
-    }
-    if (!formData.country || !formData.city) {
-      if (activeElement && (activeElement.name === "country" || activeElement.name === "city")) {
-        toast.error("Le pays et la ville sont requis.");
-      }
-      return false;
-    }
-    if (!formData.birthDate) {
-      if (activeElement && activeElement.name === "birthDate") {
-        toast.error("La date de naissance est requise.");
-      }
-      return false;
-    }
-    if (!formData.profession) {
-      if (activeElement && activeElement.name === "profession") {
-        toast.error("La profession est requise.");
-      }
-      return false;
-    }
-    if (!formData.gender) {
-      if (activeElement && activeElement.name === "gender") {
-        toast.error("Le genre est requis.");
-      }
+    if (!formData.firstName || !formData.lastName || !formData.country || !formData.city || !formData.birthDate || !formData.profession || !formData.gender) {
+      toast.error("Tous les champs sont requis.");
       return false;
     }
     if (!formData.acceptsPolicy) {
-      if (activeElement && activeElement.name === "acceptsPolicy") {
-        toast.error("Vous devez accepter la politique de confidentialité.");
-      }
+      toast.error("Vous devez accepter la politique de confidentialité.");
       return false;
     }
     return true;
@@ -178,7 +134,7 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     try {
-      const response = await registerUser({
+        await registerUser({
         email: formData.email,
         contact: formData.contact,
         password: formData.password,
@@ -190,15 +146,14 @@ export default function RegisterPage() {
         profession: formData.profession,
         gender: formData.gender,
       });
-      console.log("Register response:", response);
       setSuccessMessage(
-        "Inscription réussie ! Un email d’activation a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception (ou vos spams) pour activer votre compte."
+        "Inscription réussie ! Un email d’activation a été envoyé. Vérifiez votre boîte de réception (ou spams)."
       );
     } catch (error: unknown) {
-      console.error("Erreur lors de l’inscription:", error);
       const axiosError = error as AxiosError<{ detail?: string; email?: string[] }>;
       const errorMsg = axiosError.response?.data?.detail || axiosError.response?.data?.email?.[0] || "Erreur lors de l’inscription.";
       toast.error(errorMsg);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -212,7 +167,7 @@ export default function RegisterPage() {
   const togglePassword2 = () => setPasswordVisible2((prev) => !prev);
 
   return (
-    <div className="img-inscription">
+    <div className="img-inscription min-vh-100 d-flex flex-column align-items-center justify-content-center">
       {isLoading && (
         <div className="loading-container" id="loading">
           <div className="bar"></div>
@@ -222,203 +177,204 @@ export default function RegisterPage() {
       )}
       {!isLoading && (
         <>
-          <h1 className="Logo">BOOLi-STORE.world</h1>
+          <h1 className="Logo mb-4 text-center">BOOLi-STORE.world</h1>
           <div className="container mt-4">
             <div className="row justify-content-center">
-              <div className="col-md-6 col-lg-6 bg-white rounded-5 cadre">
-                <h2 className="mx-0 mt-3 mb-3 connex1">-- Inscription --</h2>
+              <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 cadre p-4">
+                <h2 className="mx-0 mt-3 mb-3 connex1 text-center">-- Inscription --</h2>
                 <p className="text-center mb-5 entete2">Inscrivez-vous pour profiter de nos offres</p>
                 <form onSubmit={handleSubmit}>
-                  <div className="input-group mb-4">
-                    <input
-                      type="email"
-                      name="email"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Entrez votre adresse email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="input-group mb-4">
-                    <select
-                      name="country"
-                      className="form-control border-2 shadow-none custom-input select"
-                      value={formData.country}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">Pays</option>
-                      {countries.map((country) => (
-                        <option key={country.code} value={country.name}>
-                          {country.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="input-group mb-4">
-                    <input
-                      type="text"
-                      name="contact"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Entrez votre numéro de contact"
-                      value={formData.contact}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <p className="passType mb-3">Entrez un mot de passe fort :</p>
-                  <ul className="text-muted mb-3" style={{ fontSize: "14px" }}>
-                    <li className={passwordRules.length ? "text-success" : "text-danger"}>
-                      Au moins 8 caractères : {passwordRules.length ? "✓" : "✗"}
-                    </li>
-                    <li className={passwordRules.uppercase ? "text-success" : "text-danger"}>
-                      Une majuscule : {passwordRules.uppercase ? "✓" : "✗"}
-                    </li>
-                    <li className={passwordRules.number ? "text-success" : "text-danger"}>
-                      Un chiffre : {passwordRules.number ? "✓" : "✗"}
-                    </li>
-                    <li className={passwordRules.special ? "text-success" : "text-danger"}>
-                      Un caractère spécial : {passwordRules.special ? "✓" : "✗"}
-                    </li>
-                    <li className={passwordMatch ? "text-success" : "text-danger"}>
-                      Mots de passe identiques : {passwordMatch ? "✓" : "✗"}
-                    </li>
-                  </ul>
-                  <div className="input-group password-container mb-4">
-                    <input
-                      type={passwordVisible1 ? "text" : "password"}
-                      name="password"
-                      id="password1"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Entrez un mot de passe"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                    />
-                    <span className="toggle-password" onClick={togglePassword1}>
-                      <i className={passwordVisible1 ? "fa fa-eye" : "fa fa-eye-slash"}></i>
-                    </span>
-                  </div>
-                  <div className="input-group password-container mb-4">
-                    <input
-                      type={passwordVisible2 ? "text" : "password"}
-                      name="rePassword"
-                      id="password2"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Confirmez le mot de passe"
-                      value={formData.rePassword}
-                      onChange={handleChange}
-                      required
-                    />
-                    <span className="toggle-password" onClick={togglePassword2}>
-                      <i className={passwordVisible2 ? "fa fa-eye" : "fa fa-eye-slash"}></i>
-                    </span>
-                  </div>
-                  <div className="input-group mb-4">
-                    <input
-                      type="text"
-                      name="firstName"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Prénom"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="input-group mb-4">
-                    <input
-                      type="text"
-                      name="lastName"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Nom"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="input-group mb-4">
-                    <input
-                      type="text"
-                      name="city"
-                      className="form-control border-2 shadow-none custom-input"
-                      placeholder="Entrez votre ville actuelle"
-                      value={formData.city}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="input-group mb-4">
-                    <input
-                      type="date"
-                      name="birthDate"
-                      className="form-control border-2 shadow-none custom-input"
-                      value={formData.birthDate}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  <div className="input-group mb-4">
-                    <select
-                      name="gender"
-                      className="form-control border-2 shadow-none custom-input select"
-                      value={formData.gender}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">Genre</option>
-                      <option value="male">Masculin</option>
-                      <option value="female">Féminin</option>
-                      <option value="other">Autre</option>
-                    </select>
-                  </div>
-                  <div className="input-group mb-4">
-                    <select
-                      name="profession"
-                      className="form-control border-2 shadow-none custom-input select"
-                      value={formData.profession}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">Profession</option>
-                      <option value="Etudiant">Etudiant</option>
-                      <option value="Commerçant">Commerçant</option>
-                      <option value="Fonctionnaire">Fonctionnaire</option>
-                      <option value="Autre">Autre</option>
-                    </select>
-                  </div>
-                  <div className="input-group mb-4">
-                    <input
-                      type="checkbox"
-                      id="policy"
-                      name="acceptsPolicy"
-                      checked={formData.acceptsPolicy}
-                      onChange={handleChange}
-                    />
-                    <label htmlFor="policy" id="policy" className="ms-2">
-                      J’accepte la{" "}
-                      <Link href="/politique-confidentialite" target="_blank">
-                        politique de confidentialité
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <input
+                        type="email"
+                        name="email"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Entrez votre adresse email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <select
+                        name="country"
+                        className="form-select border-2 shadow-none custom-input"
+                        value={formData.country}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Pays</option>
+                        {countries.map((country) => (
+                          <option key={country.code} value={country.name}>
+                            {country.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <input
+                        type="text"
+                        name="contact"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Numéro de contact"
+                        value={formData.contact}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-12">
+                      <p className="passType mb-3">Entrez un mot de passe fort :</p>
+                      <ul className="list-unstyled text-muted mb-3" style={{ fontSize: "14px" }}>
+                        <li className={passwordRules.length ? "text-success" : "text-danger"}>
+                          Au moins 8 caractères : {passwordRules.length ? "✓" : "✗"}
+                        </li>
+                        <li className={passwordRules.uppercase ? "text-success" : "text-danger"}>
+                          Une majuscule : {passwordRules.uppercase ? "✓" : "✗"}
+                        </li>
+                        <li className={passwordRules.number ? "text-success" : "text-danger"}>
+                          Un chiffre : {passwordRules.number ? "✓" : "✗"}
+                        </li>
+                        <li className={passwordRules.special ? "text-success" : "text-danger"}>
+                          Un caractère spécial : {passwordRules.special ? "✓" : "✗"}
+                        </li>
+                        <li className={passwordMatch ? "text-success" : "text-danger"}>
+                          Mots de passe identiques : {passwordMatch ? "✓" : "✗"}
+                        </li>
+                      </ul>
+                    </div>
+                    <div className="col-12 col-md-6 position-relative">
+                      <input
+                        type={passwordVisible1 ? "text" : "password"}
+                        name="password"
+                        id="password1"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Entrez un mot de passe"
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
+                      />
+                      <span className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2" onClick={togglePassword1}>
+                        <i className={passwordVisible1 ? "fa fa-eye" : "fa fa-eye-slash"}></i>
+                      </span>
+                    </div>
+                    <div className="col-12 col-md-6 position-relative">
+                      <input
+                        type={passwordVisible2 ? "text" : "password"}
+                        name="rePassword"
+                        id="password2"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Confirmez le mot de passe"
+                        value={formData.rePassword}
+                        onChange={handleChange}
+                        required
+                      />
+                      <span className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2" onClick={togglePassword2}>
+                        <i className={passwordVisible2 ? "fa fa-eye" : "fa fa-eye-slash"}></i>
+                      </span>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <input
+                        type="text"
+                        name="firstName"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Prénom"
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <input
+                        type="text"
+                        name="lastName"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Nom"
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <input
+                        type="text"
+                        name="city"
+                        className="form-control border-2 shadow-none custom-input"
+                        placeholder="Ville actuelle"
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <input
+                        type="date"
+                        name="birthDate"
+                        className="form-control border-2 shadow-none custom-input"
+                        value={formData.birthDate}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <select
+                        name="gender"
+                        className="form-select border-2 shadow-none custom-input"
+                        value={formData.gender}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Genre</option>
+                        <option value="male">Masculin</option>
+                        <option value="female">Féminin</option>
+                        <option value="other">Autre</option>
+                      </select>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <select
+                        name="profession"
+                        className="form-select border-2 shadow-none custom-input"
+                        value={formData.profession}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Profession</option>
+                        <option value="Etudiant">Etudiant</option>
+                        <option value="Commerçant">Commerçant</option>
+                        <option value="Fonctionnaire">Fonctionnaire</option>
+                        <option value="Autre">Autre</option>
+                      </select>
+                    </div>
+                    <div className="col-12">
+                      <div className="form-check">
+                        <input
+                          type="checkbox"
+                          id="policy"
+                          name="acceptsPolicy"
+                          className="form-check-input"
+                          checked={formData.acceptsPolicy}
+                          onChange={handleChange}
+                        />
+                        <label htmlFor="policy" className="form-check-label">
+                          J’accepte la{" "}
+                          <Link href="/politique-confidentialite" target="_blank">
+                            politique de confidentialité
+                          </Link>
+                        </label>
+                      </div>
+                    </div>
+                    <div className="col-12 d-flex flex-column flex-md-row justify-content-center gap-3 mt-3">
+                      <button
+                        type="submit"
+                        className="btn-lg connex w-100 w-md-auto"
+                        disabled={isLoading || !formData.acceptsPolicy}
+                      >
+                        {isLoading ? "Inscription..." : "S’inscrire"}
+                      </button>
+                      <Link href="/auth/login" className="haveaccount w-100 w-md-auto text-center">
+                        Continuez avec mon compte
                       </Link>
-                    </label>
-                  </div>
-                  <div className="d-block text-center mb-2">
-                    <button
-                      type="submit"
-                      className="btn btn-lg text-white connex"
-                      disabled={isLoading || !formData.acceptsPolicy}
-                      style={{
-                        backgroundColor: formData.acceptsPolicy ? "#007bff" : "#ccc",
-                        cursor: formData.acceptsPolicy ? "pointer" : "not-allowed",
-                      }}
-                    >
-                      S’inscrire
-                    </button>
-                  </div>
-                  <div className="d-block text-center">
-                    <Link href="/auth/login" className="haveaccount btn">
-                      Continuez avec mon compte
-                    </Link>
+                    </div>
                   </div>
                 </form>
                 <SuccessModal message={successMessage} onClose={closeSuccessModal} />

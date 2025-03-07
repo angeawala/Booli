@@ -5,7 +5,7 @@ import { store } from "@/store/store";
 import CookieConsent from "@/components/CookieConsent";
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
 import { Akaya_Kanadaka, Poppins } from "next/font/google";
-import "./globals.css";
+import '@/styles/css/style.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 

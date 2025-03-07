@@ -65,7 +65,7 @@ const TwoFAModal: React.FC<TwoFAModalProps> = ({ isOpen, onClose, onSubmit, onRe
           />
           <button
             type="submit"
-            className="btn btn-lg text-white connex"
+            className="btn-lg connex w-100 w-md-auto"
             disabled={isLoading}
           >
             {isLoading ? 'Vérification...' : 'Vérifier'}

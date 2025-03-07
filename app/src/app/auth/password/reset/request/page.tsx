@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { passwordResetRequest } from "@/api/authApi"; // À ajouter
+import { passwordResetRequest } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image from "next/image"; // Ajouter cet import pour l'utilisation de <Image />
-import { AxiosError } from "axios"; // Assurez-vous d'importer AxiosError pour la gestion des erreurs
+import Image from "next/image";
+import { AxiosError } from "axios";
 
 export default function PasswordResetRequestPage() {
   const [email, setEmail] = useState("");
@@ -19,14 +19,10 @@ export default function PasswordResetRequestPage() {
     setIsLoading(true);
 
     try {
-      const response = await passwordResetRequest(email);
-      console.log("Password reset request response:", response);
+      await passwordResetRequest(email); // Suppression de 'response' inutilisé
       toast.success("Un email de réinitialisation a été envoyé !");
       router.push("/auth/login");
     } catch (error: unknown) {
-      console.error("Erreur lors de la demande:", error);
-
-      // Type guard pour vérifier si l'erreur est une AxiosError
       if (error instanceof AxiosError) {
         const errorMsg = error.response?.data?.error || "Erreur lors de l’envoi de l’email.";
         toast.error(errorMsg);
@@ -41,7 +37,7 @@ export default function PasswordResetRequestPage() {
   const toggleInfo = () => setShowInfo(!showInfo);
 
   return (
-    <div className="img-inscription">
+    <div className="img-inscription min-vh-100 d-flex flex-column align-items-center justify-content-center">
       {isLoading && (
         <div className="loading-container" id="loading">
           <div className="bar"></div>
@@ -50,51 +46,54 @@ export default function PasswordResetRequestPage() {
         </div>
       )}
       {!isLoading && (
-        <div className="container px-1">
-          <div className="row justify-content-center align-items-center">
-            <div className="col-md-6 col-lg-6 bg-white rounded-5 px-3 cadre">
-              <h1 className="Logo">BOOLi-STORE.world</h1>
-              <h2 className="text-center mt-3">Mot de passe oublié</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="input-group mb-1 mt-5">
-                  <input
-                    type="email"
-                    name="email"
-                    className="form-control border-2 shadow-none custom-input e-recover"
-                    placeholder="Entrez votre adresse email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="d-block text-center mb-4">
-                  <button
-                    type="submit"
-                    className="btn btn-lg text-white connex"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Envoi en cours..." : "Envoyer"}
-                  </button>
-                </div>
-                <div className="more-info">
-                  <Image
-                    src="/image/icone.png"
-                    className="toggle-icon"
-                    alt="Help icon"
-                    onClick={toggleInfo}
-                    width={32}   // Ajoutez la largeur de l'image
-                    height={32}  // Ajoutez la hauteur de l'image
-                  />
-                  {showInfo && (
-                    <p className="toggle-text text-center">
-                      Entrez votre adresse email ci-dessus pour recevoir un lien de réinitialisation. Ce lien sera envoyé à l’email associé à votre compte.
-                    </p>
-                  )}
-                </div>
-              </form>
+        <>
+          <h1 className="Logo mb-4 text-center">BOOLi-STORE.world</h1>
+          <div className="container px-1">
+            <div className="row justify-content-center align-items-center">
+              <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 px-3 py-4 cadre">
+                <h2 className="text-center mt-3">Mot de passe oublié</h2>
+                <form onSubmit={handleSubmit}>
+                  <div className="input-group mb-4 mt-5">
+                    <input
+                      type="email"
+                      name="email"
+                      className="form-control border-2 shadow-none custom-input e-recover"
+                      placeholder="Entrez votre adresse email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="d-flex justify-content-center mb-4">
+                    <button
+                      type="submit"
+                      className="btn-lg connex w-100 w-md-auto"
+                      disabled={isLoading}
+                      style={{ display: "block" }} // Force l’affichage
+                    >
+                      {isLoading ? "Envoi en cours..." : "Envoyer"}
+                    </button>
+                  </div>
+                  <div className="more-info text-center">
+                    <Image
+                      src="/image/icone.png"
+                      className="toggle-icon mb-2"
+                      alt="Help icon"
+                      onClick={toggleInfo}
+                      width={32}
+                      height={32}
+                    />
+                    {showInfo && (
+                      <p className="toggle-text text-center">
+                        Entrez votre adresse email ci-dessus pour recevoir un lien de réinitialisation. Ce lien sera envoyé à l’email associé à votre compte.
+                      </p>
+                    )}
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

@@ -17,10 +17,7 @@ import TwoFAModal from "@/components/modals/TwoFAModal";
 import { AxiosError } from "axios";
 
 function LoginContent() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(true);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -48,33 +45,25 @@ function LoginContent() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
       const checkResponse = await checkUser(formData.email, formData.password);
-      console.log("Check user response:", checkResponse);
-
       if (!checkResponse.exists) {
-        toast.error("Échec de la connexion. Vérifiez vos identifiants ou essayez à nouveau.");
+        toast.error("Échec de la connexion. Vérifiez vos identifiants.");
       } else if (!checkResponse.is_active) {
-        setErrorMessage("Échec de la connexion. Vérifiez vos identifiants ou activez votre compte.");
+        setErrorMessage("Vérifiez vos identifiants ou activez votre compte.");
         setTimeout(() => router.push("/auth/activate/resend"), 2000);
       } else if (checkResponse.is_2fa_enabled) {
         const twoFAResponse = await generate2FAToken(formData.email);
-        console.log("2FA token response:", twoFAResponse);
         setTwoFAExpiresAt(twoFAResponse.expires_at);
         setShow2FAModal(true);
       } else {
         const tokenResponse = await login(formData.email, formData.password);
-        console.log("Login response:", tokenResponse);
         dispatch(setTokens({ access: tokenResponse.access, refresh: tokenResponse.refresh }));
         toast.success("Connexion réussie !");
         const next = validateRedirect(searchParams.get("next")) || "/";
@@ -82,10 +71,8 @@ function LoginContent() {
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        console.error("Erreur lors de la connexion:", error);
-        toast.error("Échec de la connexion. Vérifiez vos identifiants ou essayez à nouveau.");
+        toast.error("Échec de la connexion. Vérifiez vos identifiants.");
       } else {
-        console.error("Erreur inconnue:", error);
         toast.error("Une erreur inconnue est survenue.");
       }
     } finally {
@@ -97,20 +84,13 @@ function LoginContent() {
     setIsLoading(true);
     try {
       const response = await verify2FA(formData.email, code, formData.password);
-      console.log("2FA verify response:", response);
       dispatch(setTokens({ access: response.access, refresh: response.refresh }));
       toast.success("Connexion réussie !");
       setShow2FAModal(false);
       const next = validateRedirect(searchParams.get("next")) || "/";
       router.push(next);
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        console.error("Erreur lors de la vérification 2FA:", error);
-        toast.error("Code invalide ou expiré.");
-      } else {
-        console.error("Erreur inconnue lors de la vérification 2FA:", error);
-        toast.error("Une erreur inconnue est survenue.");
-      }
+      toast.error(error instanceof AxiosError ? "Code invalide ou expiré." : "Erreur inconnue.");
     } finally {
       setIsLoading(false);
     }
@@ -120,17 +100,10 @@ function LoginContent() {
     setIsLoading(true);
     try {
       const response = await generate2FAToken(formData.email);
-      console.log("2FA resend response:", response);
       setTwoFAExpiresAt(response.expires_at);
       toast.success("Nouveau code envoyé !");
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        console.error("Erreur lors du renvoi 2FA:", error);
-        toast.error("Une erreur s’est produite. Réessayez plus tard.");
-      } else {
-        console.error("Erreur inconnue lors du renvoi 2FA:", error);
-        toast.error("Une erreur inconnue est survenue.");
-      }
+      toast.error(error instanceof AxiosError ?  "Erreur lors du renvoi du code.":"Error veuillez reessayer.");
     } finally {
       setIsLoading(false);
     }
@@ -152,7 +125,7 @@ function LoginContent() {
   };
 
   return (
-    <div className="img-connexion">
+    <div className="img-connexion min-vh-100 d-flex flex-column align-items-center justify-content-center">
       {isLoading && (
         <div className="loading-container" id="loading">
           <div className="bar"></div>
@@ -162,12 +135,17 @@ function LoginContent() {
       )}
       {!isLoading && (
         <>
-          <h1 className="Logo">BOOLi-STORE.world</h1>
+          <h1 className="Logo mb-4 text-center">BOOLi-STORE.world</h1>
           <div className="container">
             <div className="row justify-content-center">
-              <div className="col-md-6 col-lg-6 bg-white rounded-5 px-3 cadre">
-                <h2 className="mx-0 mt-3 mb-3 connex1">Connectez-vous</h2>
-                <h2 className="ami">Amis, Bonjour !</h2>
+              <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 px-3 py-4 cadre">
+                <h2 className="mx-0 mt-3 mb-3 connex1 text-center">Connectez-vous</h2>
+                {/* QR Code (non fonctionnel mais affiché) */}
+                <div className="qr-login text-center mb-3">
+                  <canvas id="qr-code" className="mx-auto d-block"></canvas>
+                  <span className="Qr d-block">Connexion QR</span>
+                </div>
+                <h2 className="ami text-center">Amis, Bonjour !</h2>
                 <p className="text-center mt-3 entete">
                   Nous vous souhaitons la Bienvenue à{" "}
                   <Link href="/about">
@@ -192,7 +170,7 @@ function LoginContent() {
                         required
                       />
                     </div>
-                    <div className="input-group mb-2">
+                    <div className="input-group mb-2 position-relative">
                       <input
                         type={passwordVisible ? "text" : "password"}
                         id="password"
@@ -203,26 +181,54 @@ function LoginContent() {
                         onChange={handleChange}
                         required
                       />
-                      <span className="toggle-password" onClick={togglePassword}>
+                      <span className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2" onClick={togglePassword}>
                         <i className={passwordVisible ? "fa fa-eye" : "fa fa-eye-slash"}></i>
                       </span>
                     </div>
-                    <div>
+                    <div className="text-end mb-3">
                       <Link href="/auth/password/reset/request" className="forget">
                         Mot de passe oublié ?
                       </Link>
                     </div>
-                    <div className="d-block text-center mb-4">
+                    <div className="d-flex flex-column flex-md-row justify-content-center gap-3 mb-4">
                       <button
                         type="submit"
-                        className="btn btn-lg text-white connex"
+                        className=" btn-lg connex w-100 w-md-auto"
                         disabled={isLoading}
                       >
                         {isLoading ? "Connexion..." : "Se connecter"}
                       </button>
-                      <Link href="/auth/register" className="haveaccount btn">
+                      <Link href="/auth/register" className="haveaccount w-100 w-md-auto text-center">
                         Créer un compte
                       </Link>
+                    </div>
+                    {/* Autres options de connexion (non fonctionnelles) */}
+                    <div className="separator text-center mb-3">Autres options de connexion</div>
+                    <div className="text-center mb-2 OneTapSignIn d-flex flex-wrap justify-content-center gap-3">
+                      <span className="text-center">
+                        <a href="#">
+                          <img src="/image/google.png" alt="Google icon" className="img-fluid" style={{ maxWidth: "30px" }} />
+                          <p>Google</p>
+                        </a>
+                      </span>
+                      <span className="text-center">
+                        <a href="#">
+                          <img src="/image/apple.png" alt="Apple icon" className="img-fluid" style={{ maxWidth: "30px" }} />
+                          <p>Apple</p>
+                        </a>
+                      </span>
+                      <span className="text-center">
+                        <a href="#">
+                          <img src="/image/twitter.png" alt="X icon" className="img-fluid" style={{ maxWidth: "30px" }} />
+                          <p>X-Twitter</p>
+                        </a>
+                      </span>
+                      <span className="text-center">
+                        <a href="#">
+                          <img src="/image/facebook.png" alt="Facebook icon" className="img-fluid" style={{ maxWidth: "30px" }} />
+                          <p>Facebook</p>
+                        </a>
+                      </span>
                     </div>
                   </form>
                 )}
@@ -249,7 +255,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="img-connexion">
+        <div className="img-connexion min-vh-100 d-flex align-items-center justify-content-center">
           <div className="loading-container" id="loading">
             <div className="bar"></div>
             <div className="bar"></div>
