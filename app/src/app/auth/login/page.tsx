@@ -125,7 +125,7 @@ function LoginContent() {
   };
 
   return (
-    <div className="img-connexion ">
+    <div className="img-connexion min-vh-100 d-flex flex-column align-items-center justify-content-center">
       {isLoading && (
         <div className="loading-container" id="loading">
           <div className="bar"></div>
@@ -190,7 +190,7 @@ function LoginContent() {
                         Mot de passe oublié ?
                       </Link>
                     </div>
-                    <div className="d-flex flex-column flex-md-row justify-content-center gap-3 mb-4">
+                    <div className="d-flex flex-column gap-3 mb-4">
                       <button
                         type="submit"
                         className=" btn-lg connex w-100 w-md-auto"
