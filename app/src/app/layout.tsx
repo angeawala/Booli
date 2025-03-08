@@ -2,6 +2,7 @@
 
 import { Provider } from "react-redux";
 import { store } from "@/store/store";
+import Head from "next/head";
 import CookieConsent from "@/components/CookieConsent";
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
 import { Akaya_Kanadaka, Poppins } from "next/font/google";
@@ -22,12 +23,13 @@ const poppins = Poppins({
   display: "optional",
 });
 
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" href="/Photo/booli.orang.jpg" type="image/jpg" />
-      </head>
+    <html lang="fr">
+      <Head>
+        <link rel="icon" href="/image/booli.orang.jpg" type="image/jpg" />
+      </Head>
       <body className={`${akayaKanadaka.className} ${poppins.className}`}>
         <Provider store={store}>
           <GoogleTranslateLoader />

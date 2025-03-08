@@ -193,7 +193,7 @@ function LoginContent() {
                     <div className="d-flex flex-column gap-3 mb-4">
                       <button
                         type="submit"
-                        className=" btn-lg connex w-100 w-md-auto"
+                        className="btn-lg connex w-100 w-md-auto"
                         disabled={isLoading}
                       >
                         {isLoading ? "Connexion..." : "Se connecter"}
