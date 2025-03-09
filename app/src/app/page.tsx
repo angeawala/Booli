@@ -73,7 +73,7 @@ export default function Home() {
         console.log("Countdown:", prev); // Pour déboguer
         if (prev <= 1) {
           clearInterval(countdownInterval);
-          window.location.href = "/";
+          window.location.href = "/store/product";
           return 0;
         }
         return prev - 1;
@@ -84,7 +84,7 @@ export default function Home() {
   }, [showContent]);
 
   const handleNextClick = () => {
-    window.location.href = "/";
+    window.location.href = "/store/product";
   };
 
   const handleTranslateChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -171,7 +171,7 @@ export default function Home() {
               </div>
 
               <div className="services col-4 mt-5">
-                <a href="/pharmacopee" className="load-link" target="_blank">
+                <a href="/store/pharma" className="load-link" target="_blank">
                   <i className="fa-solid fa-newspaper"></i> Pharmacopée &
                   Tourisme
                 </a>
