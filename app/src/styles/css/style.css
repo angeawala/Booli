@@ -578,7 +578,7 @@ height: 6.2em;
     border-radius: 10%;
 }
 .services a{
-   
+   text-decoration: none;
     color: teal;
     font-family: verdana;
     transition: 0.5s;
@@ -589,14 +589,18 @@ height: 6.2em;
 }
 .services a:hover{background-color: rgba(255, 255, 255, 0.781) ; color: teal; text-decoration: none;  border-radius: 10px;}
 
-.h5{ list-style-type: none; font-family: bold; color: blue ; font-weight: bold;}
-.h5:hover{border-top: 1px solid #fff; background-color: #0000006c; padding: 5px; border-radius: 10px; }
-.h6{
+a .h5 { list-style-type: none; font-family: bold; color: blue ; font-weight: bold; text-decoration: none;}
+a .h5:hover{border-top: 1px solid #fff; text-decoration: none; background-color: #0000006c; padding: 5px; border-radius: 10px; }
+a.h6{
     font-family: verdana; ; color: #ffffffb4; font-size: 1em; font-style: italic; font-weight: bold;
 }
 .info p{
     font-family: verdana;
     width: 75%;
+}
+.info a {
+    text-decoration: none;
+    font-family: verdana; ; color: #ffffffb4; font-size: 1em; font-style: italic; font-weight: 800;
 }
 .background {
    background-color: #000000a1;
@@ -605,8 +609,9 @@ height: 6.2em;
 }
 
 .section_next{
+    position:absolute;
    margin: auto;
-    margin-top: -10%;
+   margin-top: -10%;
    z-index:100;
 }
 .ad{
@@ -654,8 +659,24 @@ content: '';
      cursor: pointer; display:relative;
      background-image: url('/image/neurone1.jpg');
      margin-bottom: 20px;
-     /*margin-top: -4%;*/
+     margin-top: -10%;
+     margin-left: -7%;
 
+}
+@media screen and (max-width:768px) {
+    #next{
+        margin-top: -22%;
+        margin-left: -12%;
+    }
+  .chat-message{
+        display: none;
+    }
+.chargement, .announcement{
+        margin-left: 10%;
+    }
+    .chargement{
+        margin-left: 19%;
+    }
 }
 #next{
     position: absolute;
@@ -674,9 +695,9 @@ content: '';
 }
   /* Cercle animé autour du bouton */
   .cercle-pulsant {
-    position: relative;
-    top: 30px;
-    left: 38px;
+    position: absolute;
+    display: block;
+    margin-top: -8%;
     width: 80px;
     height: 80px;
     background-color: transparent;
@@ -686,6 +707,8 @@ content: '';
     transform: translate(-50%, -50%);
     animation: pulsee 1s infinite;
     z-index: 1;
+    align-items: center;
+    justify-content: center;
 }
 @keyframes pulsee {
     0% {
@@ -714,7 +737,8 @@ content: '';
     width: 130px;
     height: 130px;
     background-color: #f0f0f0;
-    margin-left: 10%;
+    margin-top: -10%;
+    margin-left: 1%;
     animation: spin 2s linear infinite;
 }
 
@@ -725,9 +749,9 @@ content: '';
 
 .announcement {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-left: 17%;
+    top: 40%;
+    left: 6%;
+    margin-top: -9%;
     transform: translate(-50%, -50%);
     font-size: 13px;
     text-align: center;
@@ -831,10 +855,10 @@ content: '';
     font-size: 13px;
 }
 .text-help{font-weight: 800;}
-.content3 a{color: white;}
-.content3 a:hover{color: blue;}
-.content1 a{color: white;}
-.content1 a:hover{color: blue;}
+.content3 a{color: white; text-decoration: none;}
+.content3 a:hover{color: blue; text-decoration: none;}
+.content1 a{color: white; text-decoration: none;}
+.content1 a:hover{color: blue; text-decoration: none;}
 
 @media screen and (max-width: 768px) {
     .services, .DEVISE{
@@ -884,6 +908,9 @@ content: '';
      }
     .messaging-icon{
        display: none;
+     }
+     .info a, p {
+        display: none;
      }
 }
 
@@ -1555,7 +1582,7 @@ h6{
 /* ====================== Boite d'affichage a l'atualisation ================================*/
  .message-box {
     position: absolute;
-    bottom: 20px;
+    top: 55%;
     left: 20px;
     width: 250px;
     background-color: #333;

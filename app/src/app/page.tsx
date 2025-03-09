@@ -1,59 +1,72 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import MessageBox from "@/components/ui/MessageBox";
 import ChatModal from "@/components/modals/ChatModal";
-import Image from "next/image";
+//import Image from "next/image";
 import Footer from "@/components/layout/static/Footer";
 import Header from "@/components/layout/static/Header";
 import SignInOrLogout from "@/components/links/SignInOrLogout";
 import Helmet from "@/components/seo/Helmet";
+import LoadingScreen from "@/components/animations/LoadingScreen";
+import CompatibilityCheck from "@/components/animations/CompatibilityCheck";
 
+const announcements = [
+  "BOOLi 🌍",
+  "STORE ",
+  "Opportinuté",
+  "Tourisme",
+  "Formations",
+  "Services",
+  "Autres...",
+  "CBAAAA !",
+  "Surprise",
+  "Partenaire",
+  "Assistanc",
+];
 
 export default function Home() {
-  const [isLoadingScreenVisible, setIsLoadingScreenVisible] = useState(true);
+  /*const [isLoadingScreenVisible, setIsLoadingScreenVisible] = useState(true);
   const [isContentVisible, setIsContentVisible] = useState(false);
-  const [isLoaderVisible, setIsLoaderVisible] = useState(true);
+  const [isLoaderVisible, setIsLoaderVisible] = useState(true);*/
+
+  const [showLoading, setShowLoading] = useState(true);
+  const [showCompatibility, setShowCompatibility] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+
   const [announcement, setAnnouncement] = useState("Patienter...");
   const [countdown, setCountdown] = useState(100);
   const [currentLang, setCurrentLang] = useState('fr');
 
-  const announcements = [
-    "BOOLi 🌍 AFRICAIN",
-    "Consulter notre Bibliothèque",
-    "Offre d'opportinuté et satge",
-    "Explorez nos sites touristiques",
-    "Devenez expert ",
-    "Découvrez des :",
-    "Formations",
-    "Services",
-    "Et Autres...",
-    "Acheter tous en un clic !",
-    "Découvrez des experts",
-    "Devenez partenaire",
-    "Nous vous assistons",
-  ];
+
 
   useEffect(() => {
     // Loading screen
-    const loadingTimeout = setTimeout(() => {
-      setIsLoadingScreenVisible(false);
-      setIsContentVisible(true);
-    }, 900);
-
-    // Loader
-    const loaderTimeout = setTimeout(() => {
-      setIsLoaderVisible(false);
-    }, 1500);
-
-    // Announcement rotation
+      if (!sessionStorage.getItem('hasLoaded')) {
+      console.log('Chargement initial');
+      setTimeout(() => {
+        console.log('Fin loading, début compatibility');
+        setShowLoading(false);
+        setShowCompatibility(true);
+        setTimeout(() => {
+          console.log('Fin compatibility, début contenu');
+          setShowCompatibility(false);
+          setShowContent(true);
+          sessionStorage.setItem('hasLoaded', 'true');
+        }, 1500);
+      }, 900);
+    } else {
+      console.log('Chargement sauté, contenu direct');
+      setShowLoading(false);
+      setShowCompatibility(false);
+      setShowContent(true);
+    };
     let rotate = 0;
     const interval = setInterval(() => {
       setAnnouncement(announcements[rotate]);
-      rotate = (rotate + 1) % announcements.length;
+      rotate = (rotate +1) % announcements.length;
     }, 2500);
-
+    return () => clearInterval(interval);
     // Countdown for "Suivant" button
     const countdownInterval = setInterval(() => {
       setCountdown((prev) => {
@@ -67,12 +80,10 @@ export default function Home() {
     }, 1000);
 
     return () => {
-      clearTimeout(loadingTimeout);
-      clearTimeout(loaderTimeout);
-      clearInterval(interval);
+
       clearInterval(countdownInterval);
     };
-  }, [announcements]);
+  });
 
   const handleNextClick = () => {
     window.location.href = "/";
@@ -83,6 +94,19 @@ export default function Home() {
     document.cookie = `googtrans=/fr/${lang}; path=/`;
     window.location.reload();
   };
+  if (showLoading) {
+    console.log('Affichage LoadingScreen');
+    return <LoadingScreen />;
+  }
+
+  if (showCompatibility) {
+    console.log('Affichage CompatibilityCheck');
+    return <CompatibilityCheck />;
+  }
+
+
+  if (showContent) {
+    console.log('Affichage contenu principal');
   return (
     <>
           <Helmet>
@@ -91,12 +115,12 @@ export default function Home() {
             name="description"
             content="Découvrez la page d’accueil de BOOLi-STORE : réservations, opportunités, et plus encore."
           />
-        </Helmet>
+        </Helmet>{/*
       <section>
         {isLoadingScreenVisible && (
           <div id="loading-screen">
             <Image
-          src="/logo/booli.blanc.jpg" // Chemin absolu depuis public/
+          src="/logo/booliblanc.jpg" // Chemin absolu depuis public/
           alt="Logo BOOLi"
           width={100}
           height={100}
@@ -108,8 +132,8 @@ export default function Home() {
             </div>
           </div>
         )}
-      </section>
-
+      </section> */}
+{/* 
       <section>
         {isContentVisible && isLoaderVisible && (
           <div id="content22">
@@ -120,7 +144,7 @@ export default function Home() {
           </div>
         )}
       </section>
-
+*/}
       <Header/>
       <section>
         <MessageBox />
@@ -157,32 +181,32 @@ export default function Home() {
         <div className="background">
           <div className="row col-12 img-text">
             <div className="info col-4">
-              <Link href="/about" target="_blank">
+              <a href="/about" target="_blank">
                 <i className="fas fa-question-circle" style={{ color: "#ffffffc9" }}></i>
                 <span className="h6"> En savoir plus sur </span>
                 <br />
                 <span className="h5 ml-6">BOOLi-Store.world</span>
                 <br />
-              </Link>
+              </a>
               <p className="DEVISE mt-3">
                 Plateforme de mise en relation B2B, pour la commercialisation et <br /> l&apos; Innovation
               </p>
             </div>
 
             <div className="services col-4 mt-5">
-              <Link href="/pharmacopee" className="load-link" target="_blank">
+              <a href="/pharmacopee" className="load-link" target="_blank">
                 <i className="fa-solid fa-newspaper"></i> Pharmacopée & Tourisme
-              </Link>
+              </a>
               <br />
               <br />
-              <Link href="/librairie" target="_blank">
+              <a href="/librairie" target="_blank">
                 <i className="fa-solid fa-book-open"></i> Bibliothèque [Documents]
-              </Link>
+              </a>
               <br />
               <br />
-              <Link href="/opportunites" target="_blank">
+              <a href="/opportunites" target="_blank">
                 <i className="fas fa-briefcase" id="conu"></i> Découvrir des Opportunitées
-              </Link>
+              </a>
             </div>
 
             <div className="ad col-4" id="conteneur">
@@ -199,31 +223,37 @@ export default function Home() {
                   <img src="/image/work7.jpg" alt="Pub2" id="img1" />
                 </a>
                 <a href="#">
-                  <img src="/image/surprise1.jpg" alt="Pub3" id="img2" />
+                  <img src="/image/surprise1jpj.jpg" alt="Pub3" id="img2" />
                 </a>
               </div>
             </div>
           </div>
-          
+          </div>
+      </section>
+     
           <div className="section_next row col-12">
             <div className="loader-container">
               <div className="chargement"></div>
               <div className="announcement" id="announcement">{announcement || "ok"}</div>
             </div>
-
-            <div className="lova mt-4">
+            <section className="lova">
+            <div>
               <div className="cercle-pulsant"></div>
               <button id="next" onClick={handleNextClick}>
                 Suivant...({countdown})
               </button>
             </div>
+            </section>
             <section>
             <ChatModal />
             </section>
           </div>
-        </div>
-      </section>
+      
       <Footer/>
     </>
   );
+}
+console.log('Rien à afficher');
+return null;
+
 }

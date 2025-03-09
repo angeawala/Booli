@@ -7,7 +7,7 @@ export default function LoadingScreen() {
     <section>
       <div id="loading-screen" className="animate-fade-in">
         <Image
-          src="/logo/booli.blanc.jpg" // Chemin absolu depuis public/
+          src="/logo/booliblanc.jpg" // Chemin absolu depuis public/
           alt="Logo BOOLi"
           width={100}
           height={100}

@@ -28,7 +28,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
       <Head>
-        <link rel="icon" href="/image/booli.orang.jpg" type="image/jpg" />
+        <link rel="icon" href="/logo/booliorang.jpg" type="image/jpg" />
       </Head>
       <body className={`${akayaKanadaka.className} ${poppins.className}`}>
         <Provider store={store}>
