@@ -71,6 +71,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',  # JWT pour des tokens sécurisés
     'users',  # app users avec CustomUser
     'drf_spectacular',  # Ajout pour la doc auto
+    'product',
+    'utils',
+    'payement',
+    'category',
 ]
 # ======= Fin Apps =======
 

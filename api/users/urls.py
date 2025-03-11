@@ -1,8 +1,9 @@
+# users/urls.py
 from django.urls import path
 from .views import (
     CustomTokenObtainPairView, CustomTokenRefreshView, CustomTokenVerifyView,
-    logout_view, password_reset_request, password_reset_confirm, activate_account,
-    register_user, resend_activation, generate_2fa_token, check_user, verify_2fa
+    LogoutView, PasswordResetRequestView, PasswordResetConfirmView, ActivateAccountView,
+    RegisterUserView, ResendActivationView, Generate2FATokenView, CheckUserView, Verify2FAView
 )
 
 urlpatterns = [
@@ -12,21 +13,21 @@ urlpatterns = [
     path('jwt/verify/', CustomTokenVerifyView.as_view(), name='token_verify'),
 
     # Déconnexion
-    path('logout/', logout_view, name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 
     # Réinitialisation mot de passe
-    path('password/reset/request/', password_reset_request, name='password_reset_request'),
-    path('password/reset/', password_reset_confirm, name='password_reset_confirm'),
+    path('password/reset/request/', PasswordResetRequestView.as_view(), name='password_reset_request'),
+    path('password/reset/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 
     # Inscription et activation
-    path('register/', register_user, name='register_user'),
-    path('activate/', activate_account, name='activate_account'),  # Changé en POST
-    path('activate/resend/', resend_activation, name='resend_activation'),
+    path('register/', RegisterUserView.as_view(), name='register_user'),
+    path('activate/', ActivateAccountView.as_view(), name='activate_account'),
+    path('activate/resend/', ResendActivationView.as_view(), name='resend_activation'),
 
     # 2FA
-    path('generate-2fa-token/', generate_2fa_token, name='generate_2fa_token'),
-    path('verify-2fa/', verify_2fa, name='verify_2fa'),
+    path('generate-2fa-token/', Generate2FATokenView.as_view(), name='generate_2fa_token'),
+    path('verify-2fa/', Verify2FAView.as_view(), name='verify_2fa'),
 
     # Utilitaire
-    path('check-user/', check_user, name='check_user'),
+    path('check-user/', CheckUserView.as_view(), name='check_user'),
 ]

@@ -5,6 +5,7 @@ charset-normalizer==3.4.1
 dj-database-url==2.3.0
 Django==5.1.6
 django-cors-headers==4.7.0
+django-filter==25.1
 django-redis==5.4.0
 djangorestframework==3.15.2
 djangorestframework_simplejwt==5.5.0
@@ -15,6 +16,7 @@ inflection==0.5.1
 jsonschema==4.23.0
 jsonschema-specifications==2024.10.1
 packaging==24.2
+pillow==11.1.0
 psycopg2-binary==2.9.10
 PyJWT==2.9.0
 PyYAML==6.0.2
