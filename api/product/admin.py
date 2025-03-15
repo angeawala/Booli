@@ -55,24 +55,24 @@ class ShopProductAdmin(admin.ModelAdmin):
 
 @admin.register(BookProduct)
 class BookProductAdmin(admin.ModelAdmin):
-    list_display = ('base_product', 'company', 'author', 'isbn', 'created_by', 'created_at')
-    list_filter = ('company', 'created_by')
-    search_fields = ('base_product__name', 'company__email', 'author', 'isbn')
+    list_display = ('base_product', 'company', 'author', 'isbn', 'is_free', 'discount_price', 'stock', 'created_by', 'created_at')
+    list_filter = ('is_free', 'company', 'created_by')
+    search_fields = ('author', 'isbn', 'base_product__name', 'company__name')
     list_per_page = 25
-    ordering = ('base_product__name',)
+    ordering = ('base_product',)
     date_hierarchy = 'created_at'
     readonly_fields = ('created_by', 'created_at', 'updated_at')
 
     fieldsets = (
         (None, {
-            'fields': ('base_product', 'company')
+            'fields': ('base_product', 'company', 'author', 'isbn', 'is_free')
         }),
-        ('Détails Livre', {
-            'fields': ('author', 'isbn'),
+        ('Prix et Stock', {
+            'fields': ('discount_price', 'stock'),
             'classes': ('collapse',)
         }),
-        ('Détails Supplémentaires', {
-            'fields': ('details',),
+        ('Fichier PDF', {
+            'fields': ('pdf_file',),
             'classes': ('collapse',)
         }),
         ('Métadonnées', {
@@ -80,7 +80,6 @@ class BookProductAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-
 @admin.register(PharmacyProduct)
 class PharmacyProductAdmin(admin.ModelAdmin):
     list_display = ('base_product', 'doctor', 'discount_price', 'stock', 'created_by', 'created_at')

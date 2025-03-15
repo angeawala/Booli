@@ -158,11 +158,17 @@ class BookProduct(BaseModel):
         verbose_name="Stock",
         help_text="Nombre de versions physiques en stock."
     )
+    pdf_file = models.FileField(
+        upload_to='books/pdfs/',
+        null=True,
+        blank=True,
+        verbose_name="Fichier PDF",
+        help_text="Fichier PDF du livre (si disponible)."
+    )
 
     class Meta:
         verbose_name = "Produit livre"
         verbose_name_plural = "Produits livres"
-
 class PharmacyProduct(BaseModel):
     """
     Produit spécifique à la pharmacopée, lié à BaseProduct.
