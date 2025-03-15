@@ -29,7 +29,10 @@ if DEVELOPPEMENT:
     }
     FRONTEND_URL = "http://localhost:3000"  # URL frontend local
     BACKEND_URL = "http://localhost:8000"
-    CORS_ALLOW_ALL_ORIGINS = True 
+    CORS_ALLOW_ALL_ORIGINS = True
+    STATIC_ROOT = BASE_DIR / 'staticfiles'  # Où collectstatic mettra les fichiers
+    STATICFILES_DIRS = []  # fichiers statiques personnalisés (optionnel)
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  # Par défaut
 else:
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY')
@@ -45,6 +48,8 @@ else:
     DATABASES = {
         'default': dj_database_url.config(default=os.getenv('DATABASE_URL'), conn_max_age=600)
     }
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ======= Fin Dev/Prod =======
 
@@ -68,7 +73,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'jazzmin',
     'corsheaders',  # CORS pour les en-têtes HTTP cross-origin
     'rest_framework',  # DRF pour l’API REST
     'rest_framework_simplejwt',  # JWT pour des tokens sécurisés
@@ -216,26 +220,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Où collectstatic mettra les fichiers
-STATICFILES_DIRS = []  # fichiers statiques personnalisés (optionnel)
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  # Par défaut
+
 # ======= Fin Fichiers Statiques =======
 
 # ======= Auto Field : Les ID automatiques =======
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ======= Fin Auto Field =======
-
-# ======= Personnalisation du dashboard =======
-
-JAZZMIN_SETTINGS = {
-    "site_title": "Booli Admin",
-    "site_header": "Administration Booli Store",
-    "welcome_sign": "Bienvenue le tableau administrative de Booli",
-    #"search_model": ["auth.User", "app.Model"],  # Recherche rapide
-    "icons": {
-        "auth.User": "fas fa-user",
-        "app.Model": "fas fa-database",
-    },
-    "show_sidebar": True,
-    "navigation_expanded": True,
-}
