@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from core.models import BaseModel
 from category.models import Category, SubCategory
 from marcher.models import Shop, Company, Doctor, Mark, Supermarket
+from payement.models import Devise
 
 User = get_user_model()
 
@@ -40,6 +41,12 @@ class BaseProduct(BaseModel):
         verbose_name="Prix",
         help_text="Prix de base du produit."
     )
+    devise = models.ForeignKey(
+        Devise,
+        on_delete=models.SET_NULL,
+        null=False,
+        verbose_name="Devise",
+        help_text="Devise de Gestion du produit")
 
     class Meta:
         verbose_name = "Produit de base"
