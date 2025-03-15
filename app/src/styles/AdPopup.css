@@ -1,0 +1,134 @@
+.an_up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+    text-align: center;
+  }
+  
+  .glow-effect {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+    z-index: -1;
+  }
+  
+  .trend-graph {
+    margin-top: 20px;
+  }
+  
+  .bar1-chart {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .bar1 {
+    width: 50px;
+    background-color: #4caf50;
+    position: relative;
+    text-align: center;
+  }
+  
+  .bar1.import {
+    background-color: #ff9800;
+  }
+  
+  .bar1-value {
+    color: white;
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 5px;
+    width: 100%;
+  }
+  
+  .bar1[data-value="767"] { height: 76.7px; }
+  .bar1[data-value="35"] { height: 35px; }
+  .bar1[data-value="411"] { height: 41.1px; }
+  .bar1[data-value="54"] { height: 54px; }
+  .bar1[data-value="144"] { height: 14.4px; }
+  .bar1[data-value="20"] { height: 20px; }
+  .bar1[data-value="138"] { height: 13.8px; }
+  .bar1[data-value="85"] { height: 8.5px; }
+  .bar1[data-value="33"] { height: 33px; }
+  .bar1[data-value="55"] { height: 5.5px; }
+  .bar1[data-value="39"] { height: 39px; }
+  
+  .section-container_j {
+    position: fixed;
+    bottom: -200px;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .close-section_j {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+  .service-link_j {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    background-color: #555;
+    border-radius: 5px;
+  }
+  
+  .service-link_j:hover {
+    background-color: #777;
+  }
+  
+  .scroll-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+  .scroll-top:hover {
+    background-color: #0056b3;
+  }
+  
+  .produ-grid {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .text-container {
+    display: inline-block;
+  }

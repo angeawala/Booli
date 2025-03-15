@@ -9,6 +9,7 @@ import { Akaya_Kanadaka, Poppins } from "next/font/google";
 import '@/styles/css/style.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@/styles/css/style1.css"
 
 // Charger les polices avec next/font
 const akayaKanadaka = Akaya_Kanadaka({

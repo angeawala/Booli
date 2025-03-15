@@ -9,25 +9,26 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,  # Interface Swagger
     SpectacularRedocView,  # Interface Redoc
 )
-from .temp import create_superuser_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth/', include('users.urls')),
-    path('api/', include('utils.urls')),
-    path('api/', include('payement.urls')),
-    path('api/', include('category.urls')),
-
-    #temporaire
-
-    path('', create_superuser_view, name='create_superuser'),
-
+    # Ajout pour Render
+    path('health/', health_check, name='health_check'),
     # Documentation API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),  # Schéma brut (JSON/YAML)
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),  # Swagger UI
     path('api/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),  # Redoc
-    path('health/', health_check, name='health_check'),  # Ajout pour Render
+    # Gestion utilisateurs
+    path('admin/', admin.site.urls),
+    path('auth/', include('users.urls')),
+    path('api/', include('payement.urls')),
+    path('api/', include('utils.urls')),
 
+    # Pour les produire
+    path('store/', include('category.urls')),
+    path('store/', include('tendance.urls')),
+    path('store/', include('product.urls')),
+    path('store/', include('marcher.urls')),
+    path('ads/', include('ads.urls')),
 ]
 
 if settings.DEBUG:

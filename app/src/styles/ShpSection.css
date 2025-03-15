@@ -1,0 +1,68 @@
+.produ-grid {
+    padding: 20px;
+  }
+  
+  .pixa {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  #greatmarket1 {
+    background-color: #f8f9fa;
+  }
+  
+  .hdde {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .shopGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .shopCard {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shopCard img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .detail1 {
+    margin: 10px 0;
+  }
+  
+  .detail1 p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+  }
+  
+  .price {
+    display: block;
+    font-weight: bold;
+    color: #28a745;
+    margin: 10px 0;
+  }
+  
+  .shopButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .shopButton:hover {
+    background-color: #0056b3;
+  }

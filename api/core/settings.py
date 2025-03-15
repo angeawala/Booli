@@ -60,12 +60,15 @@ DEFAULT_FROM_EMAIL = "noreply@trial-3zxk54v908qgjy6v.mlsender.net"
 
 # ======= Apps : Les modules de puissance =======
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jazzmin',
     'corsheaders',  # CORS pour les en-têtes HTTP cross-origin
     'rest_framework',  # DRF pour l’API REST
     'rest_framework_simplejwt',  # JWT pour des tokens sécurisés
@@ -75,6 +78,9 @@ INSTALLED_APPS = [
     'utils',
     'payement',
     'category',
+    'marcher',
+    'tendance',
+    'ads',
 ]
 # ======= Fin Apps =======
 
@@ -87,6 +93,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # ======= Fin Middleware =======
@@ -207,6 +214,8 @@ USE_TZ = True
 
 # ======= Fichiers Statiques =======
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Où collectstatic mettra les fichiers
 STATICFILES_DIRS = []  # fichiers statiques personnalisés (optionnel)
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  # Par défaut
@@ -215,3 +224,18 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  #
 # ======= Auto Field : Les ID automatiques =======
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ======= Fin Auto Field =======
+
+# ======= Personnalisation du dashboard =======
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Booli Admin",
+    "site_header": "Administration Booli Store",
+    "welcome_sign": "Bienvenue le tableau administrative de Booli",
+    #"search_model": ["auth.User", "app.Model"],  # Recherche rapide
+    "icons": {
+        "auth.User": "fas fa-user",
+        "app.Model": "fas fa-database",
+    },
+    "show_sidebar": True,
+    "navigation_expanded": True,
+}

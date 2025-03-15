@@ -1,82 +1,57 @@
-# api/category/views.py
-from rest_framework import viewsets
-from rest_framework.permissions import IsAdminUser, AllowAny
-from django.core.cache import cache
+from rest_framework import generics, filters, permissions
+from django.shortcuts import get_object_or_404
 from .models import Category, SubCategory
 from .serializers import CategorySerializer, SubCategorySerializer
-from rest_framework.response import Response
+from product.models import BaseProduct
+from product.serializers import BaseProductSerializer  # Ajouté pour sérialiser les produits
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.prefetch_related('subcategories').all()
+class IsStaffPermission(permissions.BasePermission):
+    """Permission pour restreindre l'accès aux utilisateurs staff."""
+    def has_permission(self, request, view):
+        return request.user and request.user.is_staff
+
+class CategoryListView(generics.ListAPIView):
+    """Retourne la liste des catégories avec leurs sous-catégories."""
+    queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [permissions.AllowAny]
 
-    def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
-            return [IsAdminUser()]
-        return [AllowAny()]
-
-    def perform_create(self, serializer):
-        cache.delete('category_list')
-        serializer.save()
-
-    def perform_update(self, serializer):
-        cache.delete('category_list')
-        serializer.save()
-
-    def perform_destroy(self, instance):
-        cache.delete('category_list')
-        instance.delete()
-
-    def list(self, request, *args, **kwargs):
-        cached_data = cache.get('category_list')
-        if cached_data is not None:
-            return Response(cached_data)
-
-        response = super().list(request, *args, **kwargs)
-        cache.set('category_list', response.data, timeout=3600)
-        return response
-
-class SubCategoryViewSet(viewsets.ModelViewSet):
-    queryset = SubCategory.objects.select_related('category').all()
-    serializer_class = SubCategorySerializer
-
-    def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
-            return [IsAdminUser()]
-        return [AllowAny()]
+class CategoryProductsView(generics.ListAPIView):
+    """Retourne les produits d'une catégorie donnée."""
+    serializer_class = BaseProductSerializer  # Défini pour sérialiser les produits
+    permission_classes = [permissions.AllowAny] 
 
     def get_queryset(self):
-        # Ajout du filtrage par catégorie via query param
-        queryset = super().get_queryset()
-        category_id = self.request.query_params.get('category', None)
-        if category_id is not None:
-            queryset = queryset.filter(category_id=category_id)
-        return queryset
+        category_id = self.kwargs['category_id']
+        category = get_object_or_404(Category, id=category_id)
+        return BaseProduct.objects.filter(category=category)
 
-    def perform_create(self, serializer):
-        cache.delete('subcategory_list')
-        cache.delete('category_list')
-        serializer.save()
+class SubCategoryProductsView(generics.ListAPIView):
+    """Retourne les produits d'une sous-catégorie donnée."""
+    serializer_class = BaseProductSerializer  # Défini pour sérialiser les produits
+    permission_classes = [permissions.AllowAny] 
 
-    def perform_update(self, serializer):
-        cache.delete('subcategory_list')
-        cache.delete('category_list')
-        serializer.save()
+    def get_queryset(self):
+        subcategory_id = self.kwargs['subcategory_id']
+        subcategory = get_object_or_404(SubCategory, id=subcategory_id)
+        return BaseProduct.objects.filter(subcategory=subcategory)
 
-    def perform_destroy(self, instance):
-        cache.delete('subcategory_list')
-        cache.delete('category_list')
-        instance.delete()
+class CategorySearchView(generics.ListAPIView):
+    """Recherche des catégories par nom."""
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    filter_backends = [filters.SearchFilter]
+    permission_classes = [permissions.AllowAny] 
+    search_fields = ['name']
 
-    def list(self, request, *args, **kwargs):
-        # Gestion du cache avec filtre
-        category_id = request.query_params.get('category', None)
-        cache_key = f'subcategory_list_{category_id}' if category_id else 'subcategory_list'
-        
-        cached_data = cache.get(cache_key)
-        if cached_data is not None:
-            return Response(cached_data)
+class CategoryCreateUpdateView(generics.CreateAPIView, generics.UpdateAPIView):
+    """Permet aux utilisateurs staff de créer et mettre à jour des catégories."""
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsStaffPermission]
 
-        response = super().list(request, *args, **kwargs)
-        cache.set(cache_key, response.data, timeout=3600)
-        return response
+class SubCategoryCreateUpdateView(generics.CreateAPIView, generics.UpdateAPIView):
+    """Permet aux utilisateurs staff de créer et mettre à jour des sous-catégories."""
+    queryset = SubCategory.objects.all()
+    serializer_class = SubCategorySerializer
+    permission_classes = [IsStaffPermission]

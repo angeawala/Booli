@@ -1,0 +1,160 @@
+/* Barre de défilement */
+.defile {
+    overflow: hidden;
+  }
+  
+  .barre {
+    padding: 10px 0;
+  }
+  
+  .banner {
+    display: flex;
+    gap: 20px;
+    animation: defile 15s linear infinite;
+    white-space: nowrap;
+  }
+  
+  .banner-item {
+    padding: 10px;
+    color: white;
+    font-size: 1.1rem;
+  }
+  
+  .entreprise {
+    background-color: #25d366; /* Vert WhatsApp */
+  }
+  
+  .reduction {
+    background-color: #ff4500; /* Orange vif */
+  }
+  
+  .explorer {
+    background-color: #1e90ff; /* Bleu */
+  }
+  
+  @keyframes defile {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  /* Menu fournisseur */
+  .ban {
+    padding: 20px;
+  }
+  
+  .button-bar {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Carrousel publicitaire */
+  .deff {
+    padding: 20px;
+  }
+  
+  .carousel-container {
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+  }
+  
+  .carousel {
+    width: 100%;
+  }
+  
+  .carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: auto;
+    flex-shrink: 0;
+  }
+  
+  .prev-btn,
+  .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .prev-btn {
+    left: 10px;
+  }
+  
+  .next-btn {
+    right: 10px;
+  }
+  
+  .carousel-dots {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .dot {
+    height: 10px;
+    width: 10px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background-color: #717171;
+  }
+  
+  .clignote-titles,
+  .clignote-titles1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .clignote {
+    animation: clignote 1s infinite;
+  }
+  
+  @keyframes clignote {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

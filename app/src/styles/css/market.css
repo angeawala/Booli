@@ -204,7 +204,7 @@ select{
     background-color: #ca4405d7;
     box-shadow: 2px 0px 0px 3px #00000049;
 }
-.connex a{
+.connex2 a{
     margin-left: 30px;
 }
 .connect{
@@ -399,7 +399,7 @@ select{
         order: 1; 
     }
     
-    .connex, #Bye, .helf {
+    .connex2, #Bye, .helf {
         flex: 0 0 30%; 
     }
 }
@@ -410,7 +410,7 @@ select{
         align-items: stretch;
     }
     
-    .log, .connex, #Bye, .helf {
+    .log, .connex2, #Bye, .helf {
         flex: 0 0 auto;
         width: 100%; 
         text-align: center;
@@ -523,7 +523,7 @@ option[data-flag="de"] {
     .suggestions{
         display: none;
     }
-    .connex{
+    .connex2{
         content: '';
         top: -5em;
         left: -9em;   
@@ -546,7 +546,7 @@ option[data-flag="de"] {
         position: relative;
         display: none;
      }
-    .connex img{
+    .connex2 img{
         width: 0.9em;
         height: 1.5em;
     }
@@ -618,7 +618,7 @@ option[data-flag="de"] {
     font-family: cursive;
     margin-left: 20px;
 }
-.connex a{
+.connex2 a{
     text-decoration: none;
     font-weight: 900;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -645,7 +645,7 @@ option[data-flag="de"] {
     margin-top: 10px;
 }
 
-.connex{
+.connex2{
     margin-top: 10px;
     position: relative;
 }
@@ -686,7 +686,7 @@ option[data-flag="de"] {
 }
 
 /* Afficher le menu lors du survol */
-.connex:hover .dropdown1-menu {
+.connex2:hover .dropdown1-menu {
     display: block;
     font-size: 14px;
     font-weight: 200px;
@@ -1642,7 +1642,7 @@ h6{
 
 .defile {
     position: relative;
-    background-image: url('../Photo/vente1.jpg'); 
+    background-image: url('/image/vente1.jpg'); 
     background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
@@ -3004,7 +3004,7 @@ nav ul li a {
 
 #home{
    /* background-color: rgba(207, 200, 99, 0.89);*/
-   background-image: url('../media/font_reservation.jpg');
+   background-image: url('/image/font_reservation.jpg');
     background-size: cover;
     color: #ffff;
     text-align: center;
@@ -3058,7 +3058,7 @@ nav ul li a {
 }
    
 .coactch {
-    background-image:url('media/trans.jpg');
+    background-image:url('/image/trans.jpg');
     background-size: cover;
     color: #fff;
     background-repeat: no-repeat;
@@ -3271,7 +3271,7 @@ h3{
 }
 .ozeba {  
     font-family: 'Arial', sans-serif;   
-    background: url('../Photo/quiz2.jpg') no-repeat center center/cover;    
+    background: url('/image/quiz2.jpg') no-repeat center center/cover;    
     position: relative;  
     margin: 0 auto;
 } 
@@ -4980,7 +4980,7 @@ transform: rotate(360deg) scale(1.1);
 
  /*******************page d'acceuil formation******/
  .bod {
-    background: url('../Photo/booli.blanc.jpg') no-repeat center center fixed;
+    background: url('/logo/booliblanc.jpg') no-repeat center center fixed;
     background-size: cover;
     position: relative;
     display: flex;
@@ -5130,12 +5130,12 @@ transform: rotate(360deg) scale(1.1);
         .background-container {
             position: relative;
             height: 100%;
-            background: url('../Photo/vente1.jpg') no-repeat center center/cover;
+            background: url('/image/vente1.jpg') no-repeat center center/cover;
         }
         .background-containere{
             position: relative;
             height: 100%;
-            background: url('../media/connexionR4.jpg') no-repeat center center/cover;
+            background: url('/image/connexionR4.jpg') no-repeat center center/cover;
         }
         .overlayee {
             position: absolute;
@@ -5191,7 +5191,7 @@ transform: rotate(360deg) scale(1.1);
         /*==================================================
         /*****************acceuil index2******************/
         .index2 {
-            background: url('../media/work2.jpg') no-repeat center center fixed;
+            background: url('/image/work2.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -5606,7 +5606,7 @@ transform: rotate(360deg) scale(1.1);
  /* Style de la première section */
  .section-1 {
     position: relative;
-    background-image: url('../Photo/portable.jpg');
+    background-image: url('/image/portable.jpg');
     background-size: cover;
     background-position: center;
     height: 290px;
@@ -5741,7 +5741,7 @@ tbody tr:nth-child(even) {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../media/code1.jpg'); 
+    background-image: url('/image/code1.jpg'); 
     background-size: cover;
     background-position: center;
     position: relative;
@@ -5874,8 +5874,8 @@ tbody tr:nth-child(even) {
     align-items: center;
     justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-                url('../Photo/code1.jpg') left, 
-                url('Photo/code2.jpg') right;
+                url('/image/code1.jpg') left, 
+                url('/image/code2.jpg') right;
     background-size: cover;
     color: #fff;
   }
@@ -6138,7 +6138,7 @@ tbody tr:nth-child(even) {
     margin:  0 auto;
     align-items: center;
     justify-content: center;
-    background-image: url('Photo/vente.jpg')
+    background-image: url('/image/vente.jpg')
   }
   .video-section17 video {
     max-width: 100%;
@@ -6320,7 +6320,7 @@ tbody tr:nth-child(even) {
 } 
 
 .some{
-    background-image: url('../Photo/Medecine.jpg'); 
+    background-image: url('/image/Medecine.jpg'); 
     background-size: cover; 
     background-repeat: no-repeat; 
     align-items: center; 
