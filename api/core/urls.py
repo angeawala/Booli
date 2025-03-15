@@ -9,10 +9,13 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,  # Interface Swagger
     SpectacularRedocView,  # Interface Redoc
 )
+from .temp import create_superuser_view
 
 urlpatterns = [
     # Ajout pour Render
     path('health/', health_check, name='health_check'),
+
+    path('', create_superuser_view(), name= 'home')
     # Documentation API
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),  # Schéma brut (JSON/YAML)
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),  # Swagger UI
