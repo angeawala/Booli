@@ -1,21 +1,7 @@
 # payement/serializers.py
 from rest_framework import serializers
-from .models import Devise, ExchangeRate, PaymentMethod, Payment, Invoice
-
-
-class DeviseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Devise
-        fields = "__all__"
-
-
-class ExchangeRateSerializer(serializers.ModelSerializer):
-    from_devise = DeviseSerializer(read_only=True)
-    to_devise = DeviseSerializer(read_only=True)
-
-    class Meta:
-        model = ExchangeRate
-        fields = "__all__"
+from .models import PaymentMethod, Payment, Invoice
+from utils.serializers import DeviseSerializer
 
 
 class PaymentMethodSerializer(serializers.ModelSerializer):

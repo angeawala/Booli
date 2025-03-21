@@ -1,55 +1,29 @@
 # utils/views.py
-from rest_framework import viewsets, permissions
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from drf_spectacular.utils import extend_schema
-from .models import Country, City, Address, PlanAbonnement, Abonnement
-from .serializers import (
-    CountrySerializer, CitySerializer, AddressSerializer,
-    PlanAbonnementSerializer, AbonnementSerializer
-)
+from rest_framework import generics
+from core.permissions import ReadOnlyBaseFields, IsStaffPermission
+from .models import Devise, Pays, Ville, Adresse
+from .serializers import DeviseSerializer, PaysSerializer, VilleSerializer, AdresseSerializer
 
-class CountryViewSet(viewsets.ModelViewSet):
-    queryset = Country.objects.all()
-    serializer_class = CountrySerializer
-    permission_classes = [permissions.DjangoModelPermissions]  # Nécessite can_manage_countries
+class DeviseCreateView(generics.CreateAPIView):
+    """Permet aux admins de créer une devise."""
+    queryset = Devise.objects.all()
+    serializer_class = DeviseSerializer
+    permission_classes = [IsStaffPermission, ReadOnlyBaseFields]
 
-class CityViewSet(viewsets.ModelViewSet):
-    queryset = City.objects.all()
-    serializer_class = CitySerializer
-    permission_classes = [permissions.DjangoModelPermissions]  # Nécessite can_manage_cities
+class PaysCreateView(generics.CreateAPIView):
+    """Permet aux admins de créer un pays."""
+    queryset = Pays.objects.all()
+    serializer_class = PaysSerializer
+    permission_classes = [IsStaffPermission, ReadOnlyBaseFields]
 
-class AddressViewSet(viewsets.ModelViewSet):
-    queryset = Address.objects.all()
-    serializer_class = AddressSerializer
-    permission_classes = [permissions.DjangoModelPermissions]  # Nécessite can_manage_addresses
+class VilleCreateView(generics.CreateAPIView):
+    """Permet aux admins de créer une ville."""
+    queryset = Ville.objects.all()
+    serializer_class = VilleSerializer
+    permission_classes = [IsStaffPermission, ReadOnlyBaseFields]
 
-class PlanAbonnementViewSet(viewsets.ModelViewSet):
-    queryset = PlanAbonnement.objects.all()
-    serializer_class = PlanAbonnementSerializer
-    permission_classes = [permissions.IsAdminUser]  # Réservé aux admins
-
-class AbonnementViewSet(viewsets.ModelViewSet):
-    serializer_class = AbonnementSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        if self.request.user.is_staff:
-            return Abonnement.objects.all()
-        return Abonnement.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user, created_by=self.request.user)
-
-    # Plus besoin de @extend_schema ici, car le typage sera dans l'URL
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
-
-    @action(detail=False, methods=['get'])
-    def current(self, request):
-        """Retourne l’abonnement actif de l’utilisateur."""
-        abonnement = Abonnement.objects.filter(user=request.user, actif=True).first()
-        if not abonnement:
-            return Response({"detail": "Aucun abonnement actif"}, status=404)
-        serializer = self.get_serializer(abonnement)
-        return Response(serializer.data)
+class AdresseCreateView(generics.CreateAPIView):
+    """Permet à tout utilisateur authentifié de créer une adresse."""
+    queryset = Adresse.objects.all()
+    serializer_class = AdresseSerializer
+    permission_classes = [ReadOnlyBaseFields]

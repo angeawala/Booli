@@ -24,14 +24,19 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('users.urls')),
     path('api/', include('payement.urls')),
+
+    # utilitaire general
     path('api/', include('utils.urls')),
+    path('avis/', include('avis.urls')),
 
     # Pour les produire
     path('store/', include('category.urls')),
-    path('store/', include('tendance.urls')),
+    path('product/', include('library.urls')),
+    path('product/', include('pharmacope.urls')),
+    #path('store/', include('tendance.urls')),
     path('store/', include('product.urls')),
-    path('store/', include('marcher.urls')),
-    path('ads/', include('ads.urls')),
+    #path('store/', include('marcher.urls')),
+    #path('ads/', include('ads.urls')),
 ]
 
 if settings.DEBUG:

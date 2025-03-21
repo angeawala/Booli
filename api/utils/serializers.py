@@ -1,39 +1,33 @@
 # utils/serializers.py
 from rest_framework import serializers
-from .models import Country, City, Address,  PlanAbonnement, Abonnement
+from core.serializers import BaseSerializer
+from .models import Devise, TauxEchange, Pays, Ville, Adresse
 
+class DeviseSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = Devise
+        fields = BaseSerializer.Meta.fields + ['name', 'code', 'symbol']
 
-class CountrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Country
-        fields = "__all__"
+class TauxEchangeSerializer(BaseSerializer):
+    devise_from = serializers.StringRelatedField()
+    devise_to = serializers.StringRelatedField()
+    class Meta(BaseSerializer.Meta):
+        model = TauxEchange
+        fields = BaseSerializer.Meta.fields + ['devise_from', 'devise_to', 'taux']
 
+class PaysSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = Pays
+        fields = BaseSerializer.Meta.fields + ['name', 'code']
 
-class CitySerializer(serializers.ModelSerializer):
-    country = CountrySerializer(read_only=True)
+class VilleSerializer(BaseSerializer):
+    pays = serializers.StringRelatedField()
+    class Meta(BaseSerializer.Meta):
+        model = Ville
+        fields = BaseSerializer.Meta.fields + ['name', 'pays']
 
-    class Meta:
-        model = City
-        fields = "__all__"
-
-
-class AddressSerializer(serializers.ModelSerializer):
-    city = CitySerializer(read_only=True)
-
-    class Meta:
-        model = Address
-        fields = "__all__"
-
-class PlanAbonnementSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PlanAbonnement
-        fields = ['id', 'nom', 'temps', 'prix', 'devise', 'created_at', 'updated_at']
-
-class AbonnementSerializer(serializers.ModelSerializer):
-    plan = PlanAbonnementSerializer(read_only=True)
-    plan_id = serializers.UUIDField(write_only=True, source='plan.id')
-
-    class Meta:
-        model = Abonnement
-        fields = ['id', 'user', 'plan', 'plan_id', 'payment', 'code', 'date_debut', 'date_expiration', 'actif', 'created_at', 'updated_at']
-        read_only_fields = ['user', 'code', 'date_debut', 'date_expiration', 'created_at', 'updated_at']
+class AdresseSerializer(BaseSerializer):
+    ville = serializers.StringRelatedField()
+    class Meta(BaseSerializer.Meta):
+        model = Adresse
+        fields = BaseSerializer.Meta.fields + ['rue', 'code_postal', 'ville']

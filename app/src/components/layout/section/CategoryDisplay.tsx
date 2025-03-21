@@ -1,4 +1,4 @@
-"use client";
+/*"use client";
 
 import React, { useState } from "react";
 import { useCategoryDisplay } from "@/hooks/useCategoryDisplay";
@@ -98,4 +98,4 @@ const CategoryDisplay: React.FC = () => {
   );
 };
 
-export default CategoryDisplay;
+export default CategoryDisplay;*/

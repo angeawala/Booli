@@ -1,8 +1,7 @@
 # payement/views.py
 from rest_framework import viewsets, permissions
-from .models import Devise, ExchangeRate, PaymentMethod, Payment, Invoice
-from .serializers import (DeviseSerializer, ExchangeRateSerializer, PaymentMethodSerializer,
-                          PaymentSerializer, InvoiceSerializer)
+from .models import PaymentMethod, Payment, Invoice
+from .serializers import (PaymentMethodSerializer, PaymentSerializer, InvoiceSerializer)
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -12,19 +11,6 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from django.core.files.base import ContentFile
-
-
-class DeviseViewSet(viewsets.ModelViewSet):
-    queryset = Devise.objects.all()
-    serializer_class = DeviseSerializer
-    permission_classes = [permissions.DjangoModelPermissions]  # Réservé aux admins
-
-
-class ExchangeRateViewSet(viewsets.ModelViewSet):
-    queryset = ExchangeRate.objects.all()
-    serializer_class = ExchangeRateSerializer
-    permission_classes = [permissions.DjangoModelPermissions]  # Réservé aux admins
-
 
 class PaymentMethodViewSet(viewsets.ModelViewSet):
     queryset = PaymentMethod.objects.all()

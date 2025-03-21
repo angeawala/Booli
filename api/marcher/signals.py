@@ -2,7 +2,7 @@ from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.core.cache import cache
 from .models import Shop, Company, Doctor, Mark, Supermarket
-from product.models import ShopProduct, BookProduct, PharmacyProduct, CompanyProduct, MarkProduct, SupermarketProduct
+from product.models import ShopProduct, PharmacyProduct, CompanyProduct, MarkProduct, SupermarketProduct
 import logging
 
 logger = logging.getLogger(__name__)
@@ -51,16 +51,6 @@ def handle_shop_deletion(sender, instance, **kwargs):
     product_count = products.count()
     products.delete()  # Ou update(shop=None) si vous préférez réassigner
     logger.info(f"{product_count} produits supprimés après suppression de la boutique {instance.name}")
-
-@receiver(pre_delete, sender=Company)
-def handle_company_deletion(sender, instance, **kwargs):
-    """Supprime ou réassigne les produits liés à la compagnie supprimée."""
-    book_products = BookProduct.objects.filter(company=instance)
-    company_products = CompanyProduct.objects.filter(company=instance)
-    product_count = book_products.count() + company_products.count()
-    book_products.delete()
-    company_products.delete()
-    logger.info(f"{product_count} produits supprimés après suppression de la compagnie {instance.name}")
 
 @receiver(pre_delete, sender=Doctor)
 def handle_doctor_deletion(sender, instance, **kwargs):

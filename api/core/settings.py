@@ -35,6 +35,7 @@ if DEVELOPPEMENT:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'  # Par défaut
 else:
     DEBUG = False
+    SECURE_SSL_REDIRECT = True
     SECRET_KEY = os.getenv('SECRET_KEY')
     ALLOWED_HOSTS = [
         'booli-api.onrender.com',  # Domaine public
@@ -78,13 +79,18 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',  # JWT pour des tokens sécurisés
     'users',  # app users avec CustomUser
     'drf_spectacular',  # Ajout pour la doc auto
+    'django_currentuser',
+    'core', # Le principale
+    'avis',
     'product',
+    'library',
     'utils',
+    'pharmacope',
     'payement',
     'category',
-    'marcher',
-    'tendance',
-    'ads',
+    #'marcher',
+    #'tendance',
+    #'ads',
 ]
 # ======= Fin Apps =======
 

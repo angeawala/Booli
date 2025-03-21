@@ -5,10 +5,10 @@ export default function Footer() {
     <footer className="index_footer">
       <div className="row foot-content-wrapper">
         <div className="col-sm-4 content1">
-          <Link href="/about" target="_blank">A propos</Link><br /><br />
-          <Link href="/enterprise" target="_blank">Entreprise</Link><br /><br />
-          <Link href="/contact" target="_blank">Contact</Link><br /><br />
-          <Link href="/Forum" target="_blank">Forum</Link><br />
+          <Link href="/about/" target="_blank">A propos</Link><br /><br />
+          <Link href="/enterprise/" target="_blank">Entreprise</Link><br /><br />
+          <Link href="/contact/" target="_blank">Contact</Link><br /><br />
+          <Link href="/Forum/" target="_blank">Forum</Link><br />
         </div>
         <div className="col-sm-4 content2">
           <form>
@@ -25,8 +25,8 @@ export default function Footer() {
         <div className="col-sm-4 content3">
           <Link href="/professionnal" target="_blank">Professionnel</Link><br /><br />
           <Link href="/comment" target="_blank">Commentaire</Link><br /><br />
-          <Link href="/condition-et-termes" target="_blank">Conditions</Link><br /><br />
-          <Link href="/helph_market" target="_blank">FAQ</Link><br /><br />
+          <Link href="/condition" target="_blank">Conditions</Link><br /><br />
+          <Link href="/help" target="_blank">FAQ</Link><br /><br />
         </div>
       </div>
     </footer>

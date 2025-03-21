@@ -1,4 +1,3 @@
-// @/components/layout/listing/Header.tsx
 "use client";
 
 import Link from "next/link";
@@ -11,12 +10,26 @@ export default function Header() {
   const countrySelectRef = useRef<HTMLSelectElement>(null);
   const [searchQuery, setSearchQuery] = useState<string>(""); // État pour la recherche
   const [suggestions, setSuggestions] = useState<string[]>([]); // État pour les suggestions
+  const [slideIndex, setSlideIndex] = useState<number>(0); // État pour le carrousel
+  const [isScrolled, setIsScrolled] = useState<boolean>(false); // État pour le défilement
 
-  // Liste des produits et services
+  // Références pour les sections
+  const moteurRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const sousRef = useRef<HTMLElement>(null);
+
+  // Liste des produits et services pour les suggestions
   const items = [
     "Accessoires", "Appareils photo", "Bijoux", "Chaussures",
     "Électronique", "Formation", "Jouets", "Livres", "Documents",
     "Meubles", "Ordinateurs", "Téléphones", "Vêtements"
+  ];
+
+  // Images pour le carrousel
+  const carouselImages = [
+    "/Photo/vente.jpg",
+    "/Photo/EA.jpg",
+    "/Photo/livraison.jpg",
   ];
 
   // Gestion des suggestions
@@ -78,9 +91,63 @@ export default function Header() {
     showSuggestions(query);
   };
 
+  // Gestion du carrousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSlideIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+    }, 4500); // Change toutes les 4,5 secondes
+
+    return () => clearInterval(interval);
+  }, [carouselImages.length]);
+
+  // Gestion du défilement pour fixer la barre moteur
+  useEffect(() => {
+    const moteur = moteurRef.current;
+    if (!moteur) return;
+
+    const offsetTop = moteur.offsetTop; // Position initiale de moteur
+
+    const handleScroll = () => {
+      if (window.scrollY > offsetTop) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Gestion de la caméra pour la recherche par image
+  const handleCameraClick = () => {
+    const cameraInput = document.getElementById("camera-input") as HTMLInputElement;
+    if (cameraInput) cameraInput.click();
+  };
+
+  const handleCameraInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageData = e.target?.result;
+        console.log("Image Data:", imageData);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <>
-      <header className="header" id="header">
+      <header
+        className="header"
+        id="header"
+        ref={headerRef}
+        style={{ display: isScrolled ? "none" : "block" }}
+      >
         <div className="head">
           <Link href="/index_acceuil2">
             <span className="new">
@@ -110,29 +177,34 @@ export default function Header() {
         </div>
       </section>
 
-      {/* Section avec images de fond */}
-      <section className="sous col-12 px-2 ml-4 px-4" id="sous">
-        <div
-          className="backgroundf"
-          style={{ backgroundImage: "url('/image/vente.jpg')" }}
-        ></div>
-        <div
-          className="backgroundf"
-          style={{ backgroundImage: "url('/image/EA.jpg')" }}
-        ></div>
-        <div
-          className="backgroundf"
-          style={{ backgroundImage: "url('/image/livraison.jpg')" }}
-        ></div>
+      {/* Section avec carrousel */}
+      <section
+        className="sous col-12 px-2 ml-4 px-4"
+        id="sous"
+        ref={sousRef}
+        style={{ display: isScrolled ? "none" : "block" }}
+      >
+        <div className="carousel">
+          {carouselImages.map((img, index) => (
+            <div
+              key={index}
+              className="backgroundf"
+              style={{
+                backgroundImage: `url('${img}')`,
+                display: slideIndex === index ? "block" : "none",
+              }}
+            ></div>
+          ))}
+        </div>
         <div className="row col-12 px-2 content-wrapper">
           <div className="connect col-sm-4 mt-3 text-left px-4">
             <button onClick={() => (window.location.href = "/acceuil_boutique")}>
-              <img src="/image/user_market.jpeg" id="m1" alt="Démarrer un Business" /> Démarrer un
+              <img src="/media/user_market.jpeg" id="m1" alt="Démarrer un Business" /> Démarrer un
               Business
             </button>
           </div>
           <div className="affi col-sm-5">
-            <img src="/image/Eco.jpg" alt="Produit" className="image" />
+            <img src="/Photo/Eco.jpg" alt="Produit" className="image" />
             <p>
               BOOLi-STORE ECONOMISEZ <i className="fas fa-plus" id="accru"></i>
             </p>
@@ -142,11 +214,7 @@ export default function Header() {
               <label htmlFor="country-select">
                 <strong>Expédiez à :</strong>
               </label>
-              <select
-                id="country-select"
-                name="country"
-                ref={countrySelectRef}
-              >
+              <select id="country-select" name="country" ref={countrySelectRef}>
                 <option value="bj" data-flag="bj">Benin</option>
                 <option value="tg" data-flag="tg">Togo</option>
                 <option value="ng" data-flag="ng">Nigeria</option>
@@ -168,11 +236,20 @@ export default function Header() {
 
       {/* Section moteur de recherche */}
       <section className="tout row col-12 pt-2">
-        <section className="moteur" id="moteur">
+        <section
+          className="moteur"
+          id="moteur"
+          ref={moteurRef}
+          style={{
+            position: isScrolled ? "fixed" : "relative",
+            top: isScrolled ? "0" : undefined,
+            boxShadow: isScrolled ? "0 2px 5px rgba(0, 0, 0, 0.2)" : "none",
+          }}
+        >
           <div className="row col-12" id="mtn">
             <div className="log col-2 mt-3">
               <Link href="/index">
-                <img src="/logo/booli.png" id="coni" alt="Logo" />
+                <img src="/Photo/booli.png" id="coni" alt="Logo" />
               </Link>
             </div>
             <div className="search-container col-4 ml-2">
@@ -187,7 +264,7 @@ export default function Header() {
               <button id="search-button">
                 <i className="fas fa-search"> Rechercher</i>
               </button>
-              <i className="fa fa-camera camera-icon" id="camera-icon"></i>
+              <i className="fa fa-camera camera-icon" id="camera-icon" onClick={handleCameraClick}></i>
               <div className="suggestions" id="suggestionslist">
                 {suggestions.length > 0 ? (
                   suggestions.map((item) => (
@@ -211,6 +288,7 @@ export default function Header() {
                 id="camera-input"
                 accept="image/*"
                 style={{ display: "none" }}
+                onChange={handleCameraInputChange}
               />
             </div>
             <div
@@ -218,7 +296,7 @@ export default function Header() {
               style={{ display: "block", position: "relative" }}
             >
               <a href="#" id="connect1-btn">
-                <img src="/image/user2.png" id="con" /> Mon Compte
+                <img src="/media/user2.png" id="con" alt="Mon Compte" /> Mon Compte
               </a>
               <div className="dropdown1-menu">
                 <SignInOrLogout />
@@ -244,7 +322,7 @@ export default function Header() {
                 <Link href="/command_annul">
                   <i className="fas fa-times-circle"></i> Annulation
                 </Link>
-                <Link href="/service client">
+                <Link href="/service-client">
                   <i className="fas fa-truck"></i> Service Client
                 </Link>
               </div>

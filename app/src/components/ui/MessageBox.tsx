@@ -25,7 +25,7 @@ export default function MessageBox() {
   };
 
   const handleReadClick = () => {
-    window.location.href = "/librairie-detail";
+    window.location.href = "store/library";
   };
 
   return (
