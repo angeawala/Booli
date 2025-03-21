@@ -8,7 +8,7 @@
     100% { transform: scale(1); box-shadow: 0 0 10px  rgba(29, 12, 1, 0.5); }
   }
 
-  @media (max-width: 768px) {
+@media (max-width: 768px) {
   .translate-container{
       margin-right: -5%;
       font-size: 0.7em;
@@ -16,20 +16,25 @@
     .img-text {
       display: none;
     }
-    .section_next{
+    .section_next, .img-container{
       display: none;
     }
 
 .mobile-section {
   display: flex;
+  content: '';
+  top: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
-  background: linear-gradient(135deg, #0a040067 0%, #0000008c 50%, #00000096 100%);
-  padding: 20px;
+  min-height: 40vh;
+  background-image: url('/image/fond_image..jpg'); 
+  background-size: cover;
+  background-position: center;
+   padding: 20px;
   position: relative;
   overflow: hidden;
+  z-index: -1;
 }
 
 .mobile-section::before {
@@ -37,16 +42,14 @@
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/image/fondf1.jpg'); 
-  background-size: cover;
-  background-position: center;
+  background: linear-gradient(135deg, #0a040083 0%, #000000c9 50%, #000000ce 100%);
   opacity: 0.5; 
-  z-index: -1;
+  z-index: 2;
   animation: particleMove 10s infinite linear;
 }
-
     @keyframes particleMove {
       0% { background-position: 0 0; }
       100% { background-position: 100px 100px; }
@@ -62,7 +65,7 @@
       font-weight: bold;
       text-decoration: none;
       border-radius: 50px;
-      z-index: 1;
+      z-index: 3;
       overflow: hidden;
       animation: pulseGlow 2s infinite;
     }

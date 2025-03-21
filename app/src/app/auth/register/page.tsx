@@ -31,6 +31,7 @@ export default function RegisterPage() {
     acceptsPolicy: false,
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordVisible1, setPasswordVisible1] = useState(false);
   const [passwordVisible2, setPasswordVisible2] = useState(false);
   const [countries, setCountries] = useState<Country[]>([]);
@@ -57,9 +58,9 @@ export default function RegisterPage() {
           }))
           .sort((a: Country, b: Country) => a.name.localeCompare(b.name));
         setCountries(countryList);
-      } catch (error: unknown) {
-        console.error("Erreur lors du chargement des pays:", error);
-        toast.error("Impossible de charger les pays.");
+      } catch (error) {
+        console.error("Erreur fetchCountries:", error);
+        toast.error("Impossible de charger la liste des pays.");
       } finally {
         setIsLoading(false);
       }
@@ -74,6 +75,7 @@ export default function RegisterPage() {
       ...prev,
       [name]: newValue,
     }));
+    console.log(`Champ ${name} mis à jour :`, newValue); // Log pour chaque changement
 
     if (name === "country") {
       const selectedCountry = countries.find((c) => c.name === value);
@@ -130,11 +132,15 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("handleSubmit appelé"); // Log 1
+    if (isSubmitting) return;
     if (!validateForm()) return;
 
+    setIsSubmitting(true);
     setIsLoading(true);
     try {
-        await registerUser({
+      console.log("Envoi à registerUser:", formData); // Log 2
+      await registerUser({
         email: formData.email,
         contact: formData.contact,
         password: formData.password,
@@ -146,15 +152,22 @@ export default function RegisterPage() {
         profession: formData.profession,
         gender: formData.gender,
       });
+      console.log("registerUser réussi"); // Log 3
       setSuccessMessage(
         "Inscription réussie ! Un email d’activation a été envoyé. Vérifiez votre boîte de réception (ou spams)."
       );
-    } catch (error: unknown) {
-      const axiosError = error as AxiosError<{ detail?: string; email?: string[] }>;
-      const errorMsg = axiosError.response?.data?.detail || axiosError.response?.data?.email?.[0] || "Erreur lors de l’inscription.";
-      toast.error(errorMsg);
+      setTimeout(() => router.push("/auth/login"), 3000);
+    } catch (error) {
+      console.error("Erreur registerUser:", error); // Log 4
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.detail || error.response?.data?.email?.[0] || "Erreur lors de l’inscription.";
+        toast.error(errorMsg);
+      } else {
+        toast.error("Une erreur inattendue est survenue.");
+      }
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -183,6 +196,7 @@ export default function RegisterPage() {
               <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 cadre p-4">
                 <h2 className="mx-0 mt-3 mb-3 connex1 text-center">-- Inscription --</h2>
                 <p className="text-center mb-5 entete2">Inscrivez-vous pour profiter de nos offres</p>
+                <p>acceptsPolicy: {formData.acceptsPolicy.toString()}</p> {/* Log état */}
                 <form onSubmit={handleSubmit}>
                   <div className="row g-3">
                     <div className="col-12">
@@ -254,7 +268,10 @@ export default function RegisterPage() {
                         onChange={handleChange}
                         required
                       />
-                      <span className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2" onClick={togglePassword1}>
+                      <span
+                        className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2 cursor-pointer"
+                        onClick={togglePassword1}
+                      >
                         <i className={passwordVisible1 ? "fa fa-eye" : "fa fa-eye-slash"}></i>
                       </span>
                     </div>
@@ -269,7 +286,10 @@ export default function RegisterPage() {
                         onChange={handleChange}
                         required
                       />
-                      <span className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2" onClick={togglePassword2}>
+                      <span
+                        className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2 cursor-pointer"
+                        onClick={togglePassword2}
+                      >
                         <i className={passwordVisible2 ? "fa fa-eye" : "fa fa-eye-slash"}></i>
                       </span>
                     </div>
@@ -367,9 +387,9 @@ export default function RegisterPage() {
                       <button
                         type="submit"
                         className="btn-lg connex w-100 w-md-auto"
-                        disabled={isLoading || !formData.acceptsPolicy}
+                        disabled={isSubmitting || !formData.acceptsPolicy}
                       >
-                        {isLoading ? "Inscription..." : "S’inscrire"}
+                        {isSubmitting ? "Inscription..." : "S’inscrire"}
                       </button>
                       <Link href="/auth/login" className="haveaccount w-100 w-md-auto text-center">
                         Continuez avec mon compte
@@ -377,7 +397,7 @@ export default function RegisterPage() {
                     </div>
                   </div>
                 </form>
-                <SuccessModal message={successMessage} onClose={closeSuccessModal} />
+                {successMessage && <SuccessModal message={successMessage} onClose={closeSuccessModal} />}
               </div>
             </div>
           </div>

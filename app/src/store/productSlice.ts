@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+/*import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { BaseProduct } from "@/types/product";
-import { getCategoryProducts } from "@/api/categoryApi";
+import { } from "@/api/categoryApi";
 
 interface ProductState {
   productsBySubCategory: { [subCategoryId: string]: BaseProduct[] };
@@ -101,4 +101,4 @@ const productSlice = createSlice({
   },
 });
 
-export default productSlice.reducer;
+export default productSlice.reducer;*/

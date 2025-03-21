@@ -193,3 +193,4 @@ export const getSupermarketStats = async (id: string): Promise<Stats> => {
   const response = await api.get(MARKET_ENDPOINTS.SUPERMARKETS.STATS(id));
   return response.data;
 };
+

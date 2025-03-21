@@ -1,39 +1,11 @@
-import axios from "axios";
+// api/categoryApi.ts
+import api from "@/api/api"; // Import de l'instance centralisée
 import { CATEGORY_ENDPOINTS } from "@/api/config";
-import { store } from "@/store/store";
-import { Category, SubCategory} from "@/types/category";
-import {BaseProduct} from "@/types/product";
-
-// Configuration de l'instance axios
-const api = axios.create({
-  baseURL: CATEGORY_ENDPOINTS.LIST.split("/store/")[0],
-  withCredentials: true,
-});
-
-// Intercepteur pour inclure le token JWT
-api.interceptors.request.use((config) => {
-  const accessToken = store.getState().auth.accessToken;
-  if (accessToken) {
-    config.headers.Authorization = `Bearer ${accessToken}`;
-  }
-  return config;
-});
+import { Category, SubCategory } from "@/types/category";
 
 // Récupérer toutes les catégories
 export const getCategories = async (): Promise<Category[]> => {
   const response = await api.get(CATEGORY_ENDPOINTS.LIST);
-  return response.data;
-};
-
-// Récupérer les produits d'une catégorie
-export const getCategoryProducts = async (categoryId: string): Promise<BaseProduct[]> => {
-  const response = await api.get(CATEGORY_ENDPOINTS.PRODUCTS(categoryId));
-  return response.data;
-};
-
-// Récupérer les produits d'une sous-catégorie
-export const getSubCategoryProducts = async (subcategoryId: string): Promise<BaseProduct[]> => {
-  const response = await api.get(CATEGORY_ENDPOINTS.SUBCATEGORY_PRODUCTS(subcategoryId));
   return response.data;
 };
 
@@ -74,7 +46,7 @@ export const updateCategory = async (
 export const createSubCategory = async (data: {
   name: string;
   image?: string; // Optionnel
-  category: number; // ID de la catégorie parente
+  category: string; // UUID de la catégorie parente
 }): Promise<SubCategory> => {
   const response = await api.post(CATEGORY_ENDPOINTS.CREATE_SUBCATEGORY, data);
   return response.data;
@@ -86,7 +58,7 @@ export const updateSubCategory = async (
   data: {
     name?: string;
     image?: string;
-    category?: number;
+    category?: string; // UUID optionnel
   }
 ): Promise<SubCategory> => {
   const response = await api.put(CATEGORY_ENDPOINTS.UPDATE_SUBCATEGORY(subcategoryId), data);

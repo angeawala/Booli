@@ -13,6 +13,7 @@ function ResetPasswordContent() {
     confirmPassword: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Ajout pour débouncing
   const [passwordVisible1, setPasswordVisible1] = useState(false);
   const [passwordVisible2, setPasswordVisible2] = useState(false);
   const router = useRouter();
@@ -29,29 +30,32 @@ function ResetPasswordContent() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Débouncing
     if (!token) {
-      toast.error("Token manquant");
+      toast.error("Lien invalide : token manquant.");
       return;
     }
     if (formData.newPassword !== formData.confirmPassword) {
-      toast.error("Les mots de passe ne correspondent pas");
+      toast.error("Les mots de passe ne correspondent pas.");
       return;
     }
 
+    setIsSubmitting(true);
     setIsLoading(true);
     try {
-      await resetPasswordConfirm(token, formData.newPassword, formData.confirmPassword); // Suppression de 'response' inutilisé
-      toast.success("Mot de passe réinitialisé avec succès ! Vous pouvez maintenant vous connecter.");
-      setTimeout(() => router.push("/auth/login"), 2000); // Délai pour voir le succès
+      await resetPasswordConfirm(token, formData.newPassword, formData.confirmPassword);
+      toast.success("Mot de passe réinitialisé avec succès ! Redirection vers la connexion...");
+      setTimeout(() => router.push("/auth/login"), 2000);
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        const errorMsg = error.response?.data?.error || "Erreur lors de la réinitialisation";
+        const errorMsg = error.response?.data?.detail || "Erreur lors de la réinitialisation du mot de passe.";
         toast.error(errorMsg);
       } else {
-        toast.error("Une erreur inconnue est survenue.");
+        toast.error("Une erreur inattendue est survenue.");
       }
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -73,7 +77,9 @@ function ResetPasswordContent() {
           <div className="container">
             <div className="row justify-content-center">
               <div className="col-12 col-md-8 col-lg-5 bg-white rounded-5 shadow-lg p-4 cadre">
-                <h2 className="mt-3 mb-4 text-center text-primary fw-semibold">Réinitialisation du mot de passe</h2>
+                <h2 className="mt-3 mb-4 text-center text-primary fw-semibold">
+                  Réinitialisation du mot de passe
+                </h2>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4 position-relative">
                     <input
@@ -115,7 +121,7 @@ function ResetPasswordContent() {
                     <button
                       type="submit"
                       className="btn btn-primary btn-lg text-white px-4 py-2 w-100 w-md-auto"
-                      disabled={isLoading}
+                      disabled={isSubmitting || isLoading}
                     >
                       {isLoading ? "Réinitialisation..." : "Réinitialiser"}
                     </button>

@@ -12,100 +12,137 @@ import { validateRedirect } from "@/utils/redirectUtils";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SuccessModal from "@/components/modals/SuccessModal";
-import ErrorModal from "@/components/modals/ErrorModal";
 import TwoFAModal from "@/components/modals/TwoFAModal";
 import { AxiosError } from "axios";
+import { getAccessToken } from "@/api/api";
 
 function LoginContent() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [show2FAModal, setShow2FAModal] = useState(false);
   const [twoFAExpiresAt, setTwoFAExpiresAt] = useState<string | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
+  // Vérification initiale de l’authentification
   useEffect(() => {
     const verifyAuth = async () => {
-      const isAuth = await checkAuth();
-      if (isAuth) {
+      const token = getAccessToken();
+      if (token && isAuthenticated) {
         setSuccessMessage("Vous êtes déjà connecté ! Redirection en cours...");
         const next = validateRedirect(searchParams.get("next")) || "/";
         setTimeout(() => router.push(next), 2000);
+      } else {
+        const isAuth = await checkAuth();
+        if (isAuth) {
+          setSuccessMessage("Vous êtes déjà connecté ! Redirection en cours...");
+          const next = validateRedirect(searchParams.get("next")) || "/";
+          setTimeout(() => router.push(next), 2000);
+        }
       }
       setIsLoading(false);
     };
     verifyAuth();
-  }, [router, searchParams]);
+  }, [router, searchParams, isAuthenticated]);
 
+  // Gestion des changements de formulaire
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setIsLoading(true);
+
     try {
       const checkResponse = await checkUser(formData.email, formData.password);
+      console.log("CheckUser response:", checkResponse); // Log pour débogage
+
       if (!checkResponse.exists) {
         toast.error("Échec de la connexion. Vérifiez vos identifiants.");
-      } else if (!checkResponse.is_active) {
-        setErrorMessage("Vérifiez vos identifiants ou activez votre compte.");
+        return;
+      }
+      if (!checkResponse.is_active) {
+        toast.error("Compte non activé. Redirection vers l’activation...");
         setTimeout(() => router.push("/auth/activate/resend"), 2000);
-      } else if (checkResponse.is_2fa_enabled) {
+        return;
+      }
+      if (checkResponse.is_2fa_enabled) {
         const twoFAResponse = await generate2FAToken(formData.email);
         setTwoFAExpiresAt(twoFAResponse.expires_at);
-        setShow2FAModal(true);
+        setShow2FAModal(true); // Doit afficher la modale
       } else {
         const tokenResponse = await login(formData.email, formData.password);
-        dispatch(setTokens({ access: tokenResponse.access, refresh: tokenResponse.refresh }));
+        dispatch(setTokens({ access: tokenResponse.access }));
+        localStorage.setItem("lastEmail", formData.email);
         toast.success("Connexion réussie !");
         const next = validateRedirect(searchParams.get("next")) || "/";
-        router.push(next);
+        router.push(next); // Redirection immédiate
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        toast.error("Échec de la connexion. Vérifiez vos identifiants.");
-      } else {
-        toast.error("Une erreur inconnue est survenue.");
-      }
+      console.error("Login error:", error);
+      toast.error(
+        error instanceof AxiosError
+          ? "Échec de la connexion. Vérifiez vos identifiants."
+          : "Une erreur inconnue est survenue."
+      );
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
+  // Soumission du code 2FA
   const handle2FASubmit = async (code: string) => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setIsLoading(true);
     try {
       const response = await verify2FA(formData.email, code, formData.password);
-      dispatch(setTokens({ access: response.access, refresh: response.refresh }));
+      dispatch(setTokens({ access: response.access }));
+      localStorage.setItem("lastEmail", formData.email);
       toast.success("Connexion réussie !");
       setShow2FAModal(false);
       const next = validateRedirect(searchParams.get("next")) || "/";
       router.push(next);
     } catch (error: unknown) {
-      toast.error(error instanceof AxiosError ? "Code invalide ou expiré." : "Erreur inconnue.");
+      toast.error(
+        error instanceof AxiosError ? "Code invalide ou expiré." : "Erreur inconnue."
+      );
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
+  // Renvoi du code 2FA
   const handleResend2FA = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
     setIsLoading(true);
     try {
       const response = await generate2FAToken(formData.email);
       setTwoFAExpiresAt(response.expires_at);
       toast.success("Nouveau code envoyé !");
     } catch (error: unknown) {
-      toast.error(error instanceof AxiosError ?  "Erreur lors du renvoi du code.":"Error veuillez reessayer.");
+      toast.error(
+        error instanceof AxiosError
+          ? "Erreur lors du renvoi du code."
+          : "Erreur, veuillez réessayer."
+      );
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -117,13 +154,7 @@ function LoginContent() {
     router.push(next);
   };
 
-  const closeErrorModal = () => {
-    setErrorMessage(null);
-    if (errorMessage?.includes("activez votre compte")) {
-      router.push("/auth/activate/resend");
-    }
-  };
-
+  // Rendu
   return (
     <div className="img-connexion min-vh-100 d-flex flex-column align-items-center justify-content-center">
       {isLoading && (
@@ -140,7 +171,6 @@ function LoginContent() {
             <div className="row justify-content-center">
               <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 px-3 py-4 cadre">
                 <h2 className="mx-0 mt-3 mb-3 connex1 text-center">Connectez-vous</h2>
-                {/* QR Code (non fonctionnel mais affiché) */}
                 <div className="qr-login text-center mb-3">
                   <canvas id="qr-code" className="mx-auto d-block"></canvas>
                   <span className="Qr d-block">Connexion QR</span>
@@ -155,7 +185,7 @@ function LoginContent() {
                 <p className="text-center mb-3 entete2">
                   Entrez vos identifiants pour ne plus manquer nos prochaines annonces
                 </p>
-                {isAuthenticated ? (
+                {successMessage ? (
                   <SuccessModal message={successMessage} onClose={closeSuccessModal} />
                 ) : (
                   <form onSubmit={handleSubmit}>
@@ -181,7 +211,10 @@ function LoginContent() {
                         onChange={handleChange}
                         required
                       />
-                      <span className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2" onClick={togglePassword}>
+                      <span
+                        className="toggle-password position-absolute end-0 top-50 translate-middle-y pe-2"
+                        onClick={togglePassword}
+                      >
                         <i className={passwordVisible ? "fa fa-eye" : "fa fa-eye-slash"}></i>
                       </span>
                     </div>
@@ -194,15 +227,14 @@ function LoginContent() {
                       <button
                         type="submit"
                         className="btn-lg connex w-100 w-md-auto"
-                        disabled={isLoading}
+                        disabled={isSubmitting}
                       >
-                        {isLoading ? "Connexion..." : "Se connecter"}
+                        {isSubmitting ? "Connexion..." : "Se connecter"}
                       </button>
                       <Link href="/auth/register" className="haveaccount w-100 w-md-auto text-center">
                         Créer un compte
                       </Link>
                     </div>
-                    {/* Autres options de connexion (non fonctionnelles) */}
                     <div className="separator text-center mb-3">Autres options de connexion</div>
                     <div className="text-center mb-2 OneTapSignIn d-flex flex-wrap justify-content-center gap-3">
                       <span className="text-center">
@@ -211,28 +243,10 @@ function LoginContent() {
                           <p>Google</p>
                         </a>
                       </span>
-                      <span className="text-center">
-                        <a href="#">
-                          <img src="/image/apple.png" alt="Apple icon" className="img-fluid" style={{ maxWidth: "30px" }} />
-                          <p>Apple</p>
-                        </a>
-                      </span>
-                      <span className="text-center">
-                        <a href="#">
-                          <img src="/image/twitter.png" alt="X icon" className="img-fluid" style={{ maxWidth: "30px" }} />
-                          <p>X-Twitter</p>
-                        </a>
-                      </span>
-                      <span className="text-center">
-                        <a href="#">
-                          <img src="/image/facebook.png" alt="Facebook icon" className="img-fluid" style={{ maxWidth: "30px" }} />
-                          <p>Facebook</p>
-                        </a>
-                      </span>
+                      {/* Autres options */}
                     </div>
                   </form>
                 )}
-                <ErrorModal message={errorMessage} onClose={closeErrorModal} />
                 <TwoFAModal
                   isOpen={show2FAModal}
                   onClose={() => setShow2FAModal(false)}

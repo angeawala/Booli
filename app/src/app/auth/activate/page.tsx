@@ -6,14 +6,8 @@ import { activateAccount } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
+import { AxiosError } from "axios";
 
-interface ErrorResponse {
-  response?: {
-    data?: {
-      error?: string;
-    };
-  };
-}
 
 function ActivateContent() {
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +18,7 @@ function ActivateContent() {
 
   useEffect(() => {
     if (!token) {
-      toast.error("Token manquant");
+      toast.error("Lien invalide : token manquant.");
       setStatus("error");
       setIsLoading(false);
       return;
@@ -32,16 +26,17 @@ function ActivateContent() {
 
     const activate = async () => {
       try {
-        const response = await activateAccount(token);
-        console.log("Activation response:", response);
-        toast.success("Compte activé avec succès ! Vous pouvez maintenant vous connecter.");
+        await activateAccount(token); // Suppression de 'response' inutilisé
+        toast.success("Compte activé avec succès ! Redirection vers la connexion...");
         setStatus("success");
         setTimeout(() => router.push("/auth/login"), 2000);
       } catch (error: unknown) {
-        console.error("Erreur lors de l’activation:", error);
-        const typedError = error as ErrorResponse;
-        const errorMsg = typedError.response?.data?.error || "Erreur lors de l’activation";
-        toast.error(errorMsg);
+        if (error instanceof AxiosError) {
+          const errorMsg = error.response?.data?.detail || "Erreur lors de l’activation du compte.";
+          toast.error(errorMsg);
+        } else {
+          toast.error("Une erreur inattendue est survenue.");
+        }
         setStatus("error");
       } finally {
         setIsLoading(false);

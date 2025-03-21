@@ -5,39 +5,39 @@ import { useRouter } from "next/navigation";
 import { resendActivation } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-interface ErrorResponse {
-  response?: {
-    data?: {
-      error?: string;
-    };
-  };
-}
+import { AxiosError } from "axios";
+import "../styles/login.css"; // Réutilisation du CSS
 
 export default function ResendActivationPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Ajout pour débouncing
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Débouncing
     if (!email) {
       toast.error("Veuillez entrer un email.");
       return;
     }
 
+    setIsSubmitting(true);
     setIsLoading(true);
     try {
-      const response = await resendActivation(email);
-      const msg = response.message || "Un nouvel email d’activation a été envoyé !";
-      toast.success(msg);
-      setTimeout(() => router.push("/auth/login"), 2000); // Ajout d'un délai pour voir le succès
+      await resendActivation(email); // Suppression de 'response' inutilisé
+      toast.success("Un nouvel email d’activation a été envoyé ! Redirection...");
+      setTimeout(() => router.push("/auth/login"), 2000);
     } catch (error: unknown) {
-      const typedError = error as ErrorResponse;
-      const errorMsg = typedError.response?.data?.error || "Erreur lors de l’envoi de l’email.";
-      toast.error(errorMsg);
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.detail || "Erreur lors de l’envoi de l’email.";
+        toast.error(errorMsg);
+      } else {
+        toast.error("Une erreur inattendue est survenue.");
+      }
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -76,7 +76,7 @@ export default function ResendActivationPage() {
                     <button
                       type="submit"
                       className="btn btn-primary btn-lg text-white px-4 py-2 w-100 w-md-auto"
-                      disabled={isLoading}
+                      disabled={isSubmitting || isLoading}
                     >
                       {isLoading ? "Envoi en cours..." : "Renvoyer"}
                     </button>

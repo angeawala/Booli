@@ -333,7 +333,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-image: url('../Photo/bureau.jpg');
+            background-image: url('/Photo/bureau.jpg');
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -477,7 +477,7 @@
         .img_soussect {
           position: relative;
           height: 350px;
-          background: url('../Photo/assistance.jpg') no-repeat center/cover;
+          background: url('/Photo/assistance.jpg') no-repeat center/cover;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -690,10 +690,10 @@
           background-position: center;
       }
       .image-left {
-           background-image: url('../Photo/vente.jpg'); 
+           background-image: url('/Photo/vente.jpg'); 
       }
       .image-right {
-           background-image: url('../Photo/colis.jpg'); 
+           background-image: url('/Photo/colis.jpg'); 
       }
       .image::before {
           content: "";

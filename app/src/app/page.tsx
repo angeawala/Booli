@@ -70,7 +70,6 @@ export default function Home() {
 
     const countdownInterval = setInterval(() => {
       setCountdown((prev) => {
-        console.log("Countdown:", prev); // Pour déboguer
         if (prev <= 1) {
           clearInterval(countdownInterval);
           window.location.href = "/store/product";
@@ -177,13 +176,13 @@ export default function Home() {
                 </a>
                 <br />
                 <br />
-                <a href="/librairie" target="_blank">
+                <a href="store/library" target="_blank">
                   <i className="fa-solid fa-book-open"></i> Bibliothèque
                   [Documents]
                 </a>
                 <br />
                 <br />
-                <a href="/opportunites" target="_blank">
+                <a href="store/product" target="_blank">
                   <i className="fas fa-briefcase" id="conu"></i> Découvrir des
                   Opportunitées
                 </a>
@@ -212,6 +211,11 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <div className="mobile-section">
+          <a href="store/pharma" className="mobile-btn">Tourisme & Pharma</a>
+          <a href="store/library" className="mobile-btn">Bibliothèque [Livres]</a>
+          <a href="store/product" className="mobile-btn">Opportinuté & Business</a>
+        </div>
 
         <div className="section_next row col-12">
           <div className="loader-container">
@@ -232,7 +236,6 @@ export default function Home() {
             <ChatModal />
           </section>
         </div>
-
         <Footer />
       </>
     );

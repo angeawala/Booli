@@ -11,26 +11,30 @@ import { AxiosError } from "axios";
 export default function PasswordResetRequestPage() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Ajout pour débouncing
   const [showInfo, setShowInfo] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Débouncing
+    setIsSubmitting(true);
     setIsLoading(true);
 
     try {
-      await passwordResetRequest(email); // Suppression de 'response' inutilisé
-      toast.success("Un email de réinitialisation a été envoyé !");
-      router.push("/auth/login");
+      await passwordResetRequest(email);
+      toast.success("Un email de réinitialisation a été envoyé ! Redirection...");
+      setTimeout(() => router.push("/auth/login"), 2000); // Délai pour voir le message
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        const errorMsg = error.response?.data?.error || "Erreur lors de l’envoi de l’email.";
+        const errorMsg = error.response?.data?.detail || "Erreur lors de l’envoi de l’email.";
         toast.error(errorMsg);
       } else {
-        toast.error("Une erreur inconnue est survenue.");
+        toast.error("Une erreur inattendue est survenue.");
       }
     } finally {
       setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -68,8 +72,8 @@ export default function PasswordResetRequestPage() {
                     <button
                       type="submit"
                       className="btn-lg connex w-100 w-md-auto"
-                      disabled={isLoading}
-                      style={{ display: "block" }} // Force l’affichage
+                      disabled={isSubmitting || isLoading}
+                      style={{ display: "block" }}
                     >
                       {isLoading ? "Envoi en cours..." : "Envoyer"}
                     </button>

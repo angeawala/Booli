@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AuthState, User } from "@/types/auth"; // Import corrigé avec @
+import { AuthState, User } from "@/types/auth";
+import { getAccessToken, setAccessToken, clearAccessToken } from "@/api/api";
 
 const initialState: AuthState = {
-  accessToken: null,
-  refreshToken: null, // Pas stocké ici, juste pour référence
-  isAuthenticated: false,
+  accessToken: getAccessToken(), // Charger depuis le cookie au démarrage
+  refreshToken: null, // Pas stocké, géré par cookie HTTP-only
+  isAuthenticated: !!getAccessToken(), // Vrai si le cookie existe
   user: null,
 };
 
@@ -19,13 +20,14 @@ const authSlice = createSlice({
       state.accessToken = action.payload.access;
       state.isAuthenticated = true;
       state.user = action.payload.user || null;
-      // refresh_token est dans un cookie, pas besoin de le stocker ici
+      setAccessToken(action.payload.access); // Synchroniser avec le cookie
     },
     logout: (state) => {
       state.accessToken = null;
       state.refreshToken = null;
       state.isAuthenticated = false;
       state.user = null;
+      clearAccessToken(); // Supprimer le cookie access_token
     },
   },
 });

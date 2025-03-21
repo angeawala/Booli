@@ -3,6 +3,7 @@ import authReducer from "./authSlice";
 import categoryReducer from "./categorySlice"; // Si existant
 import productReducer from "./productSlice";
 import marketReducer from "./marketSlice"; // Ajout
+import libraryReducer from "./librarySlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     category: categoryReducer, // Si existant
     product: productReducer,
     market: marketReducer, // Ajout
+    library: libraryReducer,
   },
 });
 
