@@ -1,51 +1,36 @@
 import { store } from "@/store/store";
-import { setTokens, logout } from "@/store/authSlice";
-import { verifyToken, refreshToken } from "@/api/authApi";
+import { setTokens, logout } from "@/store/slices/authSlice";
+import { getAccessToken } from "@/api/api";
+import { verifyToken } from "@/api/authApi";
+import { VerifyTokenResponse } from "@/types/auth";
 
-let isRefreshing = false;
-
+// Pas besoin de gérer isRefreshing ici, car api.ts s'en charge
 export const checkAuth = async (): Promise<boolean> => {
-  const { accessToken } = store.getState().auth;
+  const accessToken = getAccessToken(); // Lire depuis le cookie
 
   if (!accessToken) {
+    store.dispatch(logout()); // S'assurer que Redux est synchronisé
     return false;
   }
 
   try {
-    const verifyResponse = (await verifyToken(accessToken)) as { valid: boolean };
+    const verifyResponse: VerifyTokenResponse = await verifyToken(accessToken);
     if (verifyResponse.valid) {
+      // Synchroniser Redux si nécessaire
+      if (store.getState().auth.accessToken !== accessToken) {
+        store.dispatch(setTokens({ access: accessToken }));
+      }
       return true;
     }
+    // Si le token n'est pas valide, tenter une requête protégée déclenchera l'intercepteur
+    return false;
   } catch (error: unknown) {
-    // Vérifier si c'est une erreur et afficher un message
     if (error instanceof Error) {
       console.error("Erreur de vérification du token :", error.message);
     }
-
-    // Token invalide ou expiré, tenter un refresh
-    if (!isRefreshing) {
-      isRefreshing = true;
-      try {
-        const refreshResponse = (await refreshToken()) as { access: string };
-        store.dispatch(setTokens({ access: refreshResponse.access }));
-        isRefreshing = false;
-        return true;
-      } catch (refreshError: unknown) {
-        if (refreshError instanceof Error) {
-          console.error("Erreur de rafraîchissement du token :", refreshError.message);
-        }
-        store.dispatch(logout());
-        isRefreshing = false;
-        return false;
-      }
-    } else {
-      // Attendre la fin du refresh en cours
-      while (isRefreshing) {
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-      return store.getState().auth.isAuthenticated;
-    }
+    // L'intercepteur de api.ts gère déjà le rafraîchissement sur 401
+    // Si ça échoue, on déconnecte
+    store.dispatch(logout());
+    return false;
   }
-
-  return false; // Par défaut, si erreur inattendue
 };

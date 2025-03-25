@@ -2,7 +2,7 @@
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { logout as logoutAction } from "@/store/authSlice"; // Action Redux
+import { logout as logoutAction } from "@/store/slices/authSlice"; // Action Redux
 import { logout as logoutApi } from "@/api/authApi"; // Appel API
 import Link from "next/link";
 import { useRouter } from "next/navigation";

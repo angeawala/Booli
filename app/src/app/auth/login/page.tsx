@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { setTokens } from "@/store/authSlice";
+import { setTokens } from "@/store/slices/authSlice";
 import { login, checkUser, generate2FAToken, verify2FA } from "@/api/authApi";
 import { RootState } from "@/store/store";
 import { checkAuth } from "@/utils/authUtils";

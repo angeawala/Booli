@@ -6,7 +6,6 @@ import { resendActivation } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AxiosError } from "axios";
-import "../styles/login.css"; // Réutilisation du CSS
 
 export default function ResendActivationPage() {
   const [email, setEmail] = useState("");

@@ -1,21 +1,29 @@
+"use client";
+
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "@/store/categorySlice";
+import { getCommercialCategories } from "@/store/slices/commercialProductSlice";
 import { RootState, AppDispatch } from "@/store/store";
+import { CommercialCategory } from "@/types/commercial_products";
 
 export const useNonTechCategories = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { commercialCategories, loading, error } = useSelector((state: RootState) => state.category);
+  const { categories, loading, error } = useSelector(
+    (state: RootState) => state.commercialProducts
+  );
 
   useEffect(() => {
-    dispatch(fetchCategories()); // Charge tout et remplit commercialCategories automatiquement
+    dispatch(getCommercialCategories()); // Charge toutes les catégories commerciales
   }, [dispatch]);
 
-  // Filtrer les catégories non-tech parmi les commerciales et prendre les 9 plus récentes
-  const nonTechCategories = commercialCategories
-    .filter((cat) => cat.is_non_tech)
-    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-    .slice(0, 9);
+  // Filtrer les catégories non techniques (is_tech: false) et limiter à 9
+  const nonTechCategories = categories
+    .filter((cat) => !cat.is_tech) // Non technique = is_tech: false
+    .slice(0, 9); // Prendre les 9 premières
 
-  return { nonTechCategories, loading, error };
+  return { nonTechCategories, loading, error } as {
+    nonTechCategories: CommercialCategory[];
+    loading: boolean;
+    error: string | null;
+  };
 };

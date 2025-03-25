@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Panier from "@/components/ui/Panier";
+import Panier from "@/components/ui/button/Panier";
 import SignInOrLogout from "@/components/links/SignInOrLogout";
 import { useState, useEffect, useRef } from "react";
 

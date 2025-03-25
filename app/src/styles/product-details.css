@@ -1,0 +1,8 @@
+.cadre { display: flex; gap: 2rem; }
+.cadres-images img { max-width: 100%; }
+.thumbnail-images { display: flex; gap: 1rem; }
+.bar1 { display: flex; align-items: center; gap: 0.5rem; }
+.bar1-fill { height: 10px; background: #e67e22; }
+.quantity-selector { margin: 1rem 0; }
+.buttons { display: flex; gap: 1rem; }
+.avis { margin: 1rem 0; }

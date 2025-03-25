@@ -1,0 +1,37 @@
+.product-list {
+    padding: 20px;
+  }
+  
+  .create-btn {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background: #e67e22;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .products {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .actions i {
+    font-size: 18px;
+    color: #e67e22;
+  }

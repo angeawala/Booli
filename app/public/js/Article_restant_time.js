@@ -26,23 +26,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-// Fixed####barre de recherche
-const moteur = document.getElementById("moteur");
-const header = document.getElementById("header");
-const sous = document.getElementById("sous");
-const offsetTop = moteur.offsetTop;
-window.addEventListener("scroll", () => {
-  if (window.scrollY > offsetTop) {
-    moteur.style.position = "fixed";
-    moteur.style.top = "0";
-    moteur.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
-    header.style.display = "none";
-    sous.style.display = "none";
-  } else {
-    moteur.style.position = "relative";
-    moteur.style.boxShadow = "none";
-    header.style.display = "block";
-    sous.style.display = "block";
-  }
-});
+
 

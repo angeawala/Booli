@@ -7,7 +7,7 @@ import Head from "next/head";
 import CookieConsent from "@/components/CookieConsent";
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
 import { Akaya_Kanadaka, Poppins } from "next/font/google";
-import { CartProvider } from "@/context/CartContext"; // Ajout du CartProvider
+import { CartProvider } from "@/context/cartContext"; // Ajout du CartProvider
 import "@/styles/css/market.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -39,13 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
 
             {/* Scripts chargés avec next/script 
-            <Script src="/js/defile.js" strategy="afterInteractive" />
-            <Script src="/js/produit.js" strategy="afterInteractive" />
-            <Script src="/js/option_pays.js" strategy="afterInteractive" />
             <Script src="/js/remerciement.js" strategy="afterInteractive" />
-            <Script src="/js/suggestion_mot.js" strategy="afterInteractive" />
-            <Script src="/js/cthalogue.js" strategy="afterInteractive" />
-            <Script src="/js/panneau.js" strategy="afterInteractive" />
             <Script src="/js/fournisseur.js" strategy="afterInteractive" />
             <Script src="/js/Article_restant_time.js" strategy="afterInteractive" />*/}
           </CartProvider>
