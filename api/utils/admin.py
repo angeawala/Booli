@@ -1,120 +1,125 @@
 from django.contrib import admin
 from .models import Devise, TauxEchange, Pays, Ville, Adresse
 
-# Admin pour Devise
+
+# ======= DeviseAdmin : Gestion des devises =======
 @admin.register(Devise)
 class DeviseAdmin(admin.ModelAdmin):
+    """Interface admin pour le modèle Devise."""
     list_display = ('name', 'code', 'symbol', 'created_at')
     list_filter = ('code',)
     search_fields = ('name', 'code', 'symbol')
-    list_per_page = 20
     ordering = ('code',)
+    list_per_page = 20
 
     fieldsets = (
-        (None, {
-            'fields': ('name', 'code', 'symbol')
-        }),
+        (None, {'fields': ('name', 'code', 'symbol')}),
         ('Métadonnées', {
             'fields': ('created_at', 'updated_at', 'created_by', 'updated_by'),
             'classes': ('collapse',),
         }),
     )
-
     readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+# ======= Fin DeviseAdmin =======
 
-# Admin pour TauxEchange
+
+# ======= TauxEchangeAdmin : Gestion des taux de change =======
 @admin.register(TauxEchange)
 class TauxEchangeAdmin(admin.ModelAdmin):
+    """Interface admin pour le modèle TauxEchange."""
     list_display = ('devise_from', 'devise_to', 'taux', 'created_at')
     list_filter = ('devise_from', 'devise_to')
     search_fields = ('devise_from__code', 'devise_to__code')
-    list_per_page = 20
     ordering = ('-created_at',)
+    list_per_page = 20
 
     fieldsets = (
-        (None, {
-            'fields': ('devise_from', 'devise_to', 'taux')
-        }),
+        (None, {'fields': ('devise_from', 'devise_to', 'taux')}),
         ('Métadonnées', {
             'fields': ('created_at', 'updated_at', 'created_by', 'updated_by'),
             'classes': ('collapse',),
         }),
     )
-
     readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+# ======= Fin TauxEchangeAdmin =======
 
-# Inline pour Ville dans Pays
+
+# ======= VilleInline : Villes liées à un pays =======
 class VilleInline(admin.TabularInline):
     model = Ville
-    extra = 1  # Une ligne vide par défaut pour ajouter une ville
+    extra = 1
     fields = ('name',)
+# ======= Fin VilleInline =======
 
-# Admin pour Pays
+
+# ======= PaysAdmin : Gestion des pays =======
 @admin.register(Pays)
 class PaysAdmin(admin.ModelAdmin):
+    """Interface admin pour le modèle Pays."""
     list_display = ('name', 'code', 'created_at')
     list_filter = ('code',)
     search_fields = ('name', 'code')
-    list_per_page = 20
     ordering = ('name',)
+    list_per_page = 20
     inlines = [VilleInline]
 
     fieldsets = (
-        (None, {
-            'fields': ('name', 'code')
-        }),
+        (None, {'fields': ('name', 'code')}),
         ('Métadonnées', {
             'fields': ('created_at', 'updated_at', 'created_by', 'updated_by'),
             'classes': ('collapse',),
         }),
     )
-
     readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+# ======= Fin PaysAdmin =======
 
-# Admin pour Ville
+
+# ======= VilleAdmin : Gestion des villes =======
 @admin.register(Ville)
 class VilleAdmin(admin.ModelAdmin):
+    """Interface admin pour le modèle Ville."""
     list_display = ('name', 'pays', 'created_at')
     list_filter = ('pays',)
     search_fields = ('name', 'pays__name', 'pays__code')
-    list_per_page = 20
     ordering = ('name',)
+    list_per_page = 20
 
     fieldsets = (
-        (None, {
-            'fields': ('name', 'pays')
-        }),
+        (None, {'fields': ('name', 'pays')}),
         ('Métadonnées', {
             'fields': ('created_at', 'updated_at', 'created_by', 'updated_by'),
             'classes': ('collapse',),
         }),
     )
-
     readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+# ======= Fin VilleAdmin =======
 
-# Inline pour Adresse dans Ville (optionnel, si vous voulez gérer les adresses depuis Ville)
+
+# ======= AdresseInline : Adresses liées à une ville =======
 class AdresseInline(admin.TabularInline):
     model = Adresse
     extra = 1
     fields = ('rue', 'code_postal')
+# ======= Fin AdresseInline =======
 
-# Admin pour Adresse
+
+# ======= AdresseAdmin : Gestion des adresses =======
 @admin.register(Adresse)
 class AdresseAdmin(admin.ModelAdmin):
-    list_display = ('rue', 'code_postal', 'ville', 'created_at')
-    list_filter = ('ville__pays', 'ville')
-    search_fields = ('rue', 'code_postal', 'ville__name', 'ville__pays__name')
-    list_per_page = 20
+    """Interface admin pour le modèle Adresse."""
+    list_display = ('street', 'postal_code', 'city', 'created_at')  # 'rue' -> 'street', 'code_postal' -> 'postal_code'
+    list_filter = ('city__pays', 'city')  # Utilisation correcte des relations ForeignKey
+    search_fields = ('street', 'postal_code', 'city__name', 'city__pays__name')
     ordering = ('-created_at',)
+    list_per_page = 20
 
     fieldsets = (
-        (None, {
-            'fields': ('rue', 'code_postal', 'ville')
-        }),
+        (None, {'fields': ('street', 'postal_code', 'city')}),
         ('Métadonnées', {
             'fields': ('created_at', 'updated_at', 'created_by', 'updated_by'),
             'classes': ('collapse',),
         }),
     )
-
     readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+
+# ======= Fin AdresseAdmin =======

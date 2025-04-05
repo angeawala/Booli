@@ -8,12 +8,26 @@ class DeviseSerializer(BaseSerializer):
         model = Devise
         fields = BaseSerializer.Meta.fields + ['name', 'code', 'symbol']
 
+class DeviseListSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = Devise
+        fields = BaseSerializer.Meta.fields + ['name', 'code', 'symbol']
+
 class TauxEchangeSerializer(BaseSerializer):
-    devise_from = serializers.StringRelatedField()
-    devise_to = serializers.StringRelatedField()
+    from_currency_id = serializers.CharField(source='devise_from.code')
+    to_currency_id = serializers.CharField(source='devise_to.code')
+    rate = serializers.FloatField(source='taux')
     class Meta(BaseSerializer.Meta):
         model = TauxEchange
-        fields = BaseSerializer.Meta.fields + ['devise_from', 'devise_to', 'taux']
+        fields = BaseSerializer.Meta.fields + ['from_currency_id', 'to_currency_id', 'rate']
+
+class TauxEchangeListSerializer(BaseSerializer):
+    from_currency_id = serializers.CharField(source='devise_from.code')
+    to_currency_id = serializers.CharField(source='devise_to.code')
+    rate = serializers.FloatField(source='taux')
+    class Meta(BaseSerializer.Meta):
+        model = TauxEchange
+        fields = BaseSerializer.Meta.fields + ['from_currency_id', 'to_currency_id', 'rate']
 
 class PaysSerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
@@ -21,13 +35,13 @@ class PaysSerializer(BaseSerializer):
         fields = BaseSerializer.Meta.fields + ['name', 'code']
 
 class VilleSerializer(BaseSerializer):
-    pays = serializers.StringRelatedField()
+    pays_id = serializers.CharField(source='pays.code')
     class Meta(BaseSerializer.Meta):
         model = Ville
-        fields = BaseSerializer.Meta.fields + ['name', 'pays']
+        fields = BaseSerializer.Meta.fields + ['name', 'pays_id']
 
 class AdresseSerializer(BaseSerializer):
-    ville = serializers.StringRelatedField()
+    city_id = serializers.CharField(source='city.id')
     class Meta(BaseSerializer.Meta):
         model = Adresse
-        fields = BaseSerializer.Meta.fields + ['rue', 'code_postal', 'ville']
+        fields = BaseSerializer.Meta.fields + ['street', 'postal_code', 'city_id']

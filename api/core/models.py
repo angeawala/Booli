@@ -1,4 +1,3 @@
-# core/models.py
 import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -22,7 +21,7 @@ class BaseModel(models.Model):
         editable=False,
         verbose_name="Créé par",
         help_text="Utilisateur ayant créé l’entrée.",
-        related_name="%(class)s_created"
+        related_name="%(app_label)s_%(class)s_created"  # Ajout de %(app_label)s
     )
     created_at = models.DateTimeField(
         default=timezone.now,
@@ -39,7 +38,7 @@ class BaseModel(models.Model):
         editable=False,
         verbose_name="Mis à jour par",
         help_text="Utilisateur ayant mis à jour l’entrée.",
-        related_name="%(class)s_updated"
+        related_name="%(app_label)s_%(class)s_updated"  # Ajout de %(app_label)s
     )
     updated_at = models.DateTimeField(
         auto_now=True,

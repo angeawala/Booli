@@ -1,6 +1,8 @@
 # utils/models.py
 from django.db import models
+from django.core.validators import MinValueValidator
 from core.models import BaseModel
+from decimal import Decimal
 
 class Devise(BaseModel):
     name = models.CharField(max_length=50, verbose_name="Nom", help_text="Nom de la devise (ex. Euro)")
@@ -14,11 +16,20 @@ class Devise(BaseModel):
 
     def __str__(self):
         return f"{self.name} ({self.code})"
+    def save(self, *args, **kwargs):
+        self.code = self.code.upper()
+        return super().save(*args, **kwargs)
+
 
 class TauxEchange(BaseModel):
     devise_from = models.ForeignKey(Devise, on_delete=models.CASCADE, related_name="taux_from", verbose_name="Devise source")
     devise_to = models.ForeignKey(Devise, on_delete=models.CASCADE, related_name="taux_to", verbose_name="Devise cible")
-    taux = models.FloatField(verbose_name="Taux", help_text="Taux de conversion (ex. 1 EUR = 1.2 USD)")
+    taux = models.DecimalField(
+        max_digits=10, decimal_places=6,
+        validators=[MinValueValidator(Decimal('0.000001'))],
+        verbose_name="Taux",
+        help_text="Taux de conversion (ex. 1 EUR = 1.2 USD)"
+    )
 
     class Meta:
         verbose_name = "Taux d’échange"
@@ -40,6 +51,10 @@ class Pays(BaseModel):
 
     def __str__(self):
         return self.name
+    def save(self, *args, **kwargs):
+        self.code = self.code.upper()
+        return super().save(*args, **kwargs)
+
 
 class Ville(BaseModel):
     name = models.CharField(max_length=100, verbose_name="Nom", help_text="Nom de la ville (ex. Paris)")
@@ -55,13 +70,14 @@ class Ville(BaseModel):
         return f"{self.name}, {self.pays}"
 
 class Adresse(BaseModel):
-    rue = models.CharField(max_length=255, verbose_name="Rue", help_text="Nom de la rue et numéro")
-    code_postal = models.CharField(max_length=20, verbose_name="Code postal", help_text="Code postal")
-    ville = models.ForeignKey(Ville, on_delete=models.CASCADE, related_name="adresses", verbose_name="Ville")
+    street = models.CharField(max_length=255, verbose_name="Rue", help_text="Nom de la rue et numéro")
+    postal_code = models.CharField(max_length=20, verbose_name="Code postal", help_text="Code postal")
+    city = models.ForeignKey(Ville, on_delete=models.CASCADE, related_name="adresses", verbose_name="Ville")
 
     class Meta:
         verbose_name = "Adresse"
         verbose_name_plural = "Adresses"
+        indexes = [models.Index(fields=['postal_code', 'city'])]
 
     def __str__(self):
-        return f"{self.rue}, {self.code_postal} {self.ville}"
+        return f"{self.street}, {self.postal_code} {self.city.name} ({self.city.pays.code})"

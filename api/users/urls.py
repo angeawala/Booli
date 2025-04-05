@@ -3,8 +3,12 @@ from django.urls import path
 from .views import (
     CustomTokenObtainPairView, CustomTokenRefreshView, CustomTokenVerifyView,
     LogoutView, PasswordResetRequestView, PasswordResetConfirmView, ActivateAccountView,
-    RegisterUserView, ResendActivationView, Generate2FATokenView, CheckUserView, Verify2FAView
+    RegisterUserView, ResendActivationView, Generate2FATokenView, CheckUserView, Verify2FAView,
+    UserProfileView, UpdateProfileView, DeleteAccountView
 )
+
+app_name = 'users'
+
 
 urlpatterns = [
     # JWT Auth
@@ -30,4 +34,9 @@ urlpatterns = [
 
     # Utilitaire
     path('check-user/', CheckUserView.as_view(), name='check_user'),
+
+    # Profil utilisateur (nouveaux)
+    path('profile/', UserProfileView.as_view(), name='user_profile'),
+    path('profile/update/', UpdateProfileView.as_view(), name='update_profile'),
+    path('profile/delete/', DeleteAccountView.as_view(), name='delete_user'),
 ]

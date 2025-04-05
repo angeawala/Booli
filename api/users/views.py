@@ -4,17 +4,17 @@ from django.conf import settings
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework import generics, status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 import requests
 from .models import CustomUser, PasswordResetToken, ActivationToken, TwoFAToken
 from .serializers import (
     CustomTokenObtainPairSerializer, CustomUserCreateSerializer, ActivationTokenSerializer,
     ResendActivationSerializer, PasswordResetRequestSerializer, PasswordResetConfirmSerializer,
-    CheckUserSerializer, Generate2FASerializer, Verify2FASerializer, LogoutSerializer
+    CheckUserSerializer, Generate2FASerializer, Verify2FASerializer, LogoutSerializer,
+    UserProfileSerializer, UpdateProfileSerializer, DeleteAccountSerializer
 )
 
-# ======= CustomTokenObtainPairView : Connexion JWT =======
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
     permission_classes = [AllowAny]
@@ -40,7 +40,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             )
         return response
 
-# ======= CustomTokenRefreshView : Rafraîchissement JWT =======
 class CustomTokenRefreshView(TokenRefreshView):
     permission_classes = [AllowAny]
 
@@ -62,7 +61,6 @@ class CustomTokenRefreshView(TokenRefreshView):
         )
         return response
 
-# ======= CustomTokenVerifyView : Vérification JWT =======
 class CustomTokenVerifyView(TokenVerifyView):
     permission_classes = [AllowAny]
 
@@ -76,7 +74,6 @@ class CustomTokenVerifyView(TokenVerifyView):
         except Exception as e:
             return Response({"detail": f"Token invalide : {str(e)}"}, status=status.HTTP_401_UNAUTHORIZED)
 
-# ======= LogoutView : Déconnexion =======
 class LogoutView(generics.GenericAPIView):
     serializer_class = LogoutSerializer
     permission_classes = [AllowAny]
@@ -88,7 +85,6 @@ class LogoutView(generics.GenericAPIView):
         response.delete_cookie(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'], path='/')
         return response
 
-# ======= RegisterUserView : Inscription =======
 class RegisterUserView(generics.CreateAPIView):
     serializer_class = CustomUserCreateSerializer
     permission_classes = [AllowAny]
@@ -96,7 +92,6 @@ class RegisterUserView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save()
 
-# ======= ActivateAccountView : Activation du compte =======
 class ActivateAccountView(generics.GenericAPIView):
     serializer_class = ActivationTokenSerializer
     permission_classes = [AllowAny]
@@ -118,7 +113,6 @@ class ActivateAccountView(generics.GenericAPIView):
                 return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ======= ResendActivationView : Renvoi d’activation =======
 class ResendActivationView(generics.GenericAPIView):
     serializer_class = ResendActivationSerializer
     permission_classes = [AllowAny]
@@ -130,7 +124,6 @@ class ResendActivationView(generics.GenericAPIView):
             return Response({'message': 'Email d’activation renvoyé'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ======= PasswordResetRequestView : Demande de réinitialisation =======
 class PasswordResetRequestView(generics.GenericAPIView):
     serializer_class = PasswordResetRequestSerializer
     permission_classes = [AllowAny]
@@ -142,7 +135,6 @@ class PasswordResetRequestView(generics.GenericAPIView):
             return Response({'message': 'Email de réinitialisation envoyé'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ======= PasswordResetConfirmView : Confirmation de réinitialisation =======
 class PasswordResetConfirmView(generics.GenericAPIView):
     serializer_class = PasswordResetConfirmSerializer
     permission_classes = [AllowAny]
@@ -166,7 +158,6 @@ class PasswordResetConfirmView(generics.GenericAPIView):
                 return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ======= CheckUserView : Vérification d’existence utilisateur =======
 class CheckUserView(generics.GenericAPIView):
     serializer_class = CheckUserSerializer
     permission_classes = [AllowAny]
@@ -190,7 +181,6 @@ class CheckUserView(generics.GenericAPIView):
                 return Response({'exists': False}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ======= Generate2FATokenView : Génération 2FA =======
 class Generate2FATokenView(generics.GenericAPIView):
     serializer_class = Generate2FASerializer
     permission_classes = [AllowAny]
@@ -209,7 +199,7 @@ class Generate2FATokenView(generics.GenericAPIView):
                 subject = 'Code 2FA - BOOLi-STORE'
                 message = (
                     f"Bonjour,\n\nVotre code 2FA est : {token.code}\n\n"
-                    f"Ce code expire dans 24 heures.\n\nCordialement,\nL’équipe BOOLi-STORE"
+                    f"Ce code expire dans 10 minutes.\n\nCordialement,\nL’équipe BOOLi-STORE"
                 )
                 send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
                 return Response({'message': 'Code 2FA envoyé', 'expires_at': token.expires_at.isoformat()}, status=status.HTTP_200_OK)
@@ -217,7 +207,6 @@ class Generate2FATokenView(generics.GenericAPIView):
                 return Response({'error': 'Utilisateur non trouvé'}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ======= Verify2FAView : Vérification 2FA =======
 class Verify2FAView(generics.GenericAPIView):
     serializer_class = Verify2FASerializer
     permission_classes = [AllowAny]
@@ -243,3 +232,39 @@ class Verify2FAView(generics.GenericAPIView):
             except CustomUser.DoesNotExist:
                 return Response({'error': 'Utilisateur non trouvé'}, status=status.HTTP_404_NOT_FOUND)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserProfileView(generics.RetrieveAPIView):
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+class UpdateProfileView(generics.UpdateAPIView):
+    serializer_class = UpdateProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class DeleteAccountView(generics.DestroyAPIView):
+    serializer_class = DeleteAccountSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        instance.delete()
+        return Response({'message': 'Compte supprimé avec succès'}, status=status.HTTP_204_NO_CONTENT)
