@@ -1,0 +1,28 @@
+@media screen and (max-width: 480px) {
+    .x-btn-login{
+        font-size: 15px;
+        font-weight: 700;
+        text-wrap-mode:nowrap;
+    }
+    .x-welcome{
+        display: none;
+        padding-left:10px ;
+    }
+    .x-link-menu {
+        position: relative;
+        z-index: 9999;
+      }
+}
+.x-footer-index{
+    position: relative;
+    z-index: 9998;
+}
+.x-header-store{
+    overflow: hidden;
+    position: relative;
+    z-index: 9998;
+}
+#messageBox{
+    position: absolute;
+    z-index: 9999;
+}
