@@ -1,0 +1,146 @@
+/* styles/dashboard/products.css */
+
+/* Styles pour les onglets du dashboard */
+.x-dashboard-tabs { 
+    display: flex; 
+    gap: 1rem; /* Espacement entre les onglets */
+    margin-bottom: 2rem; /* Marge sous les onglets */
+  }
+  
+  /* Style de base pour chaque onglet */
+  .x-tab {
+    padding: 0.75rem 1.5rem; /* Rembourrage interne */
+    background: var(--bg-secondary); /* Couleur de fond par défaut */
+    border: none; /* Pas de bordure */
+    border-radius: 8px; /* Coins arrondis */
+    cursor: pointer; /* Curseur cliquable */
+    transition: var(--transition); /* Transition fluide pour les changements */
+    position: relative; /* Pour positionner les badges */
+  }
+  
+  /* Effet au survol */
+  .x-tab:hover { 
+    background: var(--secondary-color); /* Couleur au survol */
+    color: white; /* Texte blanc */
+  }
+  
+  /* Style pour l’onglet actif */
+  .x-tab-active { 
+    background: var(--primary-color); /* Couleur pour l’onglet sélectionné */
+    color: white; /* Texte blanc */
+  }
+  
+  /* Style des badges (ex. stocks faibles, expirations proches) */
+  .x-badge {
+    position: absolute; /* Positionnement par rapport au parent (.x-tab) */
+    top: -5px; /* Décalage vers le haut */
+    right: -5px; /* Décalage vers la droite */
+    padding: 0.25rem 0.5rem; /* Rembourrage interne */
+    border-radius: 50%; /* Forme circulaire */
+    color: white; /* Texte blanc */
+    font-size: 0.75rem; /* Taille de police réduite */
+  }
+  
+  /* Badge pour avertissements (ex. stocks faibles) */
+  .x-badge-warning { 
+    background: orange; /* Couleur orange */
+  }
+  
+  /* Badge pour alertes critiques (ex. expirations proches) */
+  .x-badge-danger { 
+    background: red; /* Couleur rouge */
+  }
+  
+  /* Style pour les tables des livres */
+  .x-books-table table { 
+    width: 100%; /* Pleine largeur */
+    border-collapse: collapse; /* Pas d’espace entre les cellules */
+  }
+  
+  /* Style des cellules d’en-tête et de données pour les livres */
+  .x-books-table th, .x-books-table td { 
+    padding: 0.75rem; /* Rembourrage interne */
+    border-bottom: 1px solid var(--text-secondary); /* Ligne de séparation */
+  }
+  
+  /* Style pour les tables de pharmacopée */
+  .x-pharmacy-table table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  
+  /* Style des cellules pour pharmacopée */
+  .x-pharmacy-table th, .x-pharmacy-table td { 
+    padding: 0.75rem; 
+    border-bottom: 1px solid var(--text-secondary); 
+  }
+  
+  /* Style pour les tables de docteurs */
+  .x-doctors-table table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  
+  /* Style des cellules pour docteurs */
+  .x-doctors-table th, .x-doctors-table td { 
+    padding: 0.75rem; 
+    border-bottom: 1px solid var(--text-secondary); 
+  }
+  
+  /* Style pour les tables de produits commerciaux */
+  .x-commercial-table table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  
+  /* Style des cellules pour produits commerciaux */
+  .x-commercial-table th, .x-commercial-table td { 
+    padding: 0.75rem; 
+    border-bottom: 1px solid var(--text-secondary); 
+  }
+  
+  /* Groupe de champs pour les variantes dans le formulaire */
+  .x-variant-group { 
+    display: flex; 
+    gap: 0.5rem; /* Espacement entre les champs */
+    margin-bottom: 0.5rem; /* Marge sous chaque groupe */
+  }
+  
+  /* Style pour les tables de promotions et engros */
+  .x-promotions-engros-table table { 
+    width: 100%; 
+    border-collapse: collapse; 
+  }
+  
+  /* Style des cellules pour promotions et engros */
+  .x-promotions-engros-table th, .x-promotions-engros-table td { 
+    padding: 0.75rem; 
+    border-bottom: 1px solid var(--text-secondary); 
+  }
+  
+  /* Groupe de champs pour les paliers de prix en gros */
+  .x-tier-group { 
+    display: flex; 
+    gap: 0.5rem; 
+    margin-bottom: 0.5rem; 
+  }
+  
+  /* Conteneur pour les boutons d’action (ex. ajouter promotion/engros) */
+  .x-actions { 
+    display: flex; 
+    gap: 1rem; /* Espacement entre les boutons */
+    margin-bottom: 1rem; /* Marge sous les boutons */
+  }
+  
+  /* Conteneur pour la pagination */
+  .x-pagination { 
+    margin-top: 1rem; /* Marge au-dessus */
+    display: flex; 
+    gap: 1rem; /* Espacement entre les éléments */
+    justify-content: center; /* Centrage horizontal */
+  }
+  
+  /* Style des boutons de pagination */
+  .x-pagination button { 
+    padding: 0.5rem 1rem; /* Rembourrage interne */
+  }

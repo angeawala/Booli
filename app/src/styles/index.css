@@ -17,12 +17,13 @@
     position: relative;
     z-index: 9998;
 }
-.x-header-store{
-    overflow: hidden;
-    position: relative;
-    z-index: 9998;
-}
+
 #messageBox{
     position: absolute;
     z-index: 9999;
+}
+.x-menu-header{
+    overflow: hidden;
+    position: relative;
+
 }

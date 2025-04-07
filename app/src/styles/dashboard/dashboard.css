@@ -1,0 +1,386 @@
+/* Reuse variables from header.css (ou fichier global) */
+/* Les variables sont supposées être définies ailleurs (header.css ou un fichier global) */
+
+.dashboard-wrapper {
+  background-color: var(--bg-light);
+  position: relative;
+  overflow: hidden;
+  display: flex; /* Pour le layout global */
+  flex-direction: column; /* Empile l'header, le body et potentiellement le footer */
+  min-height: 100vh; /* Assure que le wrapper prend au moins toute la hauteur de la vue */
+}
+
+[data-theme="dark"] .dashboard-wrapper {
+  background-color: var(--bg-dark);
+}
+
+.dashboard-body {
+  display: flex;
+  flex-grow: 1; /* Permet au body de s'étendre et de pousser le footer vers le bas */
+  overflow: hidden; /* Important pour le défilement indépendant */
+}
+
+/* Navbar dynamique (pour les écrans plus grands, par défaut elle est potentiellement hors écran) */
+.navbar {
+  height: calc(100vh - var(--header-height, 60px) - var(--footer-height, 0px)); /* Ajustement pour header et footer */
+  overflow-y: auto;
+  position: sticky; /* Reste visible lors du défilement du body */
+  top: var(--header-height, 60px);
+  width: auto;
+  min-width: 50px;
+  max-width: 300px; /* Légèrement réduit pour mobile */
+  padding-right: 1rem;
+  z-index: 10;
+  order: -1; /* Se place à gauche par défaut pour le layout mobile */
+}
+
+.x-dashboard-scrollable {
+  overflow-y: auto;
+  flex-grow: 1; /* Prend l'espace restant dans le dashboard-body */
+  padding: 1rem; /* Padding par défaut pour le contenu principal */
+}
+
+/* Welcome Section (Mobile First) */
+.x-dashboard-welcome {
+  margin-bottom: 1.5rem;
+  padding: 1rem; /* Ajouter un peu de padding autour du contenu */
+}
+.x-welcome-title {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  animation: x-fade-in 0.5s ease forwards; /* Assurez-vous que l'animation est définie ailleurs */
+  margin-bottom: 0.5rem;
+}
+.x-welcome-text {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+}
+
+/* Notifications Section (Mobile First) */
+.x-dashboard-notifications {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+.x-notifications-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.x-notifications-list {
+  list-style: none;
+  padding: 0;
+}
+.x-notification-item {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+  color: var(--text-primary);
+  animation: x-slide-in 0.4s ease forwards; /* Assurez-vous que l'animation est définie ailleurs */
+}
+.x-notification-success {
+  background: rgba(var(--secondary-color-rgb, 0, 204, 153), 0.2); /* Utiliser RGB */
+}
+.x-notification-warning {
+  background: rgba(var(--warning-color-rgb, 241, 196, 15), 0.2); /* Définir --warning-color-rgb */
+}
+.x-notification-error {
+  background: rgba(var(--accent-color-rgb, 255, 107, 107), 0.2); /* Utiliser RGB */
+}
+.x-icon-success {
+  color: var(--secondary-color);
+}
+.x-icon-warning {
+  color: #f1c40f; /* Ou une variable si vous en créez une */
+}
+.x-icon-error {
+  color: var(--accent-color);
+}
+.x-notification-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  margin-left: auto;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0.2rem; /* Réduire le padding du bouton */
+}
+.x-notification-close:hover {
+  color: var(--accent-color);
+}
+
+/* Stats Section (Mobile First - Layout en Colonne) */
+.x-dashboard-stats {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+.x-stats-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.x-stats-role-row {
+  margin-bottom: 1rem;
+}
+.x-stats-role-title {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
+}
+.x-stats-row {
+  display: flex;
+  flex-direction: column; /* Layout en colonne par défaut pour mobile */
+  gap: 0.75rem;
+}
+.x-stats-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  flex: 1 0 auto; /* Ne pas laisser les éléments s'étirer indéfiniment */
+  min-width: auto; /* La largeur dépend du contenu sur mobile */
+  text-align: center;
+  transition: var(--transition);
+}
+.x-stats-critical {
+  border: 2px solid var(--accent-color);
+  transform: scale(1.02); /* Léger effet sur mobile */
+}
+[data-theme="light"] .x-stats-item {
+  background: rgba(0, 0, 0, 0.05);
+}
+.x-stats-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-sm); /* Ombre plus subtile sur mobile */
+}
+.x-stats-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+.x-stats-value {
+  font-size: var(--font-size-base);
+  font-weight: 600; /* Légèrement moins gras sur mobile */
+}
+.x-stats-good {
+  color: var(--secondary-color);
+}
+.x-stats-warning {
+  color: #f1c40f;
+}
+.x-stats-bad {
+  color: var(--accent-color);
+}
+
+/* Chart Section (Mobile First - Scroll Horizontal) */
+.x-dashboard-chart {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+.x-chart-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.x-chart-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem; /* Espace pour les flèches */
+}
+.x-chart-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0.75rem;
+  width: 100%; /* Assure que le conteneur prend toute la largeur */
+}
+.x-chart-item {
+  flex: 0 0 280px; /* Taille plus petite pour les écrans étroits */
+  scroll-snap-align: start;
+  border: 1px solid rgba(var(--text-secondary-rgb, 160, 160, 160), 0.1); /* Bordure subtile */
+  border-radius: 6px;
+  padding: 0.75rem;
+  background-color: var(--bg-light); /* Fond clair pour les cartes de graphique */
+}
+[data-theme="dark"] .x-chart-item {
+  background-color: var(--bg-dark);
+  border-color: rgba(var(--text-secondary-dark-rgb, 209, 213, 219), 0.1);
+}
+.x-chart-subtitle {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.x-chart-arrow {
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 0.4rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.8rem;
+  min-width: 2rem; /* Taille minimale pour les boutons */
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.x-chart-arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.x-chart-arrow:hover:not(:disabled) {
+  background: var(--secondary-color);
+}
+
+/* Clients Section (Mobile First - Tableau Scrollable Horizontalement) */
+.x-dashboard-clients {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+.x-clients-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.x-clients-table {
+  overflow-x: auto;
+}
+.x-clients-table table {
+  width: 100%; /* La largeur s'ajuste au contenu */
+  border-collapse: collapse;
+}
+.x-clients-table th,
+.x-clients-table td {
+  padding: 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid var(--text-secondary);
+  white-space: nowrap; /* Empêche le texte de se casser */
+  font-size: var(--font-size-sm);
+}
+.x-clients-table th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+}
+[data-theme="light"] .x-clients-table th {
+  background: rgba(0, 0, 0, 0.05);
+}
+[data-theme="dark"] .x-clients-table th {
+  background: rgba(255, 255, 255, 0.15);
+}
+.x-access-denied {
+  text-align: center;
+  color: var(--accent-color);
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* Actions Section (Mobile First - Grid Adaptatif) */
+.x-dashboard-actions {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+.x-actions-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+.x-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Colonnes plus petites par défaut */
+  gap: 0.75rem;
+}
+.x-action-button {
+  display: block;
+  padding: 0.75rem;
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+.x-action-button:hover {
+  background: var(--secondary-color);
+  transform: scale(1.02);
+}
+
+/* Badges (Mobile First - Taille Réduite) */
+.x-badge {
+  display: inline-block;
+  padding: 0.2rem 0.4rem;
+  border-radius: 50%;
+  color: white;
+  font-size: 0.65rem;
+  margin-left: 0.3rem;
+}
+
+.x-badge-warning {
+  background: #ff9900;
+}
+
+.x-badge-danger {
+  background: #ff4444;
+}
+
+.x-badge-info {
+  background: #1e90ff;
+}
+
+/* Animations (Supposées définies ailleurs) */
+/* @keyframes x-fade-in { ... } */
+/* @keyframes x-slide-in { ... } */
+
+/* Media Queries pour les écrans plus grands */
+@media (min-width: 768px) {
+  .x-welcome-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  .x-stats-title,
+  .x-notifications-title,
+  .x-actions-title,
+  .x-chart-title,
+  .x-clients-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .x-stats-role-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .x-stats-row {
+    flex-direction: row; /* Retour au layout horizontal sur les écrans plus grands */
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .x-stats-item {
+    min-width: 150px;
+    flex-grow: 1; /* Permettre aux éléments de s'étendre */
+  }
+  .x-chart-item {
+    flex-basis: 300px; /* Taille plus importante sur les grands écrans */
+  }
+  .x-actions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Colonnes plus larges */
+  }
+  .navbar {
+    position: sticky; /* Garder sticky sur les grands écrans aussi */
+    order: 0; /* Retour à l'ordre normal */
+    border-right: 1px solid var(--text-secondary-dark); /* Ajouter une bordure pour la séparation */
+  }
+  .x-dashboard-scrollable {
+    padding: 2rem; /* Plus de padding sur les grands écrans */
+  }
+}
+
+@media (min-width: 992px) {
+  .x-chart-item {
+    flex-basis: 350px; /* Encore plus grand sur les très grands écrans */
+  }
+}

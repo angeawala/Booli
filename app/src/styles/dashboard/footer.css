@@ -1,0 +1,60 @@
+/* Reuse variables from header.css */
+.footer {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: var(--transition);
+  }
+  
+  /* Extended styles with x- prefix */
+  .x-footer {
+    z-index: 1000;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .x-footer-container {
+    padding: 0 1.5rem;
+  }
+  
+  .x-footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .x-footer-text {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    animation: x-fade-in 0.5s ease forwards;
+  }
+  
+  .x-footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .footer-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    transition: var(--transition);
+  }
+  
+  .x-footer-link:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+  }
+  
+  /* Animations */
+  @keyframes x-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive Design */
+  @media (min-width: 768px) {
+    .x-footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }

@@ -840,6 +840,7 @@ content: '';
 .foot-content-wrapper{
     padding-bottom: 0px;
     font-size: 16pt;
+    z-index: 1000;
 }
 
 .foot-content-wrapper .content1 #search{
@@ -1584,7 +1585,7 @@ h6{
 /* ====================== Boite d'affichage a l'atualisation ================================*/
  .message-box {
     position: absolute;
-    top: 52%;
+    top: 60%;
     left: 20px;
     width: 250px;
     background-color: #333;
