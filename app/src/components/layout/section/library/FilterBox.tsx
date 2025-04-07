@@ -1,9 +1,8 @@
-// FilterBox.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "@/store";
 import { useLibrary } from "@/hooks/useLibrary";
 import { BookCategory } from "@/types/books";
 
@@ -13,24 +12,30 @@ const FilterBox: React.FC = () => {
 
   const [isVisible, setIsVisible] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const toggleFilter = () => setIsVisible(!isVisible);
 
-  const handleFilterChange = async (genre: string) => {
+  const handleFilterChange = useCallback(async (genre: string) => {
     const newSelectedGenres = selectedGenres.includes(genre)
       ? selectedGenres.filter((g) => g !== genre)
       : [...selectedGenres, genre];
 
     setSelectedGenres(newSelectedGenres);
 
-    try {
-      // Si aucun genre sélectionné, on récupère tous les livres
-      const filters = newSelectedGenres.length > 0 ? { genre: newSelectedGenres.join(",") } : {};
-      await getBooks({ ...filters, limit: 12, offset: 0 });
-    } catch (err) {
-      console.error("Erreur lors du filtrage :", err);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
     }
-  };
+
+    timeoutRef.current = setTimeout(async () => {
+      try {
+        const filters = newSelectedGenres.length > 0 ? { genre: newSelectedGenres.join(",") } : {};
+        await getBooks({ ...filters, limit: 12, offset: 0 });
+      } catch (err) {
+        console.error("Erreur lors du filtrage :", err);
+      }
+    }, 500);
+  }, [getBooks, selectedGenres]);
 
   return (
     <section>

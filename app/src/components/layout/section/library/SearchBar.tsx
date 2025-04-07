@@ -1,9 +1,8 @@
-// SearchBar.tsx
 "use client";
 
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { RootState } from "@/store";
 import { useLibrary } from "@/hooks/useLibrary";
 
 const SearchBar: React.FC = () => {
@@ -59,6 +58,7 @@ const SearchBar: React.FC = () => {
     [getBooks]
   );
 
+  // Ajout du débouncing pour handleFilter
   const handleFilter = useCallback(
     (filters: {
       q?: string;
@@ -66,15 +66,20 @@ const SearchBar: React.FC = () => {
       has_pdf?: boolean;
       ordering?: "name" | "-name" | "prix_normal" | "-prix_normal" | "prix_reduit" | "-prix_reduit" | "parution" | "-parution" | "pages" | "-pages" | "created_at" | "-created_at";
     }) => {
-      console.log("Filtre appliqué :", filters);
-      getBooks({ ...filters, limit: 12, offset: 0 }).catch((err) =>
-        console.error("Erreur dans handleFilter :", err)
-      );
+      if (timeoutIdRef.current) {
+        clearTimeout(timeoutIdRef.current);
+      }
+
+      timeoutIdRef.current = setTimeout(() => {
+        console.log("Filtre appliqué :", filters);
+        getBooks({ ...filters, limit: 12, offset: 0 }).catch((err) =>
+          console.error("Erreur dans handleFilter :", err)
+        );
+      }, 500); // Délai de 500 ms pour limiter les appels
     },
     [getBooks]
   );
 
-  // Typage explicite des options de tri
   const sortOptions = useMemo<
     { label: string; value: "name" | "-name" | "prix_normal" | "-prix_normal" | "prix_reduit" | "-prix_reduit" | "parution" | "-parution" | "pages" | "-pages" | "created_at" | "-created_at" }[]
   >(
