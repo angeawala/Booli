@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer className="index_footer">
+    <footer className="index_footer x-footer-index">
       <div className="row foot-content-wrapper">
         <div className="col-sm-4 content1">
           <Link href="/about/" target="_blank">A propos</Link><br /><br />

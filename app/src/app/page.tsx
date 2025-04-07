@@ -6,9 +6,10 @@ import ChatModal from "@/components/modals/ChatModal";
 import Footer from "@/components/layout/static/Footer";
 import Header from "@/components/layout/static/Header";
 import SignInOrLogout from "@/components/links/SignInOrLogout";
-import Helmet from "@/components/seo/Helmet";
-import LoadingScreen from "@/components/animations/LoadingScreen";
-import CompatibilityCheck from "@/components/animations/CompatibilityCheck";
+import Helmet from "@/components/common/seo/Helmet";
+import LoadingScreen from "@/components/common/animations/LoadingScreen";
+import CompatibilityCheck from "@/components/common/animations/CompatibilityCheck";
+import '@/styles/index.css'
 
 const announcements = [
   "BOOLi 🌍",
@@ -121,9 +122,9 @@ export default function Home() {
         <section>
           <div className="row col-12 pt-2 menu">
             <div className="col-4 text-left ml-4 px-4">
-              <SignInOrLogout className="btn btn-primary m-2" />
+              <SignInOrLogout className="btn btn-primary m-2 x-btn-login" />
             </div>
-            <div className="col-4 text-center welcome">Bienvenu</div>
+            <div className="col-4 text-center welcome x-welcome">Bienvenu</div>
             <div className="col-4 mt-2 text-center lang">
               <div className="translate-container">
                 <i
@@ -211,7 +212,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <div className="mobile-section">
+        <div className="mobile-section x-link-menu">
           <a href="store/pharma" className="mobile-btn">Tourisme & Pharma</a>
           <a href="store/library" className="mobile-btn">Bibliothèque [Livres]</a>
           <a href="store/product" className="mobile-btn">Opportinuté & Business</a>
