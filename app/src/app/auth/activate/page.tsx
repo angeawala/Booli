@@ -2,11 +2,11 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { activateAccount } from "@/api/authApi";
+import { activateAccount } from "@/features/auth/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "@/styles/auth.css";
 import Link from "next/link";
-import { AxiosError } from "axios";
 
 
 function ActivateContent() {
@@ -18,7 +18,7 @@ function ActivateContent() {
 
   useEffect(() => {
     if (!token) {
-      toast.error("Lien invalide : token manquant.");
+      toast.error("Lien invalide, réessayez.");
       setStatus("error");
       setIsLoading(false);
       return;
@@ -26,70 +26,49 @@ function ActivateContent() {
 
     const activate = async () => {
       try {
-        await activateAccount(token); // Suppression de 'response' inutilisé
-        toast.success("Compte activé avec succès ! Redirection vers la connexion...");
+        await activateAccount(token);
+        toast.success("Compte activé ! Redirection...");
         setStatus("success");
-        setTimeout(() => router.push("/auth/login"), 2000);
-      } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-          const errorMsg = error.response?.data?.detail || "Erreur lors de l’activation du compte.";
-          toast.error(errorMsg);
-        } else {
-          toast.error("Une erreur inattendue est survenue.");
-        }
+        router.push("/auth/login");
+      } catch (error) {
+        toast.error("Erreur d’activation, lien invalide ou expiré.");
         setStatus("error");
-      } finally {
+        console.log("Erreur dors de activation de compte ", error)
         setIsLoading(false);
       }
     };
-
     activate();
   }, [token, router]);
 
   return (
-    <div className="img-inscription min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+    <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center p-3 x-auth-container">
       {isLoading && (
-        <div className="loading-container position-absolute top-50 start-50 translate-middle">
-          <div className="bar bg-primary"></div>
-          <div className="bar bg-primary"></div>
-          <div className="bar bg-primary"></div>
+        <div className="x-auth-loading">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Chargement...</span>
+          </div>
         </div>
       )}
       {!isLoading && (
-        <>
-          <h1 className="Logo mb-4 text-center text-white fw-bold">BOOLi-STORE.world</h1>
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-12 col-md-8 col-lg-5 bg-white rounded-5 shadow-lg p-4 cadre">
-                <h2 className="mx-0 mt-3 mb-4 text-center text-primary fw-semibold">Confirmation d’email</h2>
-                {status === "success" && (
-                  <div className="alert alert-success text-center" role="alert">
-                    <p className="mb-0 fw-medium">
-                      Votre compte a été activé avec succès ! Redirection vers la connexion...
-                    </p>
-                  </div>
-                )}
-                {status === "error" && (
-                  <>
-                    <div className="alert alert-danger text-center" role="alert">
-                      <p className="mb-0 fw-medium">
-                        Échec de l’activation. Le lien peut être invalide ou expiré.
-                      </p>
-                    </div>
-                    <div className="d-flex justify-content-center mb-3">
-                      <Link
-                        href="/auth/activate/resend"
-                        className="btn btn-primary btn-lg text-white px-4 py-2 w-100 w-md-auto"
-                      >
-                        Renvoyer un email d’activation
-                      </Link>
-                    </div>
-                  </>
-                )}
-              </div>
+        <div className="container">
+          <h1 className="text-center mb-4 fw-bold text-white">BOOLi-STORE.world</h1>
+          <div className="row justify-content-center">
+            <div className="col-12 col-md-8 col-lg-5 bg-white rounded-5 p-4 shadow x-auth-form">
+              <h2 className="text-center mb-4 fw-semibold text-primary">Confirmation d’email</h2>
+              {status === "success" && (
+                <p className="text-center text-success">Compte activé, redirection en cours...</p>
+              )}
+              {status === "error" && (
+                <div className="text-center">
+                  <p className="text-danger mb-4">Échec de l’activation.</p>
+                  <Link href="/auth/activate/resend" className="btn btn-primary btn-lg x-auth-button">
+                    Renvoyer un email
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
@@ -99,11 +78,9 @@ export default function ActivatePage() {
   return (
     <Suspense
       fallback={
-        <div className="img-inscription min-vh-100 d-flex align-items-center justify-content-center">
-          <div className="loading-container">
-            <div className="bar bg-primary"></div>
-            <div className="bar bg-primary"></div>
-            <div className="bar bg-primary"></div>
+        <div className="min-vh-100 d-flex align-items-center justify-content-center x-auth-container">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Chargement...</span>
           </div>
         </div>
       }
