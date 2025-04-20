@@ -12,7 +12,7 @@ DEVELOPPEMENT = os.getenv('DEVELOPPEMENT', 'True') == 'True'  # True = local, Fa
 # ======= Sécurité : Clé secrète et hôtes =======
 if DEVELOPPEMENT:
     DEBUG = True
-    SECRET_KEY = 'your-local-secret-key'  # À remplacer par une clé sécurisée en local
+    SECRET_KEY = 'your-local-secret_key'  # À remplacer par une clé sécurisée en local
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
     CORS_ALLOW_ALL_ORIGINS = True  # Tout autoriser en dev
 else:
