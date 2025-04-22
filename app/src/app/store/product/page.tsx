@@ -25,7 +25,6 @@ export default function ProductPage() {
         <Navbar/>
         <CategoryDisplay/>
         </section>
-
         <AdBanner/>
         <CategoryIconScroll/>
         <EngrosSection/>
