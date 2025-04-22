@@ -6,8 +6,8 @@ export default function Footer() {
       <div className="row foot-content-wrapper">
         <div className="col-sm-4 content1">
           <Link href="/about/" target="_blank">A propos</Link><br /><br />
-          <Link href="/enterprise/" target="_blank">Entreprise</Link><br /><br />
-          <Link href="/contact/" target="_blank">Contact</Link><br /><br />
+          <Link href="/home/enterprise/" target="_blank">Entreprise</Link><br /><br />
+          <Link href="/home/contact/" target="_blank">Contact</Link><br /><br />
           <Link href="/Forum/" target="_blank">Forum</Link><br />
         </div>
         <div className="col-sm-4 content2">
@@ -23,7 +23,7 @@ export default function Footer() {
           </form>
         </div>
         <div className="col-sm-4 content3">
-          <Link href="/professionnal" target="_blank">Professionnel</Link><br /><br />
+          <Link href="/professionnelle" target="_blank">Professionnel</Link><br /><br />
           <Link href="/comment" target="_blank">Commentaire</Link><br /><br />
           <Link href="/condition" target="_blank">Conditions</Link><br /><br />
           <Link href="/help" target="_blank">FAQ</Link><br /><br />

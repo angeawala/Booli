@@ -6,10 +6,12 @@ import ChatModal from "@/components/modals/ChatModal";
 import Footer from "@/components/layout/static/Footer";
 import Header from "@/components/layout/static/Header";
 import SignInOrLogout from "@/components/links/SignInOrLogout";
-import Helmet from "@/components/common/seo/Helmet";
-import LoadingScreen from "@/components/common/animations/LoadingScreen";
-import CompatibilityCheck from "@/components/common/animations/CompatibilityCheck";
+import Helmet from "@/components/seo/Helmet";
+import LoadingScreen from "@/components/animations/LoadingScreen";
+import CompatibilityCheck from "@/components/animations/CompatibilityCheck";
 import '@/styles/index.css'
+import '@/styles/style_mobile.css'
+
 
 const announcements = [
   "BOOLi 🌍",
@@ -121,7 +123,7 @@ export default function Home() {
         </section>
         <section>
           <div className="row col-12 pt-2 menu">
-            <div className="col-4 text-left ml-4 px-4">
+            <div className="col-4 text-left ml-4 px-4 ">
               <SignInOrLogout className="btn btn-primary m-2 x-btn-login" />
             </div>
             <div className="col-4 text-center welcome x-welcome">Bienvenu</div>

@@ -1,25 +1,21 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import "@/styles/AdBanner.css"; // Styles additionnels non inline
+import "@/styles/AdBanner.css";
 
 const AdBanner: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
-    { src: "/image/drap.jpg", alt: "Draps" },
-    { src: "/image/tech1.jpg", alt: "" },
-    { src: "/image/dior.jpg", alt: "Mark dior" },
-    { src: "/image/md.jpg", alt: "veste" },
-    { src: "/image/sport1.jpg", alt: "Chaussures" },
-    { src: "/image/ho.jpg", alt: "" },
+    { src: "/Photo/drap.jpg", alt: "Draps" },
+    { src: "/Photo/tech1.jpg", alt: "" },
+    { src: "/Photo/sport1.jpg", alt: "Chaussures" },
   ];
 
-  // Gestion du carrousel
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 5000); // Change toutes les 5 secondes
+    }, 5000);
     return () => clearInterval(interval);
   }, [slides.length]);
 
@@ -36,33 +32,32 @@ const AdBanner: React.FC = () => {
   };
 
   return (
-      <section className="defile">
-        <section className="barre">
-          <div className="banner col-12">
-            <div className="banner-item entreprise">
-              Joignez-nous au <i className="fab fa-whatsapp"></i> +2.. 96 78 07 62
-            </div>
-            <div className="banner-item reduction">
-              <strong>Profitez 85% de nos offres</strong>
-            </div>
-            <div className="banner-item explorer">
-              Explorez le monde des affaires en Afrique
-            </div>
+    <section className="defile">
+      <section className="barre">
+        <div className="banner col-12">
+          <div className="banner-item entreprise">
+            Joignez-nous au <i className="fab fa-whatsapp"></i> +2.. 96 78 07 62
           </div>
-        </section>
+          <div className="banner-item reduction">
+            <strong>Profitez 85% de nos offres</strong>
+          </div>
+          <div className="banner-item explorer">
+            Explorez le monde des affaires en Afrique
+          </div>
+        </div>
+      </section>
 
-      {/* Menu fournisseur */}
       <section>
         <div className="ban col-12">
           <div className="button-bar">
             <button
-              onClick={() => window.open("contact_number.html", "_blank")}
+              onClick={() => window.open("/contact_number", "_blank")}
               className="btn"
             >
               <i className="fas fa-phone-alt"></i> Appeler pour Commander
             </button>
             <button
-              onClick={() => window.open("Panier.html", "_blank")}
+              onClick={() => window.open("/Panier", "_blank")}
               className="btn"
             >
               <i className="fas fa-cart-plus"></i> Voir votre panier
@@ -80,7 +75,6 @@ const AdBanner: React.FC = () => {
         </div>
       </section>
 
-      {/* Carrousel publicitaire */}
       <section className="deff">
         <div className="carousel-container col-12">
           <div className="carousel">

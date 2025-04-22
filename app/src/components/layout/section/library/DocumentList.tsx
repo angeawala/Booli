@@ -1,3 +1,4 @@
+// DocumentList.tsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -11,15 +12,12 @@ interface DocumentListProps {
 const DocumentList: React.FC<DocumentListProps> = ({ onOpenModal }) => {
   const { books, loading, error, getBooks, totalCount, nextPage, previousPage } = useLibrary();
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasFetchedPage, setHasFetchedPage] = useState<number[]>([]); // Suivi des pages chargées
+  const [hasFetched, setHasFetched] = useState(false); // Contrôle pour éviter les appels multiples
   const itemsPerPage = 12;
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
   useEffect(() => {
-    if (hasFetchedPage.includes(currentPage)) {
-      console.log(`Page ${currentPage} déjà chargée, useEffect ignoré`);
-      return;
-    }
+    if (hasFetched) return;
 
     console.log("DocumentList useEffect déclenché pour page :", currentPage);
     const fetchBooksForPage = async () => {
@@ -29,17 +27,18 @@ const DocumentList: React.FC<DocumentListProps> = ({ onOpenModal }) => {
       } catch (err) {
         console.error("Erreur dans DocumentList fetch :", err);
       } finally {
-        setHasFetchedPage((prev) => [...prev, currentPage]);
+        setHasFetched(true);
       }
     };
 
     fetchBooksForPage();
-  }, [getBooks, currentPage, hasFetchedPage]);
+  }, [getBooks, currentPage, hasFetched]);
 
   const handleNext = () => {
     if (nextPage) {
       console.log("Passage à la page suivante :", currentPage + 1);
       setCurrentPage((prev) => prev + 1);
+      setHasFetched(false); // Permet de relancer le fetch pour la nouvelle page
     }
   };
 
@@ -47,6 +46,7 @@ const DocumentList: React.FC<DocumentListProps> = ({ onOpenModal }) => {
     if (previousPage) {
       console.log("Retour à la page précédente :", currentPage - 1);
       setCurrentPage((prev) => prev - 1);
+      setHasFetched(false); // Permet de relancer le fetch pour la nouvelle page
     }
   };
 

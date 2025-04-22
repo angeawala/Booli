@@ -1,8 +1,11 @@
 @media screen and (max-width: 480px) {
     .x-btn-login{
-        font-size: 15px;
+        font-size: 10px;
         font-weight: 700;
-        text-wrap-mode:nowrap;
+        text-wrap:nowrap;
+        min-width: 100px;
+        position: relative;
+        z-index: 9999;
     }
     .x-welcome{
         display: none;
@@ -17,13 +20,12 @@
     position: relative;
     z-index: 9998;
 }
-
+.x-header-store{
+    overflow: hidden;
+    position: relative;
+    z-index: 9998;
+}
 #messageBox{
     position: absolute;
     z-index: 9999;
-}
-.x-menu-header{
-    overflow: hidden;
-    position: relative;
-
 }

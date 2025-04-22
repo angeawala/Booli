@@ -7,22 +7,22 @@ const Footer: React.FC = () => {
       <div className="index-footer row col-12">
         <div className="about col-sm-2 mt-2 text-left">
           <h5>Qui sommes-nous</h5>
-          <Link href="about" target="_blank">
+          <Link href="about.html" target="_blank">
             A propos de nous
           </Link>
           <br />
           <br />
-          <Link href="professionnelle" target="_blank">
+          <Link href="carriere professionnelle.html" target="_blank">
             Carrière chez BOOLi-Store
           </Link>
           <br />
           <br />
-          <Link href="condition" target="_blank">
+          <Link href="condition et termes.html" target="_blank">
             Conditions d&apos; utilisation
           </Link>
           <br />
           <br />
-          <Link href="politique" target="_blank">
+          <Link href="politique-confidentialité1.html" target="_blank">
             Politique de Confidence
           </Link>
           <br />
@@ -65,12 +65,12 @@ const Footer: React.FC = () => {
       <div className="index-footer row col-12">
         <div className="about col-sm-4 mt-2">
           <h5>AIDE_Assistance</h5>
-          <Link href="help" target="_blank">
+          <Link href="helph_market.html" target="_blank">
             Centre d&apos; Assistance
           </Link>
           <br />
           <br />
-          <Link href="service_client" target="_blank">
+          <Link href="contact.html" target="_blank">
             Contacter le support client
           </Link>
           <br />
@@ -85,7 +85,7 @@ const Footer: React.FC = () => {
           </Link>
           <br />
           <br />
-          <Link href="service_client" target="_blank">
+          <Link href="contact.html" target="_blank">
             Signaler un problème
           </Link>
           <br />
@@ -97,22 +97,22 @@ const Footer: React.FC = () => {
 
         <div className="about col-sm-4 mt-2">
           <h5>Vendre sur BOOLi-STORE</h5>
-          <Link href="dashboard/products/add" target="_blank">
+          <Link href="acceuil_boutique.html" target="_blank">
             Commencer à vendeur
           </Link>
           <br />
           <br />
-          <Link href="Fournisseur" target="_blank">
+          <Link href="Fournisseur.html" target="_blank">
             Devenir Fournisseur
           </Link>
           <br />
           <br />
-          <Link href="newslatter" target="_blank">
+          <Link href="newslatter.html" target="_blank">
             Newslatteur
           </Link>
           <br />
           <br />
-          <Link href="service_client" target="_blank">
+          <Link href="service client.html" target="_blank">
             Service Client
           </Link>
           <br />
@@ -132,12 +132,12 @@ const Footer: React.FC = () => {
           <Link href="#">Paiement sécuriser</Link>
           <br />
           <br />
-          <Link href="garantir" target="_blank">
+          <Link href="garantie du site.html" target="_blank">
             Nos garanties
           </Link>
           <br />
           <br />
-          <Link href="remboussement" target="_blank">
+          <Link href="retour au remboussement.html" target="_blank">
             Retour-Rembourssement
           </Link>
           <br />

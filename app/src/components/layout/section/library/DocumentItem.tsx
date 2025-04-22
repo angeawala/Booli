@@ -3,7 +3,7 @@
 
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { RootState } from "@/store/store";
 import { useLibrary } from "@/hooks/useLibrary";
 import { Book } from "@/types/books";
 import { useRouter } from "next/navigation";

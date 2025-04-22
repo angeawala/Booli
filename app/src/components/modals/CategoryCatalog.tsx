@@ -1,42 +1,60 @@
+"use client";
+
 import React, { useState } from "react";
-import { useSubCategories } from "@/hooks/useSubCategories";
 
 const CategoryCatalog: React.FC = () => {
-  const { subCategories, loading, error } = useSubCategories();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+  const catalogItems = [
+    { name: "Santé, Beauté", image: "/Photo/beauté.jpg", href: "/maker" },
+    { name: "Bébé & Jouet", image: "/Photo/bébé.jpg", href: "/maker" },
+    { name: "Vêtements", image: "/Photo/tissu.jpg", href: "/maker" },
+    { name: "Chaussures", image: "/Photo/ch6.jpg", href: "/maker" },
+    { name: "Électroménager", image: "/Photo/decoration.jpg", href: "/maker" },
+    { name: "Artisanat", image: "/Photo/resource.jpg", href: "/maker" },
+    { name: "Agriculture", image: "/Photo/agriculture.jpg", href: "/maker" },
+    { name: "Matière Première", image: "/Photo/mpremiere.jpg", href: "/maker" },
+    { name: "Bricolage", image: "/Photo/bricolage.jpg", href: "/maker" },
+    { name: "Immobilier", image: "/Photo/immobilier.jpg", href: "/maker" },
+    { name: "Informatique", image: "/Photo/informatique.jpg", href: "/maker" },
+    { name: "Électronique", image: "/Photo/electronique.jpg", href: "/maker" },
+    { name: "Industriel", image: "/Photo/industrie.jpg", href: "/maker" },
+    { name: "Pharmacopée", image: "/Photo/choix_produit.jpg", href: "/maker" },
+    { name: "Maison & Bureau", image: "/Photo/bureau.jpg", href: "/maker" },
+    { name: "Médecine", image: "/Photo/medecine.jpg", href: "/maker" },
+    { name: "Fourniture", image: "/Photo/fourniture.jpg", href: "/maker" },
+    { name: "Sécurité", image: "/Photo/securité.jpg", href: "/maker" },
+    { name: "Bijouterie", image: "/Photo/bijoux.jpg", href: "/maker" },
+    { name: "Boisson", image: "/Photo/boisson.jpg", href: "/maker" },
+    { name: "Pharmacie", image: "/Photo/pharmacie.jpg", href: "/maker" },
+  ];
 
   return (
     <section className="cathalogues">
       <div className="catha row col-12">
         <div className="arti col-sm-4">
-          <div className="catalog-icon" onClick={toggleModal}>
+          <div className="catalog-icon" id="catalog-icon" onClick={toggleModal}>
             <i className="fas fa-bars" style={{ fontSize: "2em", marginTop: "10px", color: "#004353" }}></i>
             <span className="catalog-text animate4">Catalogues</span>
           </div>
 
           {isModalOpen && (
-            <div className="modal" style={{ display: "block" }}>
+            <div className="modal" id="catalog-modal" style={{ display: "block" }}>
               <div className="modal-content">
-                <span className="close-button" onClick={toggleModal}>×</span>
+                <span className="close-button" id="close-button" onClick={toggleModal}>×</span>
                 <h2>CATALOGUES</h2>
-                {loading ? (
-                  <p>Chargement...</p>
-                ) : error ? (
-                  <p>Erreur : {error}</p>
-                ) : (
-                  <ul className="catalog-list">
-                    {subCategories.map((subCat) => (
-                      <li key={subCat.id}>
-                        <a href={`/product/filter?subcategory_id=${subCat.id}`} target="_blank">
-                          <img src={subCat.image || "/Photo/default.jpg"} alt={subCat.name} />
-                          <span>{subCat.name}</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <ul className="catalog-list">
+                  {catalogItems.map((item, index) => (
+                    <li key={index}>
+                      <a href={item.href} target="_blank">
+                        <img src={item.image} alt={item.name} />
+                        <span>{item.name}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           )}
@@ -46,13 +64,13 @@ const CategoryCatalog: React.FC = () => {
           <div className="most-searched-products">
             <h5>Rechercher(+):</h5>
             <div className="product col-sm-1">
-              <a href="services.html" target="_blank">Services</a>
+              <a href="/services" target="_blank">Services</a>
             </div>
             <div className="product col-sm-1">
-              <a href="filtre.html" target="_blank">Vêtements</a>
+              <a href="/filtre" target="_blank">Vêtements</a>
             </div>
             <div className="product col-sm-1">
-              <a href="filtre.html" target="_blank">TIC</a>
+              <a href="/filtre" target="_blank">TIC</a>
             </div>
           </div>
         </div>

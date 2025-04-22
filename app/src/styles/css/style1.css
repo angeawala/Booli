@@ -42,10 +42,11 @@
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #0a040083 0%, #000000c9 50%, #000000ce 100%);
+  background-image: url('/media/fondf1.jpg'); 
+  background-size: cover;
+  background-position: center;
   opacity: 0.5; 
   z-index: 2;
   animation: particleMove 10s infinite linear;
@@ -59,8 +60,10 @@
       position: relative;
       padding: 20px 50px;
       margin: 15px 0;
-      background: #fff;
-      color: #ff6200;
+      background-color: rgba(20, 11, 11, 0.726);
+      color: teal;
+      text-align: center;
+      align-items: center;
       font-size: 1.1rem;
       font-weight: bold;
       text-decoration: none;
@@ -68,6 +71,8 @@
       z-index: 3;
       overflow: hidden;
       animation: pulseGlow 2s infinite;
+      font-family: verdana;
+      border-radius: 10px;
     }
 
     .mobile-btn::after {

@@ -11,6 +11,8 @@ import { CartProvider } from "@/context/cartContext"; // Ajout du CartProvider
 import "@/styles/css/market.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import '@/styles/index.css'
+import '@/styles/style_mobile.css'
 
 // Charger les polices avec next/font
 const akayaKanadaka = Akaya_Kanadaka({

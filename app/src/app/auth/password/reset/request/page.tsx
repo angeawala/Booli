@@ -2,90 +2,102 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { passwordResetRequest } from "@/features/auth/authApi";
+import { passwordResetRequest } from "@/api/authApi";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "@/styles/auth.css";
-import Link from "next/link";
-
+import Image from "next/image";
+import { AxiosError } from "axios";
 
 export default function PasswordResetRequestPage() {
-  const [email, setEmail] = useState(localStorage.getItem("lastEmail") || "");
+  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Ajout pour débouncing
+  const [showInfo, setShowInfo] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isSubmitting || !email) {
-      toast.error("Veuillez entrer un email.");
-      return;
-    }
-
+    if (isSubmitting) return; // Débouncing
     setIsSubmitting(true);
     setIsLoading(true);
+
     try {
       await passwordResetRequest(email);
-      toast.success("Un lien de réinitialisation a été envoyé à votre email !");
-      router.push("/auth/login");
-    } catch (e) {
-      console.log("Password reset request failed:", e);
-      toast.error("Erreur lors de l’envoi, réessayez.");
+      toast.success("Un email de réinitialisation a été envoyé ! Redirection...");
+      setTimeout(() => router.push("/auth/login"), 2000); // Délai pour voir le message
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
+        const errorMsg = error.response?.data?.detail || "Erreur lors de l’envoi de l’email.";
+        toast.error(errorMsg);
+      } else {
+        toast.error("Une erreur inattendue est survenue.");
+      }
     } finally {
       setIsLoading(false);
       setIsSubmitting(false);
     }
   };
 
+  const toggleInfo = () => setShowInfo(!showInfo);
+
   return (
-    <div className="min-vh-100 d-flex flex-column align-items-center justify-content-center p-3 x-auth-container">
+    <div className="img-inscription min-vh-100 d-flex flex-column align-items-center justify-content-center">
       {isLoading && (
-        <div className="x-auth-loading">
-          <div className="spinner-border text-primary" role="status">
-            <span className="visually-hidden">Chargement...</span>
-          </div>
+        <div className="loading-container" id="loading">
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
         </div>
       )}
       {!isLoading && (
-        <div className="container">
-          <h1 className="text-center mb-4 fw-bold">BOOLi-STORE.world</h1>
-          <div className="row justify-content-center">
-            <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 p-4 shadow x-auth-form">
-              <h2 className="text-center mb-4 fw-semibold text-primary">Réinitialisation du mot de passe</h2>
-              <p className="text-center mb-4 text-muted">
-                Entrez votre email pour recevoir un lien de réinitialisation
-              </p>
-              <form onSubmit={handleSubmit}>
-                <div className="row g-3">
-                  <div className="col-12">
+        <>
+          <h1 className="Logo mb-4 text-center">BOOLi-STORE.world</h1>
+          <div className="container px-1">
+            <div className="row justify-content-center align-items-center">
+              <div className="col-12 col-md-8 col-lg-6 bg-white rounded-5 px-3 py-4 cadre">
+                <h2 className="text-center mt-3">Mot de passe oublié</h2>
+                <form onSubmit={handleSubmit}>
+                  <div className="input-group mb-4 mt-5">
                     <input
                       type="email"
                       name="email"
-                      className="form-control x-auth-input"
-                      placeholder="Adresse email"
+                      className="form-control border-2 shadow-none custom-input e-recover"
+                      placeholder="Entrez votre adresse email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      aria-label="Adresse email"
                     />
                   </div>
-                  <div className="col-12 d-flex flex-column gap-3 mt-4">
+                  <div className="d-flex justify-content-center mb-4">
                     <button
                       type="submit"
-                      className="btn btn-primary btn-lg x-auth-button"
-                      disabled={isSubmitting}
+                      className="btn-lg connex w-100 w-md-auto"
+                      disabled={isSubmitting || isLoading}
+                      style={{ display: "block" }}
                     >
-                      {isSubmitting ? "Envoi..." : "Envoyer"}
+                      {isLoading ? "Envoi en cours..." : "Envoyer"}
                     </button>
-                    <Link href="/auth/login" className="btn btn-link x-auth-link text-center">
-                      Retour à la connexion
-                    </Link>
                   </div>
-                </div>
-              </form>
+                  <div className="more-info text-center">
+                    <Image
+                      src="/image/icone.png"
+                      className="toggle-icon mb-2"
+                      alt="Help icon"
+                      onClick={toggleInfo}
+                      width={32}
+                      height={32}
+                    />
+                    {showInfo && (
+                      <p className="toggle-text text-center">
+                        Entrez votre adresse email ci-dessus pour recevoir un lien de réinitialisation. Ce lien sera envoyé à l’email associé à votre compte.
+                      </p>
+                    )}
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

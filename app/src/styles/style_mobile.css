@@ -1,0 +1,190 @@
+.venom {
+    position: relative;
+    background-color: #4ecdc4;
+    margin: 0 auto;
+}
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #ffffff;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px;
+}
+
+.close-btn:hover {
+    color: #ff0000; 
+}
+.slide-panel {
+    display: none; 
+}
+
+.slide-panel-content {
+    height: 100vh;
+    width: 250px;
+    background-color: #141414e3;
+    color: #f1f1f1;
+    position: fixed;
+    top: 0;
+    left: -250px; 
+    transition: left 0.3s ease;
+    z-index: 3000;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.slide-panel-content a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #f1f1f1;
+    font-size: 18px;
+}
+
+.slide-panel-content a:hover {
+    background-color: #e46116;
+}
+
+.menu-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-title {
+    display: none;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+    text-align: right;
+    padding: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 1100;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.mobile-bg {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+    background-size: 200% 200%;
+    animation: gradientBG 10s ease infinite;
+    z-index: -1;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.desktop-view {
+    display: flex; 
+}
+@media (max-width: 768px) {
+    .desktop-view {
+        display: none; 
+    }
+
+    .slide-panel {
+        display: block; 
+    }
+
+    .mobile-title {
+        display: block;
+    }
+
+    .mobile-bg {
+        display: block;
+    }
+
+    .venom {
+        position: relative;
+        overflow: hidden;
+    }
+    .moteur, .deff, .ban{
+        display: none;
+    }
+    .nb{
+        margin-bottom: 1rem;
+    }
+}
+
+.slide-panel.active .slide-panel-content {
+    left: 0; 
+}
+
+/****RESOLUTION CSS MEDIA QUERIES ******/
+.x-carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.x-carousel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+.x-carousel-inner .nb {
+    flex: 0 0 100%; 
+}
+/* La nav gauche et droite */
+.x-carousel-prev, .x-carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+.x-carousel-prev {
+    left: 5px;
+}
+
+.x-carousel-next {
+    right: 5px;
+}
+
+.x-carousel-prev:hover, .x-carousel-next:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+/* intialisation Bureau #JJ DE DEPART */
+@media (min-width: 768px) {
+    .x-carousel-container {
+        overflow: visible;
+        margin: 0 auto;
+    }
+    .x-carousel-inner {
+        flex-wrap: nowrap;
+        transition: none;
+    }
+    .x-carousel-inner .nb {
+        flex: 0 0 auto; 
+    }
+    .x-carousel-prev, .x-carousel-next {
+        display: none; 
+    }
+}

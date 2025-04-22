@@ -2,17 +2,17 @@
 
 import Header from "@/components/layout/listing/Header"
 import Footer from "@/components/layout/listing/Footer";
-import CategoryCatalog from "@/features/ecommerce/components/modals/CategoryCatalog";
+import CategoryCatalog from "@/components/modals/CategoryCatalog";
 import Navbar from "@/components/layout/section/commercial/Navbar";
-import CategoryDisplay from "@/features/ecommerce/components/section/CategoryDisplay";
+import CategoryDisplay from "@/components/layout/section/commercial/CategoryDisplay";
 import AdBanner from "@/components/layout/section/commercial/Adbanner";
-import CategoryIconScroll from "@/features/ecommerce/components/section/CategoryIconScoll";
-import NonTechCategories from "@/features/ecommerce/components/section/NonTechCategories";
+import CategoryIconScroll from "@/components/layout/section/commercial/CategoryIconScoll";
+import NonTechCategories from "@/components/layout/section/commercial/NonTechCategories";
 import AdPopup from "@/components/layout/section/commercial/AdPopup";
-import ShopSection from "@/features/ecommerce/components/section/ShopSection";
-import PromotionSection from "@/features/ecommerce/components/section/PromotionSections";
-import EngrosSection from "@/features/ecommerce/components/section/EnGrosSection";
-import AgencySection from "@/features/ecommerce/components/section/AgencySection";
+import ShopSection from "@/components/layout/section/commercial/ShopSection";
+import PromotionSection from "@/components/layout/section/commercial/PromotionSections";
+import EngrosSection from "@/components/layout/section/commercial/EnGrosSection";
+import AgencySection from "@/components/layout/section/commercial/AgencySection";
 
 export default function ProductPage() {
 
