@@ -159,7 +159,7 @@ export default function Header() {
 
       {/* Header Section */}
       <header
-        className="header x-header-store"
+        className="header "
         id="header"
         ref={headerRef}
         style={{ display: isScrolled ? "none" : "block" }}
@@ -200,10 +200,9 @@ export default function Header() {
         ref={sousRef}
         style={{ display: isScrolled ? "none" : "block" }}
       >
-        <div className="carousel">
           {carouselImages.map((img, index) => (
             <div
-              key={index}
+
               className="backgroundf"
               style={{
                 backgroundImage: `url('${img}')`,
@@ -211,26 +210,25 @@ export default function Header() {
               }}
             ></div>
           ))}
-        </div>
         <div className="row col-12 px-2 content-wrapper">
-          <div className="connect col-sm-4 mt-3 text-left px-4">
-            <button onClick={() => (window.location.href = "/acceuil_boutique")}>
+          <div className="connect col-sm-3 mt-3 text-left px-4">
+            <button onClick={() => (window.location.href = "/dashboard/")}>
               <img src="/media/user_market.jpeg" id="m1" alt="Démarrer un Business" /> Démarrer un
               Business
             </button>
           </div>
-          <div className="affi col-sm-5">
+          <div className="affi col-sm-6">
             <img src="/Photo/Eco.jpg" alt="Produit" className="image" />
             <p>
               BOOLi-STORE ECONOMISEZ <i className="fas fa-plus" id="accru"></i>
             </p>
           </div>
-          <div className="expédition col-sm-2">
-            <form action="#" method="post">
+          <div className="expédition col-sm-1 ">
+            <form action="#" method="post" className="x-exp">
               <label htmlFor="country-select">
                 <strong>Expédiez à :</strong>
               </label>
-              <select id="country-select" name="country" ref={countrySelectRef}>
+              <select className="x-store-expedion" id="country-select" name="country" ref={countrySelectRef}>
                 <option value="bj" data-flag="bj">Benin</option>
                 <option value="tg" data-flag="tg">Togo</option>
                 <option value="ng" data-flag="ng">Nigeria</option>
@@ -253,7 +251,7 @@ export default function Header() {
       </section>
 
       {/* Search Engine Section */}
-      <section className="tout row col-12 pt-2">
+      <section className="tout row col-12 pt-2 x-header-store">
         <section
           className="moteur"
           id="moteur"
@@ -316,7 +314,7 @@ export default function Header() {
               <a href="#" id="connect1-btn">
                 <img src="/media/user2.png" id="con" alt="Mon Compte" /> Mon Compte
               </a>
-              <div className="dropdown1-menu x-link-menu">
+              <div className="dropdown1-menu ">
                 <SignInOrLogout />
                 <a href="/Users-Agent/page_not_found" target="_blank">Tableau de Bord</a>
                 <a href="/connexion_client" target="_blank">Vos Commandes</a>
@@ -331,10 +329,10 @@ export default function Header() {
                 <i className="fas fa-question-circle" id="conu"></i> Aide
               </Link>
               <div className="dropdown1-menu">
-                <Link href="/helph_market">
+                <Link href="/help">
                   <i className="fas fa-question-circle"></i> FAQs
                 </Link>
-                <Link href="/contact_number">
+                <Link href="/contact">
                   <i className="fas fa-shopping-cart"></i> Commander
                 </Link>
                 <Link href="/command_annul">
