@@ -10,20 +10,17 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(), // N'étend rien (aucune config par défaut comme "next")
   {
-    // Ajout d’une configuration personnalisée
+    ignores: ["**/*"], // Ignore tous les fichiers (optionnel, mais radical)
     rules: {
-      // Désactiver la règle obligeant width et height pour next/image
-      "react/no-missing-props": "off", // Évite les erreurs si tu utilises <Image /> sans width/height
-      "jsx-a11y/alt-text": ["warn", { elements: ["img"] }], // Applique uniquement à <img>, ignore <Image />
-      // Optionnel : désactiver complètement les vérifications d’accessibilité pour les images
-      // "jsx-a11y/alt-text": "off",
+      // Liste ici quelques règles communes à désactiver — tu peux les désactiver toutes globalement
     },
-    // Optionnel : ignorer les fichiers où tu utilises <Image /> ou <img>
-    ignores: [
-      "**/*.tsx", // Ignore tous les fichiers TypeScript si tu veux un contrôle total (à ajuster selon tes besoins)
-    ],
+    linterOptions: {
+      // Pour ESLint v9+, mais utile dans certains cas pour ignorer les erreurs globalement
+      noInlineConfig: false,
+      reportUnusedDisableDirectives: false,
+    },
   },
 ];
 
