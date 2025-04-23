@@ -283,16 +283,18 @@ const ShopProductManager = ({
                   )}
                 </td>
                 <td>
-                  {product.variants?.reduce(
-                    (total: number, variant: any) =>
-                      total +
-                      (variant.colors?.reduce(
-                        (colorTotal: number, color: any) =>
-                          colorTotal + (parseInt(color.stock) || 0),
+                  {product.variants && product.variants.length > 0
+                    ? product.variants.reduce(
+                        (total: number, variant: any) =>
+                          total +
+                          (variant.colors?.reduce(
+                            (colorTotal: number, color: any) =>
+                              colorTotal + (parseInt(color.stock) || 0),
+                            0
+                          ) || 0),
                         0
-                      ) || 0),
-                    0
-                  ) || 0}
+                      )
+                    : 0}
                 </td>
                 <td className="x-action-column">
                   {/* Placeholder for additional actions if needed */}
