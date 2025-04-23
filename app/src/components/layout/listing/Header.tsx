@@ -159,12 +159,12 @@ export default function Header() {
 
       {/* Header Section */}
       <header
-        className="header "
-        id="header"
+        className="header"
+
         ref={headerRef}
         style={{ display: isScrolled ? "none" : "block" }}
       >
-        <div className="head">
+        <div className="head y-desktop-section text-center">
           <Link href="">
             <span className="new">
               -- BOOLi-STORE -- CENTER GLOBAL OF THE OPPORTUNITIES IN AFRICA
@@ -172,6 +172,17 @@ export default function Header() {
           </Link>
         </div>
       </header>
+      <div className="y-mobile-section">
+    <form action="/search" className=" z-bar-header">
+        <input type="text" placeholder="Rechercher..."/>
+        <button type="submit" >
+            <i className="fas fa-search"></i>
+        </button>
+    </form>
+    <a href="/cart" className="y-cart-link">
+        <i className="fas fa-shopping-cart"></i>
+    </a>
+</div>
 
       {/* Translation Section */}
       <section className="ml-2">
@@ -249,9 +260,6 @@ export default function Header() {
           </div>
         </div>
       </section>
-
-      {/* Search Engine Section */}
-      <section className="tout row col-12 pt-2 x-header-store">
         <section
           className="moteur"
           id="moteur"
@@ -264,7 +272,7 @@ export default function Header() {
         >
           <div className="row col-12" id="mtn">
             <div className="log col-2 mt-3">
-              <Link href="/index">
+              <Link href="/">
                 <img src="/Photo/booli.png" id="coni" alt="Logo" />
               </Link>
             </div>
@@ -338,14 +346,13 @@ export default function Header() {
                 <Link href="/command_annul">
                   <i className="fas fa-times-circle"></i> Annulation
                 </Link>
-                <Link href="/service-client">
+                <Link href="/service_client">
                   <i className="fas fa-truck"></i> Service Client
                 </Link>
               </div>
             </div>
           </div>
         </section>
-      </section>
     </>
   );
 }

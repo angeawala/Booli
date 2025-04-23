@@ -5,17 +5,17 @@ import React from "react";
 const Navbar: React.FC = () => {
   return (
     <div className="cote col-sm-2">
-      <div className="sidebar">
+      <div className="sidebar x-menu-link-item">
         <ul>
           <li className="menu-item">
-            <button onClick={() => window.open("Reservation_acceuil1.html", "_blank")}>
+            <button onClick={() => window.open("/reservation/bus", "_blank")}>
               <i className="fas fa-calendar-check"></i> Réservation
             </button>
             <div className="submenu">
               <div className="submenu-column">
                 <h6>Reserver (&apos;Bus..&apos;)</h6>
-                <a href="Reservation.html#destinations">Services de reservation</a>
-                <a href="Reservation_bus.html">Agences de voyage</a>
+                <a href="/reservation/bus">Services de reservation</a>
+                <a href="/reservation/bus">Agences de voyage</a>
               </div>
               <div className="submenu-column">
                 <h6>(Hotels_Auberges)</h6>
@@ -29,7 +29,7 @@ const Navbar: React.FC = () => {
               </div>
               <div className="submenu-column">
                 <h6>Bateau</h6>
-                <a href="Reservation.html#batteau">Locations</a>
+                <a href="/reservation/bus">Locations</a>
                 <a href="#">Services de locations</a>
               </div>
             </div>

@@ -88,10 +88,6 @@ const CategoryDisplay: React.FC = () => {
     setCarouselIndex((prev) => (prev === categories.length - 1 ? 0 : prev + 1));
   };
 
-  const handleDotClick = (index: number) => {
-    setCarouselIndex(index);
-  };
-
   return (
     <>
       {isPopupOpen && (
@@ -127,14 +123,28 @@ const CategoryDisplay: React.FC = () => {
           <h4>Découvrez nos meilleures offres adaptées à vos besoins</h4>
         </div>
         <div className="x-carousel-container">
-          <button className="x-carousel-prev" onClick={handlePrev} aria-label="Précédent">◄</button>
-          <div className="x-carousel-inner">
-            {categories.map((category, index) => (
+          <button
+            className="x-carousel-prev"
+            onClick={handlePrev}
+            aria-label="Précédent"
+          >
+            ◄
+          </button>
+          <div
+            className="x-carousel-inner"
+            style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+          >
+            {categories.map((category) => (
               <div
                 key={category.id}
-                className={`nb col-sm-2 ml-4 text-center ${index === carouselIndex ? "block" : "hidden"}`}
+                className="nb col-sm-2 ml-4 text-center"
               >
-                <img src={category.image} alt={category.name} className="img-fluid" id="photo" />
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="img-fluid"
+                  id="photo"
+                />
                 <br />
                 <Link href={category.href} id="tit" target="_blank">
                   {category.name}
@@ -157,16 +167,13 @@ const CategoryDisplay: React.FC = () => {
               </div>
             ))}
           </div>
-          <button className="x-carousel-next" onClick={handleNext} aria-label="Suivant">►</button>
-          <div className="carousel-dots">
-            {categories.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${index === carouselIndex ? "active" : ""}`}
-                onClick={() => handleDotClick(index)}
-              ></span>
-            ))}
-          </div>
+          <button
+            className="x-carousel-next"
+            onClick={handleNext}
+            aria-label="Suivant"
+          >
+            ►
+          </button>
         </div>
       </div>
     </>
