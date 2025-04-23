@@ -21,7 +21,7 @@ export default function ProductPage() {
     <>
         <Header/>
         <CategoryCatalog />
-        <section className="menuu row col-12">
+        <section className="menuu row col-12 store-menu">
         <Navbar/>
         <CategoryDisplay/>
         </section>

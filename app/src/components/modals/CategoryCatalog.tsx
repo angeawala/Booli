@@ -60,7 +60,7 @@ const CategoryCatalog: React.FC = () => {
           )}
         </div>
 
-        <div className="plus col-sm-6">
+        <div className="plus col-sm-6 ">
           <div className="most-searched-products">
             <h5>Rechercher(+):</h5>
             <div className="product col-sm-1">
