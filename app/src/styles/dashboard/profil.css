@@ -1,0 +1,160 @@
+.x-profile-page {
+  padding: 2rem;
+}
+
+.x-profile-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0; /* Adjusted to align with logout button */
+}
+
+.x-profile-subtitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 2rem 0 1rem;
+}
+
+.x-profile-form {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.x-profile-label {
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.x-profile-input {
+  background-color: #f9f9f9;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.x-profile-input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+.x-profile-input-disabled {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* 2FA Toggle Switch */
+.x-toggle-switch {
+  display: flex;
+  align-items: center;
+}
+
+.x-toggle-switch input {
+  display: none;
+}
+
+.x-toggle-label {
+  width: 50px;
+  height: 24px;
+  background-color: #ccc;
+  border: 1px solid #999; /* Added visible border */
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.x-toggle-label::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px; /* Adjusted to fit within border */
+  height: 18px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.x-toggle-switch input:checked + .x-toggle-label {
+  background-color: var(--accent-color);
+  border-color: #e65a00; /* Border changes with active state */
+}
+
+.x-toggle-switch input:checked + .x-toggle-label::before {
+  transform: translateX(26px);
+}
+
+/* Buttons */
+.x-profile-save-btn {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.x-profile-save-btn:hover {
+  background-color: #e65a00;
+}
+
+.x-profile-logout-btn-top {
+  background-color: #dc3545;
+  color: var(--text-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.2s ease;
+}
+
+.x-profile-logout-btn-top:hover {
+  background-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .x-profile-page {
+    padding: 1rem;
+  }
+
+  .x-profile-title {
+    font-size: 1.5rem;
+  }
+
+  .x-profile-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .x-profile-form {
+    padding: 1rem;
+  }
+
+  .x-profile-save-btn {
+    padding: 0.5rem 1rem; /* Smaller padding on mobile */
+    font-size: 0.9rem; /* Smaller font size on mobile */
+  }
+
+  .x-profile-logout-btn-top {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .x-profile-title {
+    font-size: 2.2rem;
+  }
+
+  .x-profile-subtitle {
+    font-size: 1.8rem;
+  }
+}

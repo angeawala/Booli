@@ -1,0 +1,98 @@
+.x-shops-page {
+    padding: 2rem;
+  }
+  
+  .x-shops-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0; /* Align with buttons */
+  }
+  
+  .x-shops-label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Table Styling */
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    min-width: 600px;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle;
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+  }
+  
+  .table td {
+    font-size: 0.85rem;
+  }
+  
+  .x-action-column {
+    white-space: nowrap;
+  }
+  
+  .x-action-btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+  
+  .x-action-btn i {
+    margin: 0;
+  }
+  
+  /* Card Styling */
+  .card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 767px) {
+    .x-shops-page {
+      padding: 1rem;
+    }
+  
+    .x-shops-title {
+      font-size: 1.5rem;
+    }
+  
+    .table th,
+    .table td {
+      padding: 0.5rem 0.3rem;
+      font-size: 0.75rem;
+    }
+  
+    .x-action-btn {
+      padding: 0.2rem 0.4rem;
+      font-size: 0.7rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .x-shops-title {
+      font-size: 2.2rem;
+    }
+  }

@@ -1,0 +1,215 @@
+.x-products-page {
+    padding: 2rem;
+  }
+  
+  .x-products-title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0;
+  }
+  
+  .x-header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .x-button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .x-add-btn {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  
+  .x-add-btn:hover {
+    background-color: #e65a00;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+  }
+  
+  .x-add-btn:active {
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(1px);
+  }
+  
+  .x-products-label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Modal Styling */
+  .x-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .x-modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .x-modal-btn {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .x-modal-btn:hover {
+    background-color: #e65a00;
+  }
+  
+  .x-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+  
+  .x-modal-close:hover {
+    background-color: #c82333;
+  }
+  
+  /* Table Styling */
+  .table {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  
+  .table th {
+    background-color: #f8f9fa;
+  }
+  
+  /* Product Card for Small Screens */
+  .x-product-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 0.5rem;
+  }
+  
+  .x-product-card-body {
+    padding: 1rem;
+  }
+  
+  .x-product-card-title {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .x-product-card-text {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+    color: #555;
+  }
+  
+  .x-product-card-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* Action Buttons */
+  .x-action-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+  
+  /* Filter Row */
+  .x-filter-row {
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 767px) {
+    .x-products-page {
+      padding: 1rem;
+    }
+  
+    .x-products-title {
+      font-size: 1.5rem;
+    }
+  
+    .x-header-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .x-button-group {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .x-add-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 0.5rem;
+      font-size: 0.9rem;
+    }
+  
+    .x-modal-content {
+      padding: 1rem;
+      width: 95%;
+    }
+  
+    .x-filter-row {
+      margin: 0 0.5rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .x-products-title {
+      font-size: 2.2rem;
+    }
+  
+    .x-button-group {
+      flex-direction: row;
+    }
+  }

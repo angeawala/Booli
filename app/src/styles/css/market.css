@@ -158,7 +158,7 @@ select{
     z-index: 0;
     background-size: cover;
     background-position: center;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 1s ease-in-out;
   }
 
@@ -176,7 +176,11 @@ select{
 }
 .menuu{
     background-color: rgba(241, 212, 149, 0.747);
-    margin: 0 auto;
+}
+@media screen and (max-width:700px) {
+    .menuu{
+        margin: 0 auto;
+    }
 }
 #m1{
     border-radius: 50px;
@@ -667,12 +671,14 @@ option[data-flag="de"] {
     transform: translateX(-50%);
     background-color: #fff;
     border: 1px solid #ddd;
-    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.15);
     border-radius: 5px;
-    z-index: 1000;
+    z-index: 99999; 
     width: max-content;
     text-align: left;
+    overflow: visible;
 }
+
 .dropdown1-menu a {
     display: block;
     padding: 10px 20px;
@@ -690,6 +696,8 @@ option[data-flag="de"] {
     display: block;
     font-size: 14px;
     font-weight: 200px;
+    overflow: visible;
+    z-index: 10000;
 }
 .helf:hover .dropdown1-menu {
     display: block;
@@ -932,7 +940,7 @@ border-radius: 50%;
     height: 100%;
     overflow: auto;
     background-color: rgba(0,0,0,0.4);
-    z-index: 4;
+    z-index: 99999;
 }
 
 .modal-content {
@@ -1084,7 +1092,7 @@ h5{
 .sidebar {
     width: auto;
     margin-top: 10px;
-    margin-left: 2px;
+    margin-left: 8px;
     margin-bottom: 10px;
     padding: 20px;
     align-items: center;
@@ -1576,9 +1584,8 @@ h6{
     height: auto;
     margin: auto;
     margin-bottom: 10px;
-   overflow: hidden;
+    overflow: hidden;
     border-radius: 5px;
-    background-color: #f0f0f0;
     box-shadow: 3px 3px 3px 3px #00222c49;
     z-index: 1;
 }
@@ -1590,7 +1597,7 @@ h6{
 
 .carousel-slide img {
     width: auto;
-    height: 540px;
+    height: auto;
     cursor: pointer;
 }
 

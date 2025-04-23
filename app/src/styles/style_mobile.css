@@ -187,4 +187,99 @@
     .x-carousel-prev, .x-carousel-next {
         display: none; 
     }
+    
+}
+
+
+/* Ajout pour les images du carrousel */
+.category-photo {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain; /* Empêche la déformation en ajustant l'image sans l'étirer */
+  display: block;
+  margin: 0 auto; /* Centre l'image */
+}
+
+/* S'assurer que le conteneur .nb ne force pas de contraintes indésirées */
+.nb {
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Optionnel : Limiter la taille maximale des images pour la cohérence */
+@media (max-width: 768px) {
+  .category-photo {
+    max-height: 200px; /* Ajustez selon vos besoins */
+  }
+}
+
+@media (min-width: 768px) {
+  .category-photo {
+    max-height: 150px; /* Ajustez pour la grille sur bureau */
+  }
+}
+
+
+/* ===========Mobile header============= */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.blink {
+    animation: blink 1s infinite;
+}
+.y-desktop-section {
+    display: block;
+}
+.y-mobile-section {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .y-desktop-section {
+        display: none;
+    }
+    .y-mobile-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, #cf6915, #97c4cae0);
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .header{
+        display: none;
+    }
+    .y-search-bar {
+        display: flex;
+        align-items: center;
+        background-color: #f3f4f6;
+        border-radius: 0.375rem;
+        padding: 0.5rem;
+        width: 70%;
+    }
+    .y-search-bar input {
+        background: none;
+        border: none;
+        outline: none;
+      
+        font-size: 0.875rem;
+    }
+    .y-search-bar button {
+        background-color: #6b7280;
+        color: white;
+        border-radius: 0.25rem;
+        padding: 0.25rem;
+        margin-left: 0.5rem;
+        cursor: pointer;
+    }
+    .y-search-bar button i {
+        font-size: 0.875rem;
+    }
+    .y-cart-link i{
+        font-size: 1.5rem;
+        color: #ff792b;
+        font-weight: 1000;
+        text-shadow: 3px 2px 3xp #0000006b;
+    }
 }

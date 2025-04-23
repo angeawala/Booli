@@ -11,10 +11,6 @@
         display: none;
         padding-left:10px ;
     }
-    .x-link-menu {
-        position: relative;
-        z-index: 9999;
-      }
 }
 .x-footer-index{
     position: relative;
@@ -25,7 +21,55 @@
     position: relative;
     z-index: 9998;
 }
+.x-link-menu {
+    position: relative;
+    z-index: 9999;
+  }
+.x-store-catalogue-bar{
+    position: relative;
+    z-index: 9998;
+}
 #messageBox{
     position: absolute;
     z-index: 9999;
 }
+.x-exp{
+    display: flex;
+    flex-direction: row;
+}
+.x-store-expedion{
+    max-width: 100px;
+}
+.x-menu-link-item i{
+    color: aliceblue;
+}
+@media (max-width: 768px) {
+    .hddi-responsive {
+      font-size: 1.5rem; /* Ou la taille souhaitée */
+    }
+  }
+
+  .View_more {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 16px 0;
+  }
+  .View_more:hover {
+    background-color: #0056b3;
+  }
+  .z-bar-header {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .z-bar-header button{
+    position: relative;
+    right: 50px;
+    min-width: 50px;
+    border: none;
+  }

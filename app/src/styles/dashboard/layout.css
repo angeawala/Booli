@@ -1,0 +1,123 @@
+:root {
+    --primary-bg: #1a2526;
+    --accent-color: #ff6200;
+    --text-color: #fff;
+    --secondary-bg: #f5f5f5;
+    --border-color: #ccc;
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+  }
+  
+  .x-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .x-main-content {
+    flex: 1 0 auto; /* Ensure main content takes available space but doesn't shrink */
+    padding: 20px; /* Adjusted for mobile */
+    background-color: var(--secondary-bg);
+    color: #333;
+  }
+  
+  .x-footer {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+  }
+  
+  /* Ensure footer stays at the bottom */
+  .x-layout > .x-footer {
+    width: 100%;
+  }
+  
+  .x-dashboard-title {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .x-dashboard-card {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .x-dashboard-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .x-card-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .x-card-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+  
+  .x-card-link:hover {
+    color: var(--accent-color);
+  }
+  
+  /* Small screens (mobile) */
+  @media (max-width: 767px) {
+    .x-main-content {
+      padding-top: 60px; /* Space for header */
+    }
+  }
+  
+  /* Medium screens (tablets) */
+  @media (min-width: 768px) {
+    .x-layout {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  
+    .x-main-content {
+      margin-left: 200px; /* Space for sidebar */
+      padding: 80px 30px 30px 30px;
+      width: calc(100% - 200px); /* Ensure it takes remaining space */
+    }
+  
+    .x-dashboard-title {
+      font-size: 2rem;
+    }
+  
+    .x-card-title {
+      font-size: 1.3rem;
+    }
+  
+    .x-layout > .x-footer {
+      margin-left: 200px; /* Align with main content */
+      width: calc(100% - 200px);
+    }
+  }
+  
+  /* Large screens (desktops) */
+  @media (min-width: 992px) {
+    .x-main-content {
+      margin-left: 250px; /* Wider sidebar on large screens */
+      padding: 80px 40px 40px 40px; /* Adjusted padding to account for header */
+      width: calc(100% - 250px);
+    }
+  
+    .x-dashboard-title {
+      font-size: 2.2rem;
+    }
+  
+    .x-layout > .x-footer {
+      margin-left: 250px; /* Align with main content */
+      width: calc(100% - 250px);
+    }
+  }

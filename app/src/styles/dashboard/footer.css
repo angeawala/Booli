@@ -1,0 +1,24 @@
+.x-footer {
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    padding: 1rem 0;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto; /* Ensures footer stays at the bottom */
+  }
+  
+  .x-footer-bottom {
+    margin-top: 0;
+    padding-top: 0;
+  }
+  
+  .x-footer-bottom p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+    .x-footer-bottom p {
+      font-size: 1rem;
+    }
+  }
