@@ -34,7 +34,7 @@ const AdBanner: React.FC = () => {
   return (
     <section className="defile">
       <section className="barre">
-        <div className="banner col-12">
+        <div className="x-banner col-12">
           <div className="banner-item entreprise">
             Joignez-nous au <i className="fab fa-whatsapp"></i> +2.. 96 78 07 62
           </div>
@@ -49,26 +49,26 @@ const AdBanner: React.FC = () => {
 
       <section>
         <div className="ban col-12">
-          <div className="button-bar">
+          <div className="x-button-bar ">
             <button
               onClick={() => window.open("/contact_number", "_blank")}
-              className="btn"
+              className="x-btn"
             >
               <i className="fas fa-phone-alt"></i> Appeler pour Commander
             </button>
             <button
               onClick={() => window.open("/Panier", "_blank")}
-              className="btn"
+              className="x-btn"
             >
               <i className="fas fa-cart-plus"></i> Voir votre panier
             </button>
-            <button className="btn">
+            <button className="x-btn">
               <i className="fas fa-truck"></i> Fournisseurs
             </button>
-            <button className="btn">
+            <button className="x-btn">
               <i className="fas fa-star"></i> Nouveautés
             </button>
-            <button className="btn">
+            <button className="x-btn">
               <i className="fas fa-envelope"></i> Contacter un Fournisseur
             </button>
           </div>
@@ -105,7 +105,7 @@ const AdBanner: React.FC = () => {
           </div>
         </div>
 
-        <div className="clignote-titles">
+        <div className="x-clignote-titles">
           <h2
             className="clignote"
             style={{
@@ -129,7 +129,7 @@ const AdBanner: React.FC = () => {
             -80% de réduction
           </h2>
         </div>
-        <div className="clignote-titles1">
+        <div className="x-clignote-titles1">
           <h2
             className="clignote"
             style={{

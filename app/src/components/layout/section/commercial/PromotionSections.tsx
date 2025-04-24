@@ -344,7 +344,7 @@ const PromotionSection: React.FC = () => {
   return (
     <section className="produ-grid col-12 px-4" id="Publicite">
       <div className="col-12 text-center">
-        <h3 className="hddi hddi-responsive">Profitez de nos meilleures offres</h3>
+        <h3 className="hddi hddi-responsive hddi-responsive-p">Profitez de nos meilleures offres</h3>
       </div>
 
       {promotions.map((promo, index) => (

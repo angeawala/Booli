@@ -20,6 +20,7 @@ export interface CreatePharmacyProductPayload {
   prix_reduit?: number;
   stock: number;
   category: string;
+  ingredient: [];
   precautions: string;
   expiration_date: string;
 }

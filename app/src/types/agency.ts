@@ -18,7 +18,6 @@ export interface Agency {
 export interface Category {
   id: string;
   name: string;
-  type: "Entreprise" | "Agence" | "ONG";
-  domain: "Voyage" | "Marketing" | "Événementiel" | "Autre";
-  image: string; // Ajouté pour correspondre au design
+  description: string;
+  image: string;
 }
