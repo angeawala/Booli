@@ -52,11 +52,13 @@
     background: #f0f0f0;
   }
   .pagination {
+    display: flex;
     margin: 16px 0;
     text-align: center;
+    justify-content: center;
   }
   .pagination button {
-    background: #007bff;
+    background: #205963;
     color: white;
     border: none;
     border-radius: 50%;
@@ -66,7 +68,7 @@
     cursor: pointer;
   }
   .pagination button.active {
-    background: #0056b3;
+    background: #b35700;
   }
   .pagination button:disabled {
     background: #ccc;
@@ -136,3 +138,12 @@
     border-radius: 4px;
     cursor: pointer;
   }
+@media screen and (max-width:768px) {
+  .left-panel{
+    display: none;
+  }
+  .right-panel p{
+    display: block;
+    font-size: 0.4em;
+  }
+}
