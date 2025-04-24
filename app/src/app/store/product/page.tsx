@@ -32,7 +32,6 @@ export default function ProductPage() {
     <PromotionSection/>
     <ShopSection/>
     <AgencySection/>
-    <AdPopup/>
       <Footer/>
     </>
   );

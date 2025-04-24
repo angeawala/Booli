@@ -7,11 +7,13 @@ import CookieConsent from "@/components/CookieConsent";
 import GoogleTranslateLoader from "@/components/GoogleTranslateLoader";
 import { Akaya_Kanadaka, Poppins, Orbitron, Montserrat } from "next/font/google";
 import { CartProvider } from "@/context/cartContext";
+import TopHeader from "@/components/layout/listing/TopHeader";
 import "@/styles/css/market.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import '@/styles/index.css';
 import '@/styles/style_mobile.css';
+
 
 
 const akayaKanadaka = Akaya_Kanadaka({
@@ -50,6 +52,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartProvider>
             <GoogleTranslateLoader />
             <CookieConsent />
+            <TopHeader/>
             {children}
           </CartProvider>
         </Provider>
