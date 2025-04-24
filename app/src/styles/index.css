@@ -47,6 +47,9 @@
     .hddi-responsive {
       font-size: 1.5rem; /* Ou la taille souhaitée */
     }
+    .hddi-responsive-p {
+      font-size: 1rem;
+    }
   }
 
   .View_more {
@@ -73,3 +76,47 @@
     min-width: 50px;
     border: none;
   }
+.b-booli{
+  justify-content: center;
+    align-items: center;
+    background-color: orange;
+    color: #fff;
+    padding: 5px 10px;
+    position: relative;
+    width: 100%;
+    min-height: 20px;
+    animation-name: fock;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-delay: 60s;
+    animation-direction: reverse;
+}
+@keyframes fock{
+    0%{background-color: orange;}
+    25%{background-color: orange;}
+    50%{background-color: orange;}
+    75%{background-color: orange;}
+    100%{background-color: orange;}
+}
+.add-to-cart-btn i, .details i{
+  color: #fff;
+}
+
+.overlay-text {
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: 1000;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 1000;
+  font-size: 15px;
+  background-color: rgba(24, 9, 0, 0.719);
+  padding: 3px 5px;
+  border-bottom: 1px solid #999;
+  border-radius: 5px 0px 15px 0px;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
