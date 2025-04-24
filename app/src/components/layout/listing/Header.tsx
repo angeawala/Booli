@@ -159,7 +159,7 @@ export default function Header() {
 
       {/* Header Section */}
       <header
-        className="header"
+        className="x-header"
 
         ref={headerRef}
         style={{ display: isScrolled ? "none" : "block" }}
