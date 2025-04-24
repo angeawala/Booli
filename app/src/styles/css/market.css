@@ -1494,7 +1494,7 @@ h6{
 }
 
 /*************************************barre clignote******************************/
-.banner {
+.x-banner {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -1546,12 +1546,12 @@ h6{
 }
 
     
-.button-bar {
+.x-button-bar {
     display: flex;
     align-items: center;
 }
 
-.btn {
+.x-btn {
     background-color: #555;
     color: white;
     border: none;
@@ -1564,11 +1564,12 @@ h6{
     transition: background-color 0.3s;
 }
 
-.btn i {
+.x-btn i {
     margin-right: 8px;
+    color: #ffffff;
 }
 
-.btn:hover {
+.x-btn:hover {
     background-color: #3498db;
     color: #fff;
     font-weight: 900;
@@ -1669,7 +1670,7 @@ h6{
     z-index: 1; 
   }
 
-.clignote-titles {
+.x-clignote-titles {
     position: absolute;
     top: 48%;
     left: 1%;
@@ -1681,7 +1682,7 @@ h6{
     font-size: 8px;
     z-index: 3;
   }
-  .clignote-titles1 {
+  .x-clignote-titles1 {
     position: absolute;
     top: 59%;
     left: 1%;
@@ -1692,6 +1693,9 @@ h6{
     transform: translateY(-50%);
     font-size: 8px;
     z-index: 3;
+  }
+  .x-clignote-titles i{
+    color: #ffffff;
   }
   
   .clignote {

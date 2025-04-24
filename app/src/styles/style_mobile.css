@@ -247,7 +247,7 @@
         background: linear-gradient(135deg, #cf6915, #97c4cae0);
         border-bottom: 1px solid #e5e7eb;
     }
-    .header{
+    .x-header{
         display: none;
     }
     .y-search-bar {
@@ -283,3 +283,4 @@
         text-shadow: 3px 2px 3xp #0000006b;
     }
 }
+

@@ -1,0 +1,202 @@
+/* Conteneur de la page de visualisation */
+.view-document-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+  }
+  
+  /* Bouton Retour */
+  .back-btn {
+    background: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 20px;
+    align-self: flex-start;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .back-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+  }
+  
+  /* Visionneuse PDF */
+  .pdf-viewer {
+    flex: 1;
+    overflow: auto;
+    padding: 20px;
+    background: white;
+    margin: 0 20px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .pdf-viewer:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Barre d'outils */
+  .pdf-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #007bff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .pdf-toolbar-top {
+    margin-bottom: 15px;
+  }
+  .pdf-toolbar-bottom {
+    margin-top: 15px;
+  }
+  .toolbar-btn {
+    background: white;
+    color: #007bff;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s ease, transform 0.2s ease;
+    position: relative;
+  }
+  .toolbar-btn:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+  }
+  .toolbar-btn:disabled {
+    background: #d3d3d3;
+    cursor: not-allowed;
+  }
+  .toolbar-btn i {
+    font-size: 16px;
+  }
+  .btn-text {
+    display: inline;
+    font-size: 14px;
+  }
+  .toolbar-btn:hover .btn-text {
+    display: inline;
+  }
+  .page-info {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 10px;
+  }
+  
+  /* Conteneur du canvas */
+  .pdf-canvas-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+    padding: 10px;
+  }
+  
+  /* Canvas PDF */
+  .pdf-canvas {
+    max-width: 100%;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+  }
+  
+  /* Message d'erreur */
+  .error-message {
+    color: #dc3545;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  /* Loader */
+  .loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .view-document-container {
+      margin: 0;
+    }
+    .pdf-viewer {
+      margin: 0 10px 10px;
+      padding: 10px;
+    }
+    .back-btn {
+      padding: 8px 15px;
+      font-size: 12px;
+      margin: 10px;
+    }
+    .pdf-toolbar {
+      gap: 5px;
+      padding: 8px;
+    }
+    .toolbar-btn {
+      padding: 6px;
+    }
+    .btn-text {
+      display: none;
+    }
+    .toolbar-btn:hover .btn-text {
+      display: block;
+      position: absolute;
+      top: -30px;
+      background: #333;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      z-index: 10;
+    }
+    .page-info {
+      font-size: 12px;
+    }
+    .pdf-canvas-container {
+      padding: 5px;
+    }
+  }
+  @media (max-width: 480px) {
+    .pdf-toolbar {
+      flex-wrap: wrap;
+    }
+    .toolbar-btn {
+      padding: 5px;
+    }
+    .toolbar-btn i {
+      font-size: 14px;
+    }
+  }
