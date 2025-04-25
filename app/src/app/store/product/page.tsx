@@ -1,5 +1,5 @@
 "use client";
-
+import TopHeader from "@/components/layout/listing/TopHeader";
 import Header from "@/components/layout/listing/Header"
 import Footer from "@/components/layout/listing/Footer";
 import CategoryCatalog from "@/components/modals/CategoryCatalog";
@@ -19,6 +19,7 @@ export default function ProductPage() {
 
   return (
     <>
+        <TopHeader/>
         <Header/>
         <CategoryCatalog />
         <section className="menuu row col-12 store-menu">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,7 +10,8 @@ import { Order, Shop, Product } from '@/components/dashboard/commandes/types';
 import { getOrders, getShops, getProducts } from '@/components/dashboard/commandes/data';
 import '@/styles/dashboard/commandes.css';
 
-const TrackOrderPage = () => {
+// Child component that uses useSearchParams
+const TrackOrderContent = () => {
   const [loading, setLoading] = useState(false);
   const [trackingCode, setTrackingCode] = useState<string>('');
   const [order, setOrder] = useState<Order | null>(null);
@@ -111,6 +112,15 @@ const TrackOrderPage = () => {
 
       {order && <OrderDetails order={order} shops={shops} products={products} />}
     </div>
+  );
+};
+
+// Main page component
+const TrackOrderPage = () => {
+  return (
+    <Suspense fallback={<Loader loading={true} />}>
+      <TrackOrderContent />
+    </Suspense>
   );
 };
 

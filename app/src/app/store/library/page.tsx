@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import TopHeader from "@/components/layout/listing/TopHeader";
 import Footer from "@/components/Footer";
 import DocumentItem from "./DocumentItem";
 import DocumentModal from "./DocumentModal";
@@ -512,6 +513,7 @@ const LibrarySection: React.FC = () => {
         </div>
       ) : (
         <>
+        <TopHeader/>
           <section className="search-bar-container" id="xxl">
           <div className="search-bar-wrapper">
             <input
