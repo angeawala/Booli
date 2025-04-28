@@ -1,0 +1,46 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .bar {
+    width: 20px;
+    height: 60px;
+    background-color: #333;
+    margin: 0 5px;
+    animation: loading 1s infinite;
+  }
+  .bar:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .bar:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes loading {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.5); }
+    100% { transform: scaleY(1); }
+  }
+  .img-connexion {
+    background-image: url('/path/to/background.jpg'); /* Remplacez par votre image */
+    background-size: cover;
+    background-position: center;
+  }
+  .cadre {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .custom-input {
+    border-radius: 5px;
+  }
+  .e-recover:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  .connex {
+    background-color: #007bff;
+    transition: background-color 0.3s;
+  }
+  .connex:hover {
+    background-color: #0056b3;
+  }

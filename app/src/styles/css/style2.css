@@ -1626,9 +1626,6 @@ textarea {
   }
 
   .header1 {
-    background-image: url('');
-    background-size: cover;
-    background-position: center;
     height: 400px;
     display: flex;
     align-items: center;

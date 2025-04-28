@@ -476,7 +476,7 @@ pointer-events: none;
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
-    background-image: url('../Photo/vente1.jpg');
+    background-image: url('/Photo/vente1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     /*background: linear-gradient(135deg, #baf5ff 0%, #ACB6E5 100%);*/
@@ -752,7 +752,7 @@ nav a:hover:after {
 }
 /*=========Contact via number ============*/
 .veto {
-    background: url('../Photo/booli.png') no-repeat center center/cover;
+    background: url('/Photo/booli.png') no-repeat center center/cover;
     height: 100vh;
     display: flex;
     justify-content: center;

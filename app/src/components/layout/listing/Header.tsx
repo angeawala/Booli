@@ -158,9 +158,9 @@ export default function Header() {
               </a>
               <div className="dropdown1-menu ">
                 <SignInOrLogout />
-                <a href="/Users-Agent/page_not_found" target="_blank">Tableau de Bord</a>
-                <a href="/connexion_client" target="_blank">Vos Commandes</a>
-                <a href="/connexion_client" target="_blank">Vos Souhaits</a>
+                <a href="/dashboard/" target="_blank">Tableau de Bord</a>
+                <a href="/dashboard/commandes/mes" target="_blank">Vos Commandes</a>
+                <a href="/panier" target="_blank">Vos Souhaits</a>
               </div>
             </div>
             <div className="col-sm-2 text-center ml-4" id="Bye">
@@ -174,13 +174,13 @@ export default function Header() {
                 <Link href="/help">
                   <i className="fas fa-question-circle"></i> FAQs
                 </Link>
-                <Link href="/contact">
+                <Link href="/home/contact">
                   <i className="fas fa-shopping-cart"></i> Commander
                 </Link>
-                <Link href="/command_annul">
+                <Link href="/remboursement/">
                   <i className="fas fa-times-circle"></i> Annulation
                 </Link>
-                <Link href="/service_client">
+                <Link href="/service_client/">
                   <i className="fas fa-truck"></i> Service Client
                 </Link>
               </div>

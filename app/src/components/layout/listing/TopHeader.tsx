@@ -69,11 +69,11 @@ export default function TopHeader(){
               <button className="close-btn" onClick={toggleMobileMenu}>✕</button>
               <a href="#" id="mobile-search-btn">Rechercher</a>
               <a href="/Panier">Panier</a>
-              <a href="/helph_market">Aide</a>
-              <a href="/connexion_site" target="_blank">Se Connecter</a>
-              <a href="/Users-Agent/page_not_found" target="_blank">Votre compte</a>
-              <a href="/connexion_client" target="_blank">Vos Commandes</a>
-              <a href="/cathalogue++">** Opportinutés et Et affaires</a>
+              <a href="/help">Aide</a>
+              <a href="/auth/login" target="_blank">Se Connecter</a>
+              <a href="/dashboard/profile" target="_blank">Votre compte</a>
+              <a href="/dashboard/commandes/mes" target="_blank">Vos Commandes</a>
+              <a href="/store/product/#icone">** Opportinutés et Et affaires</a>
             </div>
           </div>
           <div className="mobile-title">At Our Place !</div>
@@ -136,7 +136,7 @@ export default function TopHeader(){
           ))}
         <div className="row col-12 px-2 content-wrapper">
           <div className="connect col-sm-3 mt-3 text-left px-4">
-            <button onClick={() => (window.location.href = "/dashboard/")}>
+            <button onClick={() => (window.location.href = "/home/business/")}>
               <img src="/media/user_market.jpeg" id="m1" alt="Démarrer un Business" /> Démarrer un
               Business
             </button>

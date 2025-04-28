@@ -7,22 +7,22 @@ const Footer: React.FC = () => {
       <div className="index-footer row col-12">
         <div className="about col-sm-2 mt-2 text-left">
           <h5>Qui sommes-nous</h5>
-          <Link href="about.html" target="_blank">
+          <Link href="/about/" target="_blank">
             A propos de nous
           </Link>
           <br />
           <br />
-          <Link href="carriere professionnelle.html" target="_blank">
+          <Link href="/professionnelle/" target="_blank">
             Carrière chez BOOLi-Store
           </Link>
           <br />
           <br />
-          <Link href="condition et termes.html" target="_blank">
+          <Link href="/condition/" target="_blank">
             Conditions d&apos; utilisation
           </Link>
           <br />
           <br />
-          <Link href="politique-confidentialité1.html" target="_blank">
+          <Link href="/politique/" target="_blank">
             Politique de Confidence
           </Link>
           <br />
@@ -65,59 +65,59 @@ const Footer: React.FC = () => {
       <div className="index-footer row col-12">
         <div className="about col-sm-4 mt-2">
           <h5>AIDE_Assistance</h5>
-          <Link href="helph_market.html" target="_blank">
+          <Link href="/help/" target="_blank">
             Centre d&apos; Assistance
           </Link>
           <br />
           <br />
-          <Link href="contact.html" target="_blank">
+          <Link href="/home/contact/" target="_blank">
             Contacter le support client
           </Link>
           <br />
           <br />
-          <Link href="suivi_de_commande.html" target="_blank">
+          <Link href="/dashboard/commandes/suivi" target="_blank">
             Suivre votre commande
           </Link>
           <br />
           <br />
-          <Link href="command_annul.html" target="_blank">
+          <Link href="/dashboard/commandes/mes" target="_blank">
             Annuler une commande
           </Link>
           <br />
           <br />
-          <Link href="contact.html" target="_blank">
+          <Link href="/home/contact/" target="_blank">
             Signaler un problème
           </Link>
           <br />
           <br />
-          <Link href="Process_paid.html" target="_blank">
+          <Link href="/home/paiement_documentation/" target="_blank">
             <i className="fa fa-hand-holding-usd">Comment Paier</i>
           </Link>
         </div>
 
         <div className="about col-sm-4 mt-2">
           <h5>Vendre sur BOOLi-STORE</h5>
-          <Link href="acceuil_boutique.html" target="_blank">
+          <Link href="/dashboard/boutiques/mes" target="_blank">
             Commencer à vendeur
           </Link>
           <br />
           <br />
-          <Link href="Fournisseur.html" target="_blank">
+          <Link href="/dashboard/mon-agence" target="_blank">
             Devenir Fournisseur
           </Link>
           <br />
           <br />
-          <Link href="newslatter.html" target="_blank">
+          <Link href="/home/newsletter/" target="_blank">
             Newslatteur
           </Link>
           <br />
           <br />
-          <Link href="service client.html" target="_blank">
+          <Link href="/service_client/" target="_blank">
             Service Client
           </Link>
           <br />
           <br />
-          <Link href="comment.html" target="_blank">
+          <Link href="/comment/" target="_blank">
             Suggestion
           </Link>
           <br />
@@ -132,17 +132,17 @@ const Footer: React.FC = () => {
           <Link href="#">Paiement sécuriser</Link>
           <br />
           <br />
-          <Link href="garantie du site.html" target="_blank">
+          <Link href="/garantir/" target="_blank">
             Nos garanties
           </Link>
           <br />
           <br />
-          <Link href="retour au remboussement.html" target="_blank">
+          <Link href="remboursement/" target="_blank">
             Retour-Rembourssement
           </Link>
           <br />
           <br />
-          <Link href="vente_mise_en_service.html" target="_blank">
+          <Link href="/mise_en_service/" target="_blank">
             Vente et mise en service
           </Link>
           <br />
@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
           </Link>
           <br />
           <br />
-          <Link href="moyen_de_paie.html" target="_blank">
+          <Link href="/" target="_blank">
             <i className="fas fa-money-bill-wave payment-icon"></i> 1000 moyens
             de paie
           </Link>

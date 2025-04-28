@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import '@/styles/css/style.css'
+import '@/styles/css/filtre.css'
 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(true); // État pour gérer l'affichage du loading
