@@ -5,6 +5,7 @@ import '@/styles/css/style2.css';
 import { useEffect } from 'react';
 import Footer3 from '@/components/Footer3';
 import Header from '@/components/layout/listing/Header';
+import TopHeader from '@/components/layout/listing/TopHeader';
 
 export default function GuaranteesPage() {
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function GuaranteesPage() {
 
   return (
     <>
+    <TopHeader/>
       <Header/> {/* Masque la barre de recherche et le panier */}
 
       <section className="header-section">

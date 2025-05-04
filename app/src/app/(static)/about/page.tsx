@@ -1,5 +1,6 @@
 import Header from '@/components/layout/listing/Header';
 import Footer3 from '@/components/Footer3';
+import TopHeader from '@/components/layout/listing/TopHeader';
 import "@/styles/css/market.css";
 import '@/styles/css/style2.css';
 
@@ -10,6 +11,7 @@ export default function AboutPage() {
 
   return (
 <>
+<TopHeader/>
 <Header/>
           <section className="heroo">
             <h1>À PROPOS DE BOOLi-STORE</h1>

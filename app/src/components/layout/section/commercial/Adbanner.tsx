@@ -35,13 +35,13 @@ const AdBanner: React.FC = () => {
     <section className="defile">
       <section className="barre">
         <div className="x-banner col-12">
-          <div className="banner-item entreprise">
+          <div className="banner-item b-entreprise">
             Joignez-nous au <i className="fab fa-whatsapp"></i> +2.. 96 78 07 62
           </div>
-          <div className="banner-item reduction">
+          <div className="banner-item b-reduction">
             <strong>Profitez 85% de nos offres</strong>
           </div>
-          <div className="banner-item explorer">
+          <div className="banner-item b-explorer">
             Explorez le monde des affaires en Afrique
           </div>
         </div>

@@ -388,6 +388,7 @@ h1 {
     }
     .book-specs p{
         display: block;
+       
     }
    
 }
@@ -508,6 +509,7 @@ h1 {
     .book-cover {
       height: 220px;
     }
+
   }
 .document-cover {
     height: 14em;
@@ -963,6 +965,7 @@ h3{text-align: center;}
 
 /* Grille pour aligner les pharmacies */
 .pharmacy-grid {
+    width: 300px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -971,7 +974,7 @@ h3{text-align: center;}
 .pharmacy {
     background-color: #fffffff8;
     color: #000;
-    padding: 15px;
+    padding: 25px;
     border-radius: 10px;
     width: 250px;
     margin: 10px;
@@ -1008,7 +1011,7 @@ h3{text-align: center;}
     box-shadow: 0px 4px 10px rgba(3, 1, 1, 0.1);
     padding: 20px;
     height: 190px;
-    width: 180;
+    width: 300px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -1073,6 +1076,31 @@ h3{text-align: center;}
 @media (max-width: 600px) {
     .pharmacies-container {
         grid-template-columns: 1fr;
+    }
+    .search-container{
+        position: absolute;
+        width: 250px;
+        margin-top: 50px;
+
+    }
+    .pg-div *{
+        font-size: 10px;
+    }
+    .h4-text{
+        display: none;
+    }
+    
+    .ph{
+        position: absolute;
+        margin: 0 auto;
+    }
+    .select-option{
+        display: none;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .pharmacy{
+        display: none;
     }
 }
 

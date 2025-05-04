@@ -105,14 +105,14 @@ const ProductList: React.FC = () => {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="p-2 border rounded"
+            className="select-option p-2 border rounded"
           >
             {categories.map(category => (
               <option key={category} value={category}>{category}</option>
             ))}
           </select>
         </div>
-        <div className='centered-div col-4 text-center mt-3'>
+        <div className=' centered-div col-4 text-center mt-3'>
         <div className="search-container">
           <input
             type="text"
@@ -127,12 +127,12 @@ const ProductList: React.FC = () => {
         </div>
         </div>
      
-        <div className='col-4 mt-4 ml-4'>
+        <div className='col-4 mt-4 '>
 
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
-            className="p-2 border rounded"
+            className="select-option p-2 border rounded"
           >
             <option value="default">Trier par:</option>
             <option value="price-asc">Prix croissant</option>
@@ -161,7 +161,7 @@ const ProductList: React.FC = () => {
       })}
 
       {/* Pagination */}
-      <div className="flex text-center justify-center gap-2 mb-4 mt-4">
+      <div className=" pg-div flex text-center justify-center gap-2 mb-4 mt-4">
         <button
           onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
           disabled={currentPage === 1}

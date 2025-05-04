@@ -73,7 +73,7 @@ export default function TopHeader(){
               <a href="/auth/login" target="_blank">Se Connecter</a>
               <a href="/dashboard/profile" target="_blank">Votre compte</a>
               <a href="/dashboard/commandes/mes" target="_blank">Vos Commandes</a>
-              <a href="/store/product/#icone">** Opportinutés et Et affaires</a>
+              <a href="/store/product/#icone">** Opportinutés et affaires</a>
             </div>
           </div>
           <div className="mobile-title">At Our Place !</div>

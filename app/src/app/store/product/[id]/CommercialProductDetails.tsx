@@ -285,18 +285,17 @@ const CommercialProductDetails: React.FC = () => {
   };
 
   return (
-    <div className="produ-grid row col-sm-12">
+    <section className="produ-grid row col-sm-12">
       <main>
-        <div className="cadre">
+        <div className="x-cadre">
           {/* Images */}
-          <div className="cadres-images">
+          <div className="x-cadres-images">
             <img
               id="mainImage"
               src={mainImage}
               alt={product.name}
-              className="img-fluid"
             />
-            <div className="thumbnail-images">
+            <div className="x-thumbnail-images">
               {thumbnailImages.map((image, index) => (
                 <img
                   key={index}
@@ -329,12 +328,12 @@ const CommercialProductDetails: React.FC = () => {
             {/* Histogramme des avis */}
             <div className="histogram">
               {product.ratings.map((rating) => (
-                <div className="bar1" key={rating.rating}>
-                  <span className="bar1-label">{rating.rating.toFixed(2)}</span>
-                  <div className="bar1-fill" style={{ width: `${rating.percentage}%` }}>
+                <div className="x-bar1" key={rating.rating}>
+                  <span className="x-bar1-label">{rating.rating.toFixed(2)}</span>
+                  <div className="x-bar1-fill" style={{ width: `${rating.percentage}%` }}>
                     {rating.percentage}%
                   </div>
-                  <span className="bar1-count">({rating.count} avis)</span>
+                  <span className="x-bar1-count">({rating.count} avis)</span>
                 </div>
               ))}
             </div>
@@ -361,7 +360,7 @@ const CommercialProductDetails: React.FC = () => {
                   </span>
                 )}
               </div>
-              <div className="rating">
+              <div className="x-rating">
                 <span>{renderStars(4)}</span>
                 <span>(123 Avis)</span>
               </div>
@@ -447,7 +446,7 @@ const CommercialProductDetails: React.FC = () => {
 
               {/* Total */}
               <div className="cart-summary" style={{ marginBottom: '10px' }}>
-                <strong>Total :</strong> {getTotalPrice()} FCF
+                <strong>Total :</strong> {getTotalPrice()} XOF
                 <a href="/Panier" className="view-cart-btn">
                   Voir mon panier
                 </a>
@@ -456,7 +455,7 @@ const CommercialProductDetails: React.FC = () => {
               {/* Boutons */}
               <div className="buttons">
                 <button
-                  className="add-to-cart btn btn-primary"
+                  className="add-to-cart"
                   onClick={handleAddToCart}
                   aria-label="Ajouter au panier"
                   disabled={selectedColor === 'gray'}
@@ -464,7 +463,7 @@ const CommercialProductDetails: React.FC = () => {
                   <i className="fas fa-cart-plus" id="fas"></i> Ajouter au panier
                 </button>
                 <button
-                  className="buy-now btn btn-success"
+                  className="buy-now"
                   onClick={() => toast.info('Redirection vers le paiement...')}
                   aria-label="Acheter maintenant"
                   disabled={selectedColor === 'gray'}
@@ -519,7 +518,7 @@ const CommercialProductDetails: React.FC = () => {
                 <br />
                 <a href="/retour">
                   <i className="fas fa-check-circle" style={{ color: 'rgba(255, 166, 0, 0.959)' }}></i>{' '}
-                  Retour
+                  Retour & Remboursement
                 </a>
                 <br />
                 <a
@@ -562,6 +561,7 @@ const CommercialProductDetails: React.FC = () => {
       </main>
 
       {/* Fiche technique */}
+      <div style={{border: "2px solid #999", width:"100%"}}></div>
       <div className="fiche-technique">
         <h4
           id="fiche-technique1"
@@ -590,19 +590,18 @@ const CommercialProductDetails: React.FC = () => {
         </div>
 
         {/* Galerie d'images et vidéo */}
-        <section className="media-produit">
-          <div className="image-galerie">
+        <section className="x-media-produit">
+          <div className="x-image-galerie">
             {product.galleryImages.map((image, index) => (
               <img
                 key={index}
                 src={image}
                 alt={`Vue ${index + 1} de ${product.name}`}
-                className="img-fluid"
               />
             ))}
           </div>
           {product.video && (
-            <div className="video-produit">
+            <div className="x-video-produit">
               <video
                 ref={videoRef}
                 id="myVideo"
@@ -649,44 +648,6 @@ const CommercialProductDetails: React.FC = () => {
               <strong>ISO 9001 :</strong> Produit dans une installation certifiée ISO 9001
             </li>
           </ul>
-
-          <h3>Comparaison</h3>
-          <table className="tableau-comparatif">
-            <thead>
-              <tr>
-                <th>Caractéristiques</th>
-                <th>{product.name}</th>
-                <th>Modèle Concurrent 1</th>
-                <th>Modèle Concurrent 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Matériau</td>
-                <td>Cuir véritable</td>
-                <td>Synthétique</td>
-                <td>Cuir recyclé</td>
-              </tr>
-              <tr>
-                <td>Semelle</td>
-                <td>Antidérapante</td>
-                <td>Standard</td>
-                <td>Renforcée</td>
-              </tr>
-              <tr>
-                <td>Poids</td>
-                <td>{selectedVariant.weight} kg</td>
-                <td>0.8 kg</td>
-                <td>0.9 kg</td>
-              </tr>
-              <tr>
-                <td>Prix</td>
-                <td>{getUnitPrice(selectedVariant)} FCF</td>
-                <td>8000 FCF</td>
-                <td>8500 FCF</td>
-              </tr>
-            </tbody>
-          </table>
         </section>
 
         {/* Avis clients */}
@@ -704,7 +665,7 @@ const CommercialProductDetails: React.FC = () => {
           ))}
         </section>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -17,7 +17,7 @@ const BusinessPage = () => {
         <div className="text-container20" id="textContainer">
           <div className="text20" id="text" style={{fontSize: '2rem', fontWeight: 'bold'}}>BOOLi-STORE - CODE!</div>
         </div>
-        <h1>Créer un compte (ENtreprise ou Boutique)</h1>
+        <h1>Créer un compte (Entreprise ou Boutique)</h1>
         <p >Connectez-vous à un large public !</p>
         <Link href="/creation_de_boutique">
           <button >

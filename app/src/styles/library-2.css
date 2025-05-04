@@ -146,6 +146,17 @@
   }
   .right-panel p{
     display: block;
-    font-size: 0.4em;
+    font-size: 0.8em;
   }
+  .right-panel strong {
+    font-size: 12px;
+}
+
+.right-panel h3{
+  font-size: 0.8em;
+}
+}
+.modal-content{
+  background: linear-gradient(45deg, #e9e5e3, #c7b09c);
+  z-index: 9999;
 }

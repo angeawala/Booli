@@ -330,14 +330,6 @@ const promotions: Promotion[] = [
     discountPercentage: 30,
     dataTime: null,
   },
-  {
-    id: "promo40",
-    product: { id: "meuble_moderne", name: "Meuble Moderne", image: "/Photo/meuble.jpeg" },
-    oldPrice: "98325 CFA",
-    newPrice: "78660 CFA",
-    discountPercentage: 30,
-    dataTime: null,
-  },
 ];
 
 const PromotionSection: React.FC = () => {

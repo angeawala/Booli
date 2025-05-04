@@ -36,7 +36,7 @@ const DoctorCard: React.FC<{ doctor: Doctor }> = ({ doctor }) => {
 const DoctorsSection: React.FC = () => {
   return (
     <section id="pharmacies">
-      <h4 className="text-center">Pharmacies des spécialistes</h4>
+      <h4 className="h4-text text-center">Pharmacies des spécialistes</h4>
       <div className="pharmacy-grid">
         {doctors.map(doctor => (
           <DoctorCard key={doctor.id} doctor={doctor} />

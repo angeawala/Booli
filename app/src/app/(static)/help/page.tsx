@@ -10,6 +10,7 @@ export default function HelpPage() {
 
   return (
     <>
+    
       <Header/>
 
       <section className="main-section">

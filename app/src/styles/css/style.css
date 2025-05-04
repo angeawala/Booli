@@ -751,7 +751,7 @@ content: '';
 .announcement {
     position: absolute;
     top: 40%;
-    left: 6%;
+    left: 6.5%;
     margin-top: -9%;
     transform: translate(-50%, -50%);
     font-size: 13px;
@@ -1584,7 +1584,7 @@ h6{
 /* ====================== Boite d'affichage a l'atualisation ================================*/
  .message-box {
     position: absolute;
-    top: 52%;
+    top: 48%;
     left: 20px;
     width: 250px;
     background-color: #333;

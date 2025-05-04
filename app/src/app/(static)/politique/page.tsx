@@ -2,11 +2,13 @@ import '@/styles/css/market.css';
 import '@/styles/css/style2.css';
 import Footer3 from '@/components/Footer3';
 import Header from '@/components/layout/listing/Header';
+import TopHeader from '@/components/layout/listing/TopHeader';
 
 export default function OffresOpportunitePage() {
 
   return (
     <>
+    <TopHeader/>
       <Header/> {/* Masque la barre de recherche et le panier */}
 
       <div className="entete1">
