@@ -18,10 +18,12 @@
     margin: 16px 0;
     text-align: center;
   }
-  .filter-box {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
+
+  .filtre-box a{
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.8em;
+    color: rgb(5, 5, 5);
   }
   .filter-btn, .sort-btn, .categorie-btn {
 

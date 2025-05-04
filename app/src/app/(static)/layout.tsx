@@ -13,7 +13,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import '@/styles/index.css';
 import '@/styles/style_mobile.css';
 
-
 // Charger les polices avec next/font
 const akayaKanadaka = Akaya_Kanadaka({
   weight: "400",

@@ -1,321 +1,562 @@
 /* Base styles (mobile-first) */
 .x-orders-page {
-    padding: 15px;
-    background-color: #f8f9fa;
-  }
-  
-  .x-orders-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  
-  .x-orders-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .x-control-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .x-shops-label {
-    display: block;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 5px;
-    font-size: 0.9rem;
-  }
-  
-  .form-control,
-  .form-select {
-    width: 100%;
-    padding: 8px;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    border: 1px solid #ced4da;
-  }
-  
-  .table-responsive {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow-x: auto;
-  }
-  
-  .table {
-    width: 100%;
-    margin-bottom: 0;
-    font-size: 0.85rem;
-  }
-  
-  .table th,
-  .table td {
-    vertical-align: middle;
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #dee2e6;
-  }
-  
-  .table th {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.9rem;
-    white-space: nowrap;
-  }
-  
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-  }
-  
-  .form-select {
-    width: 100%;
-  }
-  
-  .x-action-btn {
-    padding: 5px 8px;
-    font-size: 0.8rem;
-    white-space: nowrap;
-  }
-  
-  .x-action-btn i {
-    margin-right: 3px;
-  }
-  
-  .x-add-btn,
-  .x-modal-btn,
-  .x-modal-close {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-    width: 100%;
-    margin-top: 5px;
-  }
-  
-  .x-add-btn:hover,
-  .x-modal-btn:hover,
-  .x-modal-close:hover {
-    background-color: #218838;
-  }
-  
-  .x-modal-close {
-    background-color: #dc3545;
-  }
-  
-  .x-modal-close:hover {
-    background-color: #c82333;
-  }
-  
-  .btn-danger {
-    background-color: #dc3545;
-    border: none;
-    padding: 5px 8px;
-    font-size: 0.8rem;
-  }
-  
-  .btn-danger:hover {
-    background-color: #c82333;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border: none;
-    padding: 5px 8px;
-    font-size: 0.8rem;
-  }
-  
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-  
-  .btn-outline-primary {
-    font-size: 0.8rem;
-    padding: 5px 8px;
-  }
-  
-  .x-timeline {
-    list-style: none;
-    padding: 0;
-    position: relative;
-    margin: 15px 0;
-  }
-  
-  .x-timeline::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: #007bff;
-    left: 10px;
-  }
-  
-  .x-timeline-item {
-    position: relative;
-    margin-bottom: 15px;
-    padding-left: 25px;
-    font-size: 0.85rem;
-  }
-  
-  .x-timeline-item::before {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 5px;
-    width: 10px;
-    height: 10px;
-    background-color: #007bff;
-    border-radius: 50%;
-  }
-  
-  .x-timeline-date {
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .x-timeline-status {
-    margin-left: 8px;
-    color: #333;
-  }
-  
-  .x-timeline-comment {
-    margin-left: 8px;
-    color: #666;
-    font-style: italic;
-  }
-  
-  .x-pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-  }
-  
-  .x-pagination-btn {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-  }
-  
-  .x-pagination-btn:hover:not(:disabled) {
-    background-color: #0056b3;
-  }
-  
-  .x-pagination-btn:disabled {
-    background-color: #6c757d;
-    cursor: not-allowed;
-  }
-  
-  .x-pagination-info {
-    font-size: 0.9rem;
-    color: #333;
-  }
-  
-  .x-recent-tracking {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  /* Medium screens (tablets) */
-  @media (min-width: 768px) {
-    .x-orders-page {
+  padding: 15px;
+  background-color: #f8f9fa;
+}
+
+.x-orders-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.x-orders-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.x-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.x-shops-label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  padding: 8px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.table-responsive {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  font-size: 0.85rem;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  padding: 8px;
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.form-select {
+  width: 100%;
+}
+
+.x-action-btn {
+  padding: 5px 8px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.x-action-btn i {
+  margin-right: 3px;
+}
+
+.x-add-btn,
+.x-modal-btn,
+.x-modal-close {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.x-add-btn:hover,
+.x-modal-btn:hover,
+.x-modal-close:hover {
+  background-color: #218838;
+}
+
+.x-modal-close {
+  background-color: #dc3545;
+}
+
+.x-modal-close:hover {
+  background-color: #c82333;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  padding: 5px 8px;
+  font-size: 0.8rem;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-outline-primary {
+  font-size: 0.8rem;
+  padding: 5px 8px;
+}
+
+.x-timeline {
+  list-style: none;
+  padding: 0;
+  position: relative;
+  margin: 15px 0;
+}
+
+.x-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #007bff;
+  left: 10px;
+}
+
+.x-timeline-item {
+  position: relative;
+  margin-bottom: 15px;
+  padding-left: 25px;
+  font-size: 0.85rem;
+}
+
+.x-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background-color: #007bff;
+  border-radius: 50%;
+}
+
+.x-timeline-date {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.x-timeline-status {
+  margin-left: 8px;
+  color: #333;
+}
+
+.x-timeline-comment {
+  margin-left: 8px;
+  color: #666;
+  font-style: italic;
+}
+
+.x-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.x-pagination-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.x-pagination-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.x-pagination-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.x-pagination-info {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.x-recent-tracking {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Styles pour ProductReviewAndReport */
+.product-review-report {
+  margin-top: 10px;
+}
+
+.product-review-report .modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.product-review-report .modal-content {
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-review-report .modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-bottom: none;
+}
+
+.product-review-report .modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.product-review-report .btn-close {
+  filter: invert(1);
+}
+
+.product-review-report .fa-star {
+  margin-right: 5px;
+  font-size: 1.2rem;
+}
+
+.product-review-report .form-label {
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.product-review-report .form-control {
+  font-size: 0.85rem;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+/* Styles pour ReviewResponseForm */
+.review-response-form {
+  margin-top: 10px;
+  padding-left: 15px;
+  border-left: 2px solid #007bff;
+}
+
+.review-response-form .form-control {
+  font-size: 0.85rem;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.review-response-form .btn-primary {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.review-response-form .response-display {
+  background-color: #f9f9f9;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.review-response-form .response-display strong {
+  color: #007bff;
+}
+
+/* Styles pour les sections d'avis et signalements */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card .card-body {
+  padding: 15px;
+}
+
+.card h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+.card ul li {
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: #333;
+}
+
+.card .fa-star {
+  font-size: 0.9rem;
+  margin-right: 3px;
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) {
+  .x-orders-page {
       padding: 20px;
-    }
-  
-    .x-orders-title {
+  }
+
+  .x-orders-title {
       font-size: 2rem;
       text-align: left;
-    }
-  
-    .x-orders-controls {
+  }
+
+  .x-orders-controls {
       flex-direction: row;
       gap: 15px;
       flex-wrap: wrap;
-    }
-  
-    .x-control-group {
+  }
+
+  .x-control-group {
       flex: 1;
       min-width: 200px;
-    }
-  
-    .table {
+  }
+
+  .table {
       font-size: 0.9rem;
-    }
-  
-    .table th,
-    .table td {
+  }
+
+  .table th,
+  .table td {
       padding: 10px;
-    }
-  
-    .x-action-btn {
+  }
+
+  .x-action-btn {
       padding: 5px 10px;
       font-size: 0.9rem;
-    }
-  
-    .x-add-btn,
-    .x-modal-btn,
-    .x-modal-close {
+  }
+
+  .x-add-btn,
+  .x-modal-btn,
+  .x-modal-close {
       width: auto;
       padding: 8px 16px;
       margin-top: 0;
-    }
-  
-    .btn-outline-primary {
+  }
+
+  .btn-outline-primary {
       font-size: 0.9rem;
       padding: 5px 10px;
-    }
-  
-    .x-timeline-item {
+  }
+
+  .x-timeline-item {
       font-size: 0.9rem;
       margin-bottom: 20px;
       padding-left: 30px;
-    }
   }
-  
-  /* Large screens (desktops) */
-  @media (min-width: 992px) {
-    .x-orders-page {
-      padding: 30px;
-    }
-  
-    .table {
+
+  /* ProductReviewAndReport */
+  .product-review-report .modal-content {
+      padding: 10px;
+  }
+
+  .product-review-report .modal-title {
+      font-size: 1.5rem;
+  }
+
+  .product-review-report .fa-star {
+      font-size: 1.5rem;
+  }
+
+  .product-review-report .form-label {
       font-size: 1rem;
-    }
-  
-    .table th,
-    .table td {
+  }
+
+  .product-review-report .form-control {
+      font-size: 0.9rem;
+      padding: 10px;
+  }
+
+  /* ReviewResponseForm */
+  .review-response-form .form-control {
+      font-size: 0.9rem;
+      padding: 10px;
+  }
+
+  .review-response-form .btn-primary {
+      padding: 6px 12px;
+      font-size: 0.9rem;
+  }
+
+  .review-response-form .response-display {
+      padding: 10px;
+      font-size: 0.9rem;
+  }
+
+  /* Card */
+  .card .card-body {
+      padding: 20px;
+  }
+
+  .card h3 {
+      font-size: 1.5rem;
+  }
+
+  .card h4 {
+      font-size: 1.1rem;
+  }
+
+  .card ul li {
+      font-size: 0.9rem;
+  }
+
+  .card .fa-star {
+      font-size: 1rem;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 992px) {
+  .x-orders-page {
+      padding: 30px;
+  }
+
+  .table {
+      font-size: 1rem;
+  }
+
+  .table th,
+  .table td {
       padding: 12px;
-    }
-  
-    .x-action-btn {
+  }
+
+  .x-action-btn {
       font-size: 0.95rem;
-    }
-  
-    .x-add-btn,
-    .x-modal-btn,
-    .x-modal-close {
+  }
+
+  .x-add-btn,
+  .x-modal-btn,
+  .x-modal-close {
       padding: 10px 20px;
-    }
-  
-    .btn-outline-primary {
+  }
+
+  .btn-outline-primary {
       font-size: 0.95rem;
       padding: 6px 12px;
-    }
   }
+
+  /* ProductReviewAndReport */
+  .product-review-report .modal-content {
+      padding: 15px;
+  }
+
+  .product-review-report .modal-title {
+      font-size: 1.75rem;
+  }
+
+  .product-review-report .fa-star {
+      font-size: 1.75rem;
+  }
+
+  .product-review-report .form-label {
+      font-size: 1.1rem;
+  }
+
+  .product-review-report .form-control {
+      font-size: 1rem;
+      padding: 12px;
+  }
+
+  /* ReviewResponseForm */
+  .review-response-form .form-control {
+      font-size: 1rem;
+      padding: 12px;
+  }
+
+  .review-response-form .btn-primary {
+      padding: 8px 16px;
+      font-size: 0.95rem;
+  }
+
+  .review-response-form .response-display {
+      padding: 12px;
+      font-size: 1rem;
+  }
+
+  /* Card */
+  .card .card-body {
+      padding: 25px;
+  }
+
+  .card h3 {
+      font-size: 1.75rem;
+  }
+
+  .card h4 {
+      font-size: 1.2rem;
+  }
+
+  .card ul li {
+      font-size: 1rem;
+  }
+
+  .card .fa-star {
+      font-size: 1.1rem;
+  }
+}

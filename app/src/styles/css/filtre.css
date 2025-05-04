@@ -472,8 +472,8 @@ pointer-events: none;
     opacity: 0;
     transition: opacity 1s ease-in-out; 
 }
-.body_boutique {
-    margin: 0;
+.hero {
+
     padding: 0;
     font-family: 'Arial', sans-serif;
     background-image: url('/Photo/vente1.jpg');
@@ -483,33 +483,26 @@ pointer-events: none;
     height: 100vh;
     overflow-x: hidden;
 }
-.body_boutique::before{
+.hero::before{
     content: '';
     top: 0;
-    bottom: 0;
+    bottom: 20%;
     left: 0;
     right: 0;
     background-color: #333333a4;
     position: absolute;
 }
-.header_boutique {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+.features1{
+    position: relative;
+    z-index: 1;
 }
-
-.header_boutique .logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-   
+.features, .process{
+    position: relative;
+}
+.body_boutique{
+    position: relative;
+    background-color: #ffffff;
+    z-index: 1;
 }
 @media screen and (max-width: 768px) {
     .header_boutique{

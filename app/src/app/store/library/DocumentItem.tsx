@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Document {
   id: string;
@@ -7,16 +7,19 @@ interface Document {
   author?: string;
   category: string;
   publisher: string;
-  publicationDate: string;
-  pages: number;
+  publicationYear: string;
+  pages: string;
   language: string;
-  rating: number;
+  rating?: number;
   isFree: boolean;
   pdfPrice?: string;
   physicalPrice?: string;
-  hasPhysicalProduct: boolean;
+  hasPhysical: boolean;
   hasPdf: boolean;
   description: string;
+  weight?: string;
+  size?: string;
+  stock?: string;
 }
 
 interface DocumentItemProps {
@@ -25,60 +28,64 @@ interface DocumentItemProps {
 }
 
 const DocumentItem: React.FC<DocumentItemProps> = ({ document, onClick }) => {
+  const renderStars = (rating: number | undefined) => {
+    const stars = [];
+    const fullStars = Math.floor(rating || 0);
+    const hasHalfStar = rating && rating % 1 >= 0.5;
+
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(<i key={`full-${i}`} className="fas fa-star" aria-hidden="true"></i>);
+    }
+    if (hasHalfStar) {
+      stars.push(<i key="half" className="fas fa-star-half-alt" aria-hidden="true"></i>);
+    }
+    for (let i = stars.length; i < 5; i++) {
+      stars.push(<i key={`empty-${i}`} className="far fa-star" aria-hidden="true"></i>);
+    }
+    return stars;
+  };
+
   return (
     <div className="document-item float">
-      <div className={document.isFree ? "new-badge" : "new-badge2"}>
+      <div className={document.isFree ? 'new-badge' : 'new-badge2'}>
         <i
-          className={`fas ${document.isFree ? "fa-lock-open" : "fa-lock"} icon`}
-          title={document.isFree ? "Cadenas ouvert" : "Cadenas fermé"}
-        ></i>{" "}
-        DOCUMENT {document.isFree ? "Gratuit" : "Payant"}
+          className={`fas ${document.isFree ? 'fa-lock-open' : 'fa-lock'} icon`}
+          title={document.isFree ? 'Cadenas ouvert' : 'Cadenas fermé'}
+          aria-label={document.isFree ? 'Document gratuit' : 'Document payant'}
+        ></i>{' '}
+        DOCUMENT {document.isFree ? 'Gratuit' : 'Payant'}
       </div>
       <img
         src={document.image}
         alt={`Couverture de ${document.title}`}
         className="document-cover"
         onClick={onClick}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === 'Enter' && onClick()}
+        aria-label={`Voir les détails de ${document.title}`}
       />
-      <p>{document.title}</p>
+      <p className="document-title">{document.title}</p>
       {document.author && <div className="book-author">Par {document.author}</div>}
       <div className="book-specs">
-        <p style={{ "--i": 1 } as React.CSSProperties}>
-          <i className="fas fa-book"></i> <strong>Catégorie :</strong>{" "}
+        <p>
+          <i className="fas fa-book" aria-hidden="true"></i> <strong>Catégorie :</strong>{' '}
           {document.category}
         </p>
-        <p style={{ "--i": 2 } as React.CSSProperties}>
-          <i className="fas fa-pen"></i> <strong>Éditeur :</strong>{" "}
-          {document.publisher}
+        <p>
+          <i className="fas fa-calendar-alt" aria-hidden="true"></i>{' '}
+          <strong>Parution :</strong> {document.publicationYear}
         </p>
-        <p style={{ "--i": 3 } as React.CSSProperties}>
-          <i className="fas fa-calendar-alt"></i> <strong>Parution :</strong>{" "}
-          {document.publicationDate}
-        </p>
-        <p style={{ "--i": 4 } as React.CSSProperties}>
-          <i className="fas fa-file-alt"></i> <strong>Pages :</strong>{" "}
+        <p>
+          <i className="fas fa-file-alt" aria-hidden="true"></i> <strong>Pages :</strong>{' '}
           {document.pages}
         </p>
-        <p style={{ "--i": 5 } as React.CSSProperties}>
-          <i className="fas fa-language"></i> <strong>Langue :</strong>{" "}
-          {document.language}
-        </p>
       </div>
-      <div className="book-rating">
-        {Array(Math.floor(document.rating))
-          .fill(0)
-          .map((_, i) => (
-            <i key={i} className="fas fa-star"></i>
-          ))}
-        {document.rating % 1 !== 0 && <i className="fas fa-star-half-alt"></i>}
-        {Array(5 - Math.ceil(document.rating))
-          .fill(0)
-          .map((_, i) => (
-            <i key={i} className="far fa-star"></i>
-          ))}{" "}
-        ({document.rating}/5)
+      <div className="book-rating" aria-label={`Note : ${document.rating || 'Non noté'} sur 5`}>
+        {renderStars(document.rating)}
+        {document.rating !== undefined && ` (${document.rating}/5)`}
       </div>
-      <button className="learn-btn" onClick={onClick}>
+      <button className="learn-btn" onClick={onClick} aria-label={`Voir les détails de ${document.title}`}>
         Voir les détails
       </button>
     </div>

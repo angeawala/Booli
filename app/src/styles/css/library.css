@@ -271,24 +271,28 @@ h2{
     z-index: 10;
     position: relative;
 }
-
+.x-com{
+    align-items: center;
+    position: relative;
+    margin: 0 auto;
+    margin-left: 2em;
+}
+.search-bar-container{
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 
 .search-container input[type="text"] {
     width: 100%;
-    padding: 12px 20px;
+    padding: 12px 55px;
     font-size: 16px;
-    border: none;
+    border: solid 1px #fff;
     border-radius: 50px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.4s ease;
     outline: none;
 }
 
 .search-container input[type="text"]:focus {
     width: 100%;
-    background-color: #fff;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-    border-color: #4CAF50;
 }
 
 .search-container button {
@@ -297,7 +301,7 @@ h2{
     top: 0;
     height: 100%;
     width: 50px;
-    background-color: #4CAF50;
+    background-color: #cc7d16;
     border: none;
     border-radius: 50px;
     color: #fff;
@@ -364,7 +368,7 @@ h1 {
     margin: 2px;
     overflow-x: auto;
     flex-direction: column;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     margin: 12px;
 }
 @media screen and (max-width : 768px) {
@@ -377,7 +381,7 @@ h1 {
         justify-content: center;
     }
     .document-item {
-        width: 22em;
+        width: 15em;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -386,6 +390,9 @@ h1 {
         display: block;
     }
    
+}
+.search-bar-container i{
+    color: #ffff;
 }
 
 .document-item {
@@ -401,10 +408,10 @@ h1 {
     box-shadow: 2px 0px 2px 3px #0213259a;
     border-radius: 1px 25px 1px 25px;
     border-bottom: 4px solid #e67e22;
-    width: 23.5em;
+    width: 15em;
 }
 .document-item p{
-    font-size: 1.6em;
+    font-size: 1em;
     font-weight: 600;
     color: #34495e;
     text-align: left;
@@ -977,6 +984,8 @@ h3{text-align: center;}
 .entete{
     background-color: rgba(255, 99, 71, 0.884);
     border-radius: 5px;
+    border: none;
+    color: #fff;
 }
 #bton{
     background-color: rgb(204, 156, 0);

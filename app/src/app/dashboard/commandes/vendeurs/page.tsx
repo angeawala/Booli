@@ -114,8 +114,9 @@ const VendorOrdersPage = () => {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              setCurrentPage(1); // Reset to first page on search
+              setCurrentPage(1);
             }}
+            aria-label="Rechercher par client ou code de suivi"
           />
         </div>
 
@@ -126,8 +127,9 @@ const VendorOrdersPage = () => {
             value={filterStatus}
             onChange={(e) => {
               setFilterStatus(e.target.value);
-              setCurrentPage(1); // Reset to first page on filter change
+              setCurrentPage(1);
             }}
+            aria-label="Filtrer par statut"
           >
             <option value="">Tous les statuts</option>
             <option value="pending">En cours</option>
@@ -143,8 +145,9 @@ const VendorOrdersPage = () => {
             value={sortBy}
             onChange={(e) => {
               setSortBy(e.target.value);
-              setCurrentPage(1); // Reset to first page on sort change
+              setCurrentPage(1);
             }}
+            aria-label="Trier les commandes"
           >
             <option value="date-desc">Date (plus récent)</option>
             <option value="date-asc">Date (plus ancien)</option>
@@ -178,6 +181,7 @@ const VendorOrdersPage = () => {
                     value={order.status}
                     onChange={(e) => handleStatusChange(order.id, e.target.value)}
                     className="form-select"
+                    aria-label={`Changer le statut de la commande ${order.id}`}
                   >
                     <option value="pending">En cours</option>
                     <option value="shipped">Expédiée</option>
@@ -190,6 +194,7 @@ const VendorOrdersPage = () => {
                   <button
                     className="btn btn-info btn-sm x-action-btn"
                     onClick={() => setSelectedOrder(order)}
+                    aria-label={`Voir les détails de la commande ${order.id}`}
                   >
                     <i className="fas fa-eye"></i> Détails
                   </button>
@@ -206,6 +211,7 @@ const VendorOrdersPage = () => {
           className="btn x-pagination-btn"
           disabled={currentPage === 1}
           onClick={() => setCurrentPage((prev) => prev - 1)}
+          aria-label="Page précédente"
         >
           Précédent
         </button>
@@ -216,6 +222,7 @@ const VendorOrdersPage = () => {
           className="btn x-pagination-btn"
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage((prev) => prev + 1)}
+          aria-label="Page suivante"
         >
           Suivant
         </button>
@@ -224,10 +231,17 @@ const VendorOrdersPage = () => {
       {selectedOrder && (
         <div className="mt-4">
           <h3>Détails de la commande</h3>
-          <OrderDetails order={selectedOrder} shops={shops} products={products} />
+          <OrderDetails
+            order={selectedOrder}
+            shops={shops}
+            products={products}
+            userEmail={userEmail}
+            userRole="vendor"
+          />
           <button
             className="btn x-modal-close mt-2"
             onClick={() => setSelectedOrder(null)}
+            aria-label="Fermer les détails de la commande"
           >
             Fermer
           </button>

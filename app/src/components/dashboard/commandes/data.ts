@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Shop, Product, Order } from './types';
+import { Shop, Product, Order, Review, Report } from './types';
 import { generateTrackingCode } from '@/utils/trackingCode';
 
 export const getShops = (): Shop[] => {
@@ -29,8 +29,25 @@ export const saveOrders = (orders: Order[]) => {
   localStorage.setItem('orders', JSON.stringify(orders));
 };
 
+export const getReviews = (): Review[] => {
+  const reviews = localStorage.getItem('reviews');
+  return reviews ? JSON.parse(reviews) : [];
+};
+
+export const saveReviews = (reviews: Review[]) => {
+  localStorage.setItem('reviews', JSON.stringify(reviews));
+};
+
+export const getReports = (): Report[] => {
+  const reports = localStorage.getItem('reports');
+  return reports ? JSON.parse(reports) : [];
+};
+
+export const saveReports = (reports: Report[]) => {
+  localStorage.setItem('reports', JSON.stringify(reports));
+};
+
 export const initializeData = () => {
-  // Initialize shops
   const shops: Shop[] = [
     {
       id: uuidv4(),
@@ -59,7 +76,6 @@ export const initializeData = () => {
   ];
   localStorage.setItem('shops', JSON.stringify(shops));
 
-  // Initialize products
   const products: Product[] = [
     {
       id: uuidv4(),
@@ -110,7 +126,6 @@ export const initializeData = () => {
   ];
   localStorage.setItem('products', JSON.stringify(products));
 
-  // Initialize orders
   const orders: Order[] = [
     {
       id: uuidv4(),
@@ -127,6 +142,8 @@ export const initializeData = () => {
       statusHistory: [
         { status: 'pending', date: new Date('2025-04-10').toISOString() },
       ],
+      reviews: [],
+      reports: [],
     },
     {
       id: uuidv4(),
@@ -145,6 +162,8 @@ export const initializeData = () => {
         { status: 'pending', date: new Date('2025-04-09').toISOString() },
         { status: 'shipped', date: new Date('2025-04-11').toISOString() },
       ],
+      reviews: [],
+      reports: [],
     },
     {
       id: uuidv4(),
@@ -164,6 +183,8 @@ export const initializeData = () => {
         { status: 'shipped', date: new Date('2025-04-07').toISOString() },
         { status: 'delivered', date: new Date('2025-04-12').toISOString() },
       ],
+      reviews: [],
+      reports: [],
     },
     {
       id: uuidv4(),
@@ -180,9 +201,18 @@ export const initializeData = () => {
       updatedAt: new Date('2025-04-10').toISOString(),
       statusHistory: [
         { status: 'pending', date: new Date('2025-04-08').toISOString() },
-        { status: 'canceled', date: new Date('2025-04-10').toISOString(), comment: 'Annulé par le client' },
+        {
+          status: 'canceled',
+          date: new Date('2025-04-10').toISOString(),
+          comment: 'Annulé par le client',
+        },
       ],
+      reviews: [],
+      reports: [],
     },
   ];
   localStorage.setItem('orders', JSON.stringify(orders));
+
+  localStorage.setItem('reviews', JSON.stringify([]));
+  localStorage.setItem('reports', JSON.stringify([]));
 };
